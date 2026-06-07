@@ -3,12 +3,10 @@
 <head>
     <title>Calculator Hubs</title>
 
-    <!-- Adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
+    
+<meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
      crossorigin="anonymous"></script>
-
-    <!-- Google Verification -->
-    <meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
 
     <style>
         body {
@@ -56,28 +54,8 @@
             background: darkgreen;
         }
 
-        #history {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-        }
-
-        #history li {
-            background: #f2f2f2;
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 5px;
-        }
-
         footer {
             margin-top: 30px;
-        }
-
-        footer a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: blue;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -85,7 +63,7 @@
 <body>
 
 <div class="box">
-    <h2>Currency Converter 🔥</h2>
+    <h2>Currency Converter 🔥🔥🔥</h2>
 
     <input type="number" id="amount" placeholder="Enter amount">
 
@@ -95,17 +73,10 @@
     <button onclick="convert()">Convert</button>
 
     <h3 id="result"></h3>
-
-    <h3>History</h3>
-    <ul id="history"></ul>
-
-    <button onclick="clearHistory()">Clear History</button>
 </div>
 
 <footer>
-    <a href="#">About</a> |
-    <a href="#">Privacy</a> |
-    <a href="#">Contact</a>
+    <p>© 2026 Calculator Hubs</p>
 </footer>
 
 <script>
@@ -151,45 +122,14 @@ function convert() {
     }
 
     let result = (amt / rates[from]) * rates[to];
-    let output = amt + " " + from + " = " + result.toFixed(2) + " " + to;
 
-    document.getElementById("result").innerText = output;
-
-    saveHistory(output);
+    document.getElementById("result").innerText =
+        amt + " " + from + " = " + result.toFixed(2) + " " + to;
 }
 
-// Save history
-function saveHistory(text) {
-    let history = JSON.parse(localStorage.getItem("history")) || [];
-    history.push(text);
-    localStorage.setItem("history", JSON.stringify(history));
-    displayHistory();
-}
-
-// Show history
-function displayHistory() {
-    let history = JSON.parse(localStorage.getItem("history")) || [];
-    let list = document.getElementById("history");
-
-    list.innerHTML = "";
-
-    history.slice(-5).reverse().forEach(item => {
-        let li = document.createElement("li");
-        li.innerText = item;
-        list.appendChild(li);
-    });
-}
-
-// Clear history
-function clearHistory() {
-    localStorage.removeItem("history");
-    displayHistory();
-}
-
-// Load everything
+// Load on start
 window.onload = function() {
     loadCurrencies();
-    displayHistory();
 };
 </script>
 
