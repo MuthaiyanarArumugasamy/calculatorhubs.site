@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+
+    <!-- Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
+     crossorigin="anonymous"></script>
+
+    <!-- Google Verification -->
+    <meta name="google-site-verification" content="3xsyf1a0tnCKhm7ULB4YY5tBAgBMRbu9oSljVpej4lE" />
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            padding-top: 50px;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            width: 320px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            background: #00c853;
+            padding: 12px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            background: green;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        #history {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+
+        #history li {
+            background: #f2f2f2;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        footer {
+            margin-top: 30px;
+        }
+
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body onload="loadCurrencies(); showDate(); displayHistory();">
+
+<div class="box">
+    <h2>Currency Converter</h2>
+
+    <!-- DATE -->
+    <p id="date"></p>
+
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <select id="from"></select>
+    <select id="to"></select>
+
+    <button onclick="convert()">Convert</button>
+
+    <h3 id="result"></h3>
+
+    <!-- HISTORY -->
+    <h3>Recent History</h3>
+    <ul id="history"></ul>
+
+    <button onclick="clearHistory()">Clear History</button>
+</div>
+
+<footer>
+    <a href="about.html">About</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms</a> |
+    <a href="contact.html">Contact</a>
+</footer>
+
+<script>
+let allRates = {};
+
+// 📅 Show Date
+function showDate() {
+    let today = new Date();
+    document.getElementById("date").innerText = "Today: " + today.toDateString();
+}
+
+// 🌍 Load currencies
+async function loadCurrencies() {
+    let url = "https://api.exchangerate-api.com/v4/latest/USD";
+    let response = await fetch(url);
+    let data = await response.json();
+
+    allRates = data.rates;
+
+    let from = document.getElementById("from");
+    let to = document.getElementById("to");
+
+    for (let currency in allRates) {
+        let option1 = document.createElement("option");
+        let option2 = document.createElement("option");
+
+        option1.value = currency;
+        option1.text = currency;
+
+        option2.value = currency;
+        option2.text = currency;
+
+        from.appendChild(option1);
+        to.appendChild(option2);
+    }
+
+    from.value = "USD";
+    to.value = "INR";
+}
+
+// 🔁 Convert
+function convert() {
+    let amount = document.getElementById("amount").value;
+    let from = document.getElementById("from").value;
+    let to = document.getElementById("to").value;
+
+    if (amount === "" || amount <= 0) {
+        alert("Enter valid amount");
+        return;
+    }
+
+    let rate = allRates[to] / allRates[from];
+    let result = amount * rate;
+
+    let output = amount + " " + from + " = " + result.toFixed(2) + " " + to;
+
+    document.getElementById("result").innerText = output;
+
+    saveHistory(output);
+}
+
+// 🧾 Save History
+function saveHistory(text) {
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    history.push(text);
+    localStorage.setItem("history", JSON.stringify(history));
+    displayHistory();
+}
+
+// 👀 Show History
+function displayHistory() {
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    let list = document.getElementById("history");
+
+    list.innerHTML = "";
+
+    history.slice(-5).reverse().forEach(item => {
+        let li = document.createElement("li");
+        li.innerText = item;
+        list.appendChild(li);
+    });
+}
+
+// 🗑️ Clear History
+function clearHistory() {
+    localStorage.removeItem("history");
+    displayHistory();
+}
+</script>
+
+</body>
+</html>
