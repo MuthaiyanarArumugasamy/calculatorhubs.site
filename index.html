@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Currency Converter</title>
+    <title>Calculator Hubs</title>
 
     <!-- Adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
      crossorigin="anonymous"></script>
+
     <!-- Google Verification -->
-   <meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" /> 
+    <meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
+
     <style>
         body {
             font-family: Arial;
@@ -38,7 +40,6 @@
             margin: 10px 0;
             border-radius: 6px;
             border: 1px solid #ccc;
-            box-sizing: border-box;
         }
 
         button {
@@ -81,13 +82,10 @@
     </style>
 </head>
 
-<body onload="loadCurrencies(); showDate(); displayHistory();">
+<body>
 
 <div class="box">
-    <h2>Currency Converter 🔥🔥</h2>
-
-    <!-- DATE -->
-    <p id="date"></p>
+    <h2>Currency Converter 🔥</h2>
 
     <input type="number" id="amount" placeholder="Enter amount">
 
@@ -98,80 +96,69 @@
 
     <h3 id="result"></h3>
 
-    <!-- HISTORY -->
-    <h3>Recent History</h3>
+    <h3>History</h3>
     <ul id="history"></ul>
 
     <button onclick="clearHistory()">Clear History</button>
 </div>
 
 <footer>
-    <a href="about.html">About</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms</a> |
-    <a href="contact.html">Contact</a>
+    <a href="#">About</a> |
+    <a href="#">Privacy</a> |
+    <a href="#">Contact</a>
 </footer>
 
 <script>
-let allRates = {};
+let rates = {};
 
-// 📅 Show Date
-function showDate() {
-    let today = new Date();
-    document.getElementById("date").innerText = "Today: " + today.toDateString();
-}
-
-// 🌍 Load currencies
+// Load currencies
 async function loadCurrencies() {
-    let url = "https://api.exchangerate-api.com/v4/latest/USD";
-    let response = await fetch(url);
-    let data = await response.json();
+    let res = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+    let data = await res.json();
 
-    allRates = data.rates;
+    rates = data.rates;
 
     let from = document.getElementById("from");
     let to = document.getElementById("to");
 
-    for (let currency in allRates) {
-        let option1 = document.createElement("option");
-        let option2 = document.createElement("option");
+    for (let key in rates) {
+        let opt1 = document.createElement("option");
+        let opt2 = document.createElement("option");
 
-        option1.value = currency;
-        option1.text = currency;
+        opt1.value = key;
+        opt1.text = key;
 
-        option2.value = currency;
-        option2.text = currency;
+        opt2.value = key;
+        opt2.text = key;
 
-        from.appendChild(option1);
-        to.appendChild(option2);
+        from.appendChild(opt1);
+        to.appendChild(opt2);
     }
 
     from.value = "USD";
     to.value = "INR";
 }
 
-// 🔁 Convert
+// Convert
 function convert() {
-    let amount = document.getElementById("amount").value;
+    let amt = document.getElementById("amount").value;
     let from = document.getElementById("from").value;
     let to = document.getElementById("to").value;
 
-    if (amount === "" || amount <= 0) {
+    if (amt === "" || amt <= 0) {
         alert("Enter valid amount");
         return;
     }
 
-    let rate = allRates[to] / allRates[from];
-    let result = amount * rate;
-
-    let output = amount + " " + from + " = " + result.toFixed(2) + " " + to;
+    let result = (amt / rates[from]) * rates[to];
+    let output = amt + " " + from + " = " + result.toFixed(2) + " " + to;
 
     document.getElementById("result").innerText = output;
 
     saveHistory(output);
 }
 
-// 🧾 Save History
+// Save history
 function saveHistory(text) {
     let history = JSON.parse(localStorage.getItem("history")) || [];
     history.push(text);
@@ -179,7 +166,7 @@ function saveHistory(text) {
     displayHistory();
 }
 
-// 👀 Show History
+// Show history
 function displayHistory() {
     let history = JSON.parse(localStorage.getItem("history")) || [];
     let list = document.getElementById("history");
@@ -193,11 +180,17 @@ function displayHistory() {
     });
 }
 
-// 🗑️ Clear History
+// Clear history
 function clearHistory() {
     localStorage.removeItem("history");
     displayHistory();
 }
+
+// Load everything
+window.onload = function() {
+    loadCurrencies();
+    displayHistory();
+};
 </script>
 
 </body>
