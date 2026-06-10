@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Terms & Conditions</title>
+<style>
+body {
+    font-family: Arial;
+    padding: 20px;
+    line-height: 1.6;
+}
+h1 {
+    color: green;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Terms & Conditions</h1>
+
+<p>Welcome to Calculator Hubs. By accessing and using our website, you accept and agree to be bound by the terms and conditions described below.</p>
+
+<h2>1. Use of Website</h2>
+<p>This website provides free online calculators such as currency converter, BMI calculator, age calculator, and other tools for informational purposes only.</p>
+
+<h2>2. Accuracy of Information</h2>
+<p>We try to provide accurate results, but we do not guarantee that all calculations are 100% error-free. Users should verify results before making financial or important decisions.</p>
+
+<h2>3. No Professional Advice</h2>
+<p>The calculators and information on this website do not constitute financial, medical, or legal advice. Always consult a professional when necessary.</p>
+
+<h2>4. User Responsibility</h2>
+<p>You agree to use this website responsibly and not misuse the tools or attempt to harm the website.</p>
+
+<h2>5. Third-Party Services</h2>
+<p>We may use third-party services like Google AdSense and APIs. These services may use cookies and collect data as per their policies.</p>
+
+<h2>6. Limitation of Liability</h2>
+<p>Calculator Hubs will not be responsible for any losses or damages resulting from the use of this website.</p>
+
+<h2>7. Changes to Terms</h2>
+<p>We may update these terms at any time without prior notice. Continued use of the site means you accept the updated terms.</p>
+
+<h2>8. Contact Us</h2>
+<p>If you have any questions about these Terms, please contact us via the Contact page.</p>
+
+<br>
+<a href="index.html">⬅ Back to Home</a>
+
+</body>
+</html>
