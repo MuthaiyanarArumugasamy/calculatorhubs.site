@@ -3,11 +3,14 @@
 <head>
 <title>Calculator Hubs</title>
 
+<meta name="description" content="Free online calculators - currency, BMI, age calculator">
+
 <style>
 body {
     font-family: Arial;
     background: #f5f7fa;
     text-align: center;
+    margin:0;
 }
 
 /* HEADER */
@@ -17,10 +20,10 @@ body {
     padding: 20px;
 }
 
-/* CALCULATOR LIST */
+/* GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
     gap: 15px;
     padding: 20px;
 }
@@ -37,17 +40,25 @@ body {
     background: #e8f5e9;
 }
 
-/* CALCULATOR BOX */
+/* CALCULATOR */
 .calculator {
     display: none;
     background: white;
     width: 350px;
-    margin: auto;
+    margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
+/* INPUT */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+/* BUTTON */
 button {
     width: 100%;
     padding: 10px;
@@ -55,11 +66,29 @@ button {
     color: white;
     border: none;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: darkgreen;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 30px;
+    padding: 15px;
+    background: #eee;
+}
+
+.footer a {
+    margin: 10px;
+    text-decoration: none;
+    color: #333;
 }
 </style>
 </head>
 
-<body>
+<body onload="load()">
 
 <!-- HEADER -->
 <div class="header">
@@ -67,11 +96,11 @@ button {
 <p>All-in-one free calculators</p>
 </div>
 
-<!-- CALCULATOR MENU -->
+<!-- MENU -->
 <div class="grid">
-<div class="card" onclick="show('currency')">💱 Currency Converter</div>
-<div class="card" onclick="show('bmi')">⚖️ BMI Calculator</div>
-<div class="card" onclick="show('age')">🎂 Age Calculator</div>
+<div class="card" onclick="show('currency')">💱 Currency</div>
+<div class="card" onclick="show('bmi')">⚖️ BMI</div>
+<div class="card" onclick="show('age')">🎂 Age</div>
 </div>
 
 <!-- CURRENCY -->
@@ -113,6 +142,14 @@ button {
 <button onclick="back()">⬅ Back</button>
 </div>
 
+<!-- FOOTER -->
+<div class="footer">
+<a href="about.html">About</a>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+<a href="contact.html">Contact</a>
+</div>
+
 <script>
 let rates = {};
 
@@ -121,15 +158,19 @@ let res = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
 let data = await res.json();
 rates = data.rates;
 
+let from = document.getElementById("from");
+let to = document.getElementById("to");
+
 for (let c in rates) {
 from.add(new Option(c,c));
 to.add(new Option(c,c));
 }
+
 from.value="USD";
 to.value="INR";
 }
 
-// SHOW CALCULATOR
+// SHOW
 function show(id){
 document.querySelector('.grid').style.display="none";
 document.getElementById(id).style.display="block";
@@ -141,32 +182,39 @@ document.querySelector('.grid').style.display="grid";
 document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
 }
 
-// CURRENCY
+// CONVERT
 function convert(){
-let amt = amount.value;
-let rate = rates[to.value]/rates[from.value];
+let amt = document.getElementById("amount").value;
+let from = document.getElementById("from").value;
+let to = document.getElementById("to").value;
+
+let rate = rates[to]/rates[from];
 let result = amt * rate;
+
 document.getElementById("result").innerText =
-amt+" "+from.value+" = "+result.toFixed(2)+" "+to.value;
+amt+" "+from+" = "+result.toFixed(2)+" "+to;
 }
 
 // BMI
 function calcBMI(){
-let w = weight.value;
-let h = height.value/100;
+let w = document.getElementById("weight").value;
+let h = document.getElementById("height").value/100;
+
 let b = w/(h*h);
-bmiResult.innerText = "BMI: "+b.toFixed(2);
+document.getElementById("bmiResult").innerText =
+"BMI: "+b.toFixed(2);
 }
 
 // AGE
 function calcAge(){
 let dob = new Date(document.getElementById("dob").value);
 let today = new Date();
-let age = today.getFullYear() - dob.getFullYear();
-ageResult.innerText = "Age: "+age+" years";
-}
 
-load();
+let age = today.getFullYear() - dob.getFullYear();
+
+document.getElementById("ageResult").innerText =
+"Age: "+age+" years";
+}
 </script>
 
 </body>
