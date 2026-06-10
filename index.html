@@ -1,156 +1,172 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculator Hub - Free Online Calculators</title>
+<title>Calculator Hubs</title>
 
-    <!-- SEO -->
-    <meta name="description" content="Free online calculators - EMI, GST, Age and Currency Converter tools.">
-    <meta name="keywords" content="calculator, EMI calculator, GST calculator, age calculator, currency converter">
+<style>
+body {
+    font-family: Arial;
+    background: #f5f7fa;
+    text-align: center;
+}
 
-    <!-- Adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
-     crossorigin="anonymous"></script>
+/* HEADER */
+.header {
+    background: #4CAF50;
+    color: white;
+    padding: 20px;
+}
 
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f8;
-            margin: 0;
-            text-align: center;
-        }
+/* CALCULATOR LIST */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
 
-        header {
-            background: #1e88e5;
-            color: white;
-            padding: 15px;
-        }
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
 
-        h1 {
-            margin: 0;
-        }
+.card:hover {
+    background: #e8f5e9;
+}
 
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: auto;
-            margin-top: 20px;
-        }
+/* CALCULATOR BOX */
+.calculator {
+    display: none;
+    background: white;
+    width: 350px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
 
-        .box {
-            background: white;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        input, select {
-            width: 90%;
-            padding: 10px;
-            margin: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #1e88e5;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #1565c0;
-        }
-
-        footer {
-            margin-top: 30px;
-            padding: 20px;
-            background: #eee;
-        }
-
-        footer a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #1e88e5;
-        }
-    </style>
+button {
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    margin-top: 10px;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <h1>Calculator Hub</h1>
-</header>
-
-<div class="container">
-
-    <!-- EMI Calculator -->
-    <div class="box">
-        <h2>EMI Calculator</h2>
-        <input type="number" id="loan" placeholder="Loan Amount">
-        <input type="number" id="rate" placeholder="Interest Rate (%)">
-        <input type="number" id="months" placeholder="Months">
-        <button onclick="calcEMI()">Calculate EMI</button>
-        <h3 id="emiResult"></h3>
-    </div>
-
-    <!-- GST Calculator -->
-    <div class="box">
-        <h2>GST Calculator</h2>
-        <input type="number" id="gstAmount" placeholder="Amount">
-        <input type="number" id="gstRate" placeholder="GST %">
-        <button onclick="calcGST()">Calculate GST</button>
-        <h3 id="gstResult"></h3>
-    </div>
-
-    <!-- Age Calculator -->
-    <div class="box">
-        <h2>Age Calculator</h2>
-        <input type="date" id="dob">
-        <button onclick="calcAge()">Calculate Age</button>
-        <h3 id="ageResult"></h3>
-    </div>
-
+<!-- HEADER -->
+<div class="header">
+<h1>Calculator Hubs</h1>
+<p>All-in-one free calculators</p>
 </div>
 
-<footer>
-    <a href="about.html">About</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms</a> |
-    <a href="contact.html">Contact</a>
-</footer>
+<!-- CALCULATOR MENU -->
+<div class="grid">
+<div class="card" onclick="show('currency')">💱 Currency Converter</div>
+<div class="card" onclick="show('bmi')">⚖️ BMI Calculator</div>
+<div class="card" onclick="show('age')">🎂 Age Calculator</div>
+</div>
+
+<!-- CURRENCY -->
+<div id="currency" class="calculator">
+<h2>Currency Converter</h2>
+
+<input type="number" id="amount" value="1">
+<select id="from"></select>
+<select id="to"></select>
+
+<button onclick="convert()">Convert</button>
+<h3 id="result"></h3>
+
+<button onclick="back()">⬅ Back</button>
+</div>
+
+<!-- BMI -->
+<div id="bmi" class="calculator">
+<h2>BMI Calculator</h2>
+
+<input type="number" id="weight" placeholder="Weight (kg)">
+<input type="number" id="height" placeholder="Height (cm)">
+
+<button onclick="calcBMI()">Calculate</button>
+<h3 id="bmiResult"></h3>
+
+<button onclick="back()">⬅ Back</button>
+</div>
+
+<!-- AGE -->
+<div id="age" class="calculator">
+<h2>Age Calculator</h2>
+
+<input type="date" id="dob">
+
+<button onclick="calcAge()">Calculate</button>
+<h3 id="ageResult"></h3>
+
+<button onclick="back()">⬅ Back</button>
+</div>
 
 <script>
-// EMI
-function calcEMI() {
-    let P = document.getElementById("loan").value;
-    let r = document.getElementById("rate").value / 12 / 100;
-    let n = document.getElementById("months").value;
+let rates = {};
 
-    let emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-    document.getElementById("emiResult").innerText = "EMI: ₹" + emi.toFixed(2);
+async function load() {
+let res = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+let data = await res.json();
+rates = data.rates;
+
+for (let c in rates) {
+from.add(new Option(c,c));
+to.add(new Option(c,c));
+}
+from.value="USD";
+to.value="INR";
 }
 
-// GST
-function calcGST() {
-    let amount = document.getElementById("gstAmount").value;
-    let rate = document.getElementById("gstRate").value;
-
-    let gst = amount * rate / 100;
-    document.getElementById("gstResult").innerText = "Total: ₹" + (parseFloat(amount) + gst);
+// SHOW CALCULATOR
+function show(id){
+document.querySelector('.grid').style.display="none";
+document.getElementById(id).style.display="block";
 }
 
-// Age
-function calcAge() {
-    let dob = new Date(document.getElementById("dob").value);
-    let today = new Date();
-
-    let age = today.getFullYear() - dob.getFullYear();
-    document.getElementById("ageResult").innerText = "Age: " + age + " years";
+// BACK
+function back(){
+document.querySelector('.grid').style.display="grid";
+document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
 }
+
+// CURRENCY
+function convert(){
+let amt = amount.value;
+let rate = rates[to.value]/rates[from.value];
+let result = amt * rate;
+document.getElementById("result").innerText =
+amt+" "+from.value+" = "+result.toFixed(2)+" "+to.value;
+}
+
+// BMI
+function calcBMI(){
+let w = weight.value;
+let h = height.value/100;
+let b = w/(h*h);
+bmiResult.innerText = "BMI: "+b.toFixed(2);
+}
+
+// AGE
+function calcAge(){
+let dob = new Date(document.getElementById("dob").value);
+let today = new Date();
+let age = today.getFullYear() - dob.getFullYear();
+ageResult.innerText = "Age: "+age+" years";
+}
+
+load();
 </script>
 
 </body>
