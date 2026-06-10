@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculator Hubs</title>
+    <title>Currency Converter</title>
 
-<meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
-     crossorigin="anonymous"></script>
+    <!-- Adsense -->
+    <script async 
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
+    crossorigin="anonymous"></script>
+
+    <meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
 
     <style>
         body {
             font-family: Arial;
             text-align: center;
             background: linear-gradient(to right, #74ebd5, #ACB6E5);
-            padding-top: 50px;
+            padding-top: 40px;
         }
 
         .box {
             background: white;
             padding: 20px;
-            width: 320px;
+            width: 350px;
             margin: auto;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -31,21 +34,21 @@
             color: white;
         }
 
-        input, select {
+        /* SAME SIZE INPUTS */
+        input, select, button {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 6px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 15px;
         }
 
         button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: none;
             background: green;
             color: white;
+            border: none;
             cursor: pointer;
         }
 
@@ -53,16 +56,42 @@
             background: darkgreen;
         }
 
+        #history {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        #history li {
+            background: #f2f2f2;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
         footer {
             margin-top: 30px;
+        }
+
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
         }
     </style>
 </head>
 
-<body>
+<body onload="loadCurrencies(); showDate(); displayHistory();">
 
 <div class="box">
-    <h2>Currency Converter 🔥🔥🔥</h2>
+
+    <!-- ❌ FIRE EMOJI REMOVED -->
+    <h2>Currency Converter</h2>
+
+    <p id="date"></p>
 
     <input type="number" id="amount" placeholder="Enter amount">
 
@@ -72,34 +101,52 @@
     <button onclick="convert()">Convert</button>
 
     <h3 id="result"></h3>
+
+    <!-- HISTORY -->
+    <h3>Recent History</h3>
+    <ul id="history"></ul>
+
+    <button onclick="clearHistory()">Clear History</button>
+
 </div>
 
 <footer>
-    <p>© 2026 Calculator Hubs</p>
+    <a href="#">About</a> |
+    <a href="#">Privacy</a> |
+    <a href="#">Terms</a> |
+    <a href="#">Contact</a>
 </footer>
 
 <script>
-let rates = {};
+let allRates = {};
 
-// Load currencies
+// 📅 DATE SHOW
+function showDate() {
+    let today = new Date();
+    document.getElementById("date").innerText =
+        "Today: " + today.toDateString();
+}
+
+// 🌍 LOAD CURRENCY
 async function loadCurrencies() {
-    let res = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
-    let data = await res.json();
+    let url = "https://api.exchangerate-api.com/v4/latest/USD";
+    let response = await fetch(url);
+    let data = await response.json();
 
-    rates = data.rates;
+    allRates = data.rates;
 
     let from = document.getElementById("from");
     let to = document.getElementById("to");
 
-    for (let key in rates) {
+    for (let currency in allRates) {
         let opt1 = document.createElement("option");
         let opt2 = document.createElement("option");
 
-        opt1.value = key;
-        opt1.text = key;
+        opt1.value = currency;
+        opt1.text = currency;
 
-        opt2.value = key;
-        opt2.text = key;
+        opt2.value = currency;
+        opt2.text = currency;
 
         from.appendChild(opt1);
         to.appendChild(opt2);
@@ -109,27 +156,57 @@ async function loadCurrencies() {
     to.value = "INR";
 }
 
-// Convert
+// 🔁 CONVERT + DATE HISTORY
 function convert() {
-    let amt = document.getElementById("amount").value;
+    let amount = document.getElementById("amount").value;
     let from = document.getElementById("from").value;
     let to = document.getElementById("to").value;
 
-    if (amt === "" || amt <= 0) {
+    if (amount === "" || amount <= 0) {
         alert("Enter valid amount");
         return;
     }
 
-    let result = (amt / rates[from]) * rates[to];
+    let rate = allRates[to] / allRates[from];
+    let result = amount * rate;
 
-    document.getElementById("result").innerText =
-        amt + " " + from + " = " + result.toFixed(2) + " " + to;
+    let today = new Date().toLocaleDateString();
+
+    let output = today + " → " + amount + " " + from + 
+                 " = " + result.toFixed(2) + " " + to;
+
+    document.getElementById("result").innerText = output;
+
+    saveHistory(output);
 }
 
-// Load on start
-window.onload = function() {
-    loadCurrencies();
-};
+// 🧾 SAVE HISTORY
+function saveHistory(text) {
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    history.push(text);
+    localStorage.setItem("history", JSON.stringify(history));
+    displayHistory();
+}
+
+// 👀 DISPLAY HISTORY
+function displayHistory() {
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    let list = document.getElementById("history");
+
+    list.innerHTML = "";
+
+    history.slice(-5).reverse().forEach(item => {
+        let li = document.createElement("li");
+        li.innerText = item;
+        list.appendChild(li);
+    });
+}
+
+// 🗑 CLEAR
+function clearHistory() {
+    localStorage.removeItem("history");
+    displayHistory();
+}
 </script>
 
 </body>
