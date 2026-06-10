@@ -1,214 +1,155 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Free Currency Converter Online | Calculator Hubs</title>
-<<meta name="description" content="Free online currency converter tool. Convert USD to INR, EUR and more instantly with Calculator Hubs.">
-<meta name="keywords" content="currency converter, usd to inr, calculator, online calculator, exchange rate">
+    <title>Calculator Hub - Free Online Calculators</title>
 
+    <!-- SEO -->
+    <meta name="description" content="Free online calculators - EMI, GST, Age and Currency Converter tools.">
+    <meta name="keywords" content="calculator, EMI calculator, GST calculator, age calculator, currency converter">
 
     <!-- Adsense -->
-    <script async 
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
-    crossorigin="anonymous"></script>
-
-    <meta name="google-site-verification" content="XtRP8dWNNcBkmDLcIO1_ytufZYWCKEL6qcLK8GnwCdk" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2088931413685380"
+     crossorigin="anonymous"></script>
 
     <style>
         body {
             font-family: Arial;
+            background: #f4f6f8;
+            margin: 0;
             text-align: center;
-            background: linear-gradient(to right, #74ebd5, #ACB6E5);
-            padding-top: 40px;
+        }
+
+        header {
+            background: #1e88e5;
+            color: white;
+            padding: 15px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 20px;
         }
 
         .box {
             background: white;
             padding: 20px;
-            width: 350px;
-            margin: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        h2 {
-            background: #00c853;
-            padding: 12px;
-            border-radius: 6px;
-            color: white;
-        }
-
-        /* SAME SIZE INPUTS */
-        input, select, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 8px;
             border-radius: 6px;
             border: 1px solid #ccc;
-            box-sizing: border-box;
-            font-size: 15px;
         }
 
         button {
-            background: green;
+            padding: 10px 20px;
+            background: #1e88e5;
             color: white;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
         }
 
         button:hover {
-            background: darkgreen;
-        }
-
-        #history {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-        }
-
-        #history li {
-            background: #f2f2f2;
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 5px;
-            font-size: 14px;
+            background: #1565c0;
         }
 
         footer {
             margin-top: 30px;
+            padding: 20px;
+            background: #eee;
         }
 
         footer a {
             margin: 0 10px;
             text-decoration: none;
-            color: blue;
-            font-weight: bold;
+            color: #1e88e5;
         }
     </style>
 </head>
 
-<body onload="loadCurrencies(); showDate(); displayHistory();">
+<body>
 
-<div class="box">
+<header>
+    <h1>Calculator Hub</h1>
+</header>
 
-    <!-- ❌ FIRE EMOJI REMOVED -->
-    <h2>Currency Converter</h2>
+<div class="container">
 
-    <p id="date"></p>
+    <!-- EMI Calculator -->
+    <div class="box">
+        <h2>EMI Calculator</h2>
+        <input type="number" id="loan" placeholder="Loan Amount">
+        <input type="number" id="rate" placeholder="Interest Rate (%)">
+        <input type="number" id="months" placeholder="Months">
+        <button onclick="calcEMI()">Calculate EMI</button>
+        <h3 id="emiResult"></h3>
+    </div>
 
-    <input type="number" id="amount" placeholder="Enter amount">
+    <!-- GST Calculator -->
+    <div class="box">
+        <h2>GST Calculator</h2>
+        <input type="number" id="gstAmount" placeholder="Amount">
+        <input type="number" id="gstRate" placeholder="GST %">
+        <button onclick="calcGST()">Calculate GST</button>
+        <h3 id="gstResult"></h3>
+    </div>
 
-    <select id="from"></select>
-    <select id="to"></select>
-
-    <button onclick="convert()">Convert</button>
-
-    <h3 id="result"></h3>
-
-    <!-- HISTORY -->
-    <h3>Recent History</h3>
-    <ul id="history"></ul>
-
-    <button onclick="clearHistory()">Clear History</button>
+    <!-- Age Calculator -->
+    <div class="box">
+        <h2>Age Calculator</h2>
+        <input type="date" id="dob">
+        <button onclick="calcAge()">Calculate Age</button>
+        <h3 id="ageResult"></h3>
+    </div>
 
 </div>
 
 <footer>
-    <a href="#">About</a> |
-    <a href="#">Privacy</a> |
-    <a href="#">Terms</a> |
-    <a href="#">Contact</a>
+    <a href="about.html">About</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms</a> |
+    <a href="contact.html">Contact</a>
 </footer>
 
 <script>
-let allRates = {};
+// EMI
+function calcEMI() {
+    let P = document.getElementById("loan").value;
+    let r = document.getElementById("rate").value / 12 / 100;
+    let n = document.getElementById("months").value;
 
-// 📅 DATE SHOW
-function showDate() {
+    let emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    document.getElementById("emiResult").innerText = "EMI: ₹" + emi.toFixed(2);
+}
+
+// GST
+function calcGST() {
+    let amount = document.getElementById("gstAmount").value;
+    let rate = document.getElementById("gstRate").value;
+
+    let gst = amount * rate / 100;
+    document.getElementById("gstResult").innerText = "Total: ₹" + (parseFloat(amount) + gst);
+}
+
+// Age
+function calcAge() {
+    let dob = new Date(document.getElementById("dob").value);
     let today = new Date();
-    document.getElementById("date").innerText =
-        "Today: " + today.toDateString();
-}
 
-// 🌍 LOAD CURRENCY
-async function loadCurrencies() {
-    let url = "https://api.exchangerate-api.com/v4/latest/USD";
-    let response = await fetch(url);
-    let data = await response.json();
-
-    allRates = data.rates;
-
-    let from = document.getElementById("from");
-    let to = document.getElementById("to");
-
-    for (let currency in allRates) {
-        let opt1 = document.createElement("option");
-        let opt2 = document.createElement("option");
-
-        opt1.value = currency;
-        opt1.text = currency;
-
-        opt2.value = currency;
-        opt2.text = currency;
-
-        from.appendChild(opt1);
-        to.appendChild(opt2);
-    }
-
-    from.value = "USD";
-    to.value = "INR";
-}
-
-// 🔁 CONVERT + DATE HISTORY
-function convert() {
-    let amount = document.getElementById("amount").value;
-    let from = document.getElementById("from").value;
-    let to = document.getElementById("to").value;
-
-    if (amount === "" || amount <= 0) {
-        alert("Enter valid amount");
-        return;
-    }
-
-    let rate = allRates[to] / allRates[from];
-    let result = amount * rate;
-
-    let today = new Date().toLocaleDateString();
-
-    let output = today + " → " + amount + " " + from + 
-                 " = " + result.toFixed(2) + " " + to;
-
-    document.getElementById("result").innerText = output;
-
-    saveHistory(output);
-}
-
-// 🧾 SAVE HISTORY
-function saveHistory(text) {
-    let history = JSON.parse(localStorage.getItem("history")) || [];
-    history.push(text);
-    localStorage.setItem("history", JSON.stringify(history));
-    displayHistory();
-}
-
-// 👀 DISPLAY HISTORY
-function displayHistory() {
-    let history = JSON.parse(localStorage.getItem("history")) || [];
-    let list = document.getElementById("history");
-
-    list.innerHTML = "";
-
-    history.slice(-5).reverse().forEach(item => {
-        let li = document.createElement("li");
-        li.innerText = item;
-        list.appendChild(li);
-    });
-}
-
-// 🗑 CLEAR
-function clearHistory() {
-    localStorage.removeItem("history");
-    displayHistory();
+    let age = today.getFullYear() - dob.getFullYear();
+    document.getElementById("ageResult").innerText = "Age: " + age + " years";
 }
 </script>
 
