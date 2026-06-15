@@ -2,67 +2,43 @@
 <html>
 <head>
 <title>Calculator Hubs</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body {font-family: Arial; margin:0; background:#f5f7fa; text-align:center;}
-.header {background:#4CAF50; color:white; padding:20px;}
+body {font-family:Arial;background:#f5f7fa;text-align:center;margin:0;}
+
+.header {background:#4CAF50;color:white;padding:25px;}
+h1 {margin:0;}
 
 .grid {
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:15px; padding:20px;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+padding:20px;
 }
 
 .card {
-background:white; padding:15px; border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2); cursor:pointer;
+background:white;padding:20px;border-radius:10px;
+cursor:pointer;box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+.card:hover {background:#e8f5e9;}
+
+.calculator {
+display:none;background:white;width:350px;margin:20px auto;
+padding:20px;border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
-.box {
-display:none;
-background:white;
-width:95%; max-width:380px;
-margin:20px auto;
-padding:20px;
-border-radius:10px;
-}
+button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
-input,select {width:100%; padding:10px; margin:8px 0;}
-
-button {
-width:100%; padding:10px; margin:5px 0;
-background:green; color:white; border:none;
-}
-
-.keypad {
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:5px;
-}
-
-.keypad button {background:#ddd; color:black;}
-
-.footer {background:#eee; padding:20px; margin-top:40px;}
-
-.big-info {
-max-width:900px;
-margin:30px auto;
-text-align:left;
-background:white;
-padding:20px;
-border-radius:10px;
-}
+.keypad button {width:60px;height:40px;}
 </style>
 </head>
 
-<body onload="loadRates()">
+<body>
 
 <div class="header">
 <h1>Calculator Hubs</h1>
-<p>All-in-one calculators</p>
+<p>All-in-one advanced calculators</p>
 </div>
 
 <!-- MENU -->
@@ -70,153 +46,185 @@ border-radius:10px;
 <div class="card" onclick="show('currency')">💱 Currency</div>
 <div class="card" onclick="show('bmi')">⚖️ BMI</div>
 <div class="card" onclick="show('age')">🎂 Age</div>
-<div class="card" onclick="show('gst')">🧾 GST</div>
-<div class="card" onclick="show('emi')">🏦 EMI</div>
-<div class="card" onclick="show('basic')">➕ Basic</div>
-<div class="card" onclick="show('sci')">🔬 Scientific</div>
+<div class="card" onclick="show('gst')">💰 GST</div>
+<div class="card" onclick="show('basic')">🔢 Basic</div>
+<div class="card" onclick="show('sci')">📐 Scientific</div>
+</div>
+<!-- MENU -->
+<div class="grid">
+...
 </div>
 
-<!-- ================= CALCULATORS ================= -->
+<!-- ✅ FRONT PAGE PARAGRAPH -->
+<div class="info" id="homeInfo">
+<h2>Calculator Hubs</h2>
 
-<div id="currency" class="box">
+<p>Calculator Hubs is a powerful all-in-one platform designed to provide fast and accurate calculations for daily needs. From financial tools to health and math calculators, everything is available in one place. It is built to be simple, user-friendly, and accessible for everyone.</p>
+
+<p>Our platform includes advanced tools like currency converters, GST calculators, EMI tools, and more. Each calculator is designed with precision to give real-time results and improve user experience. You can easily switch between different calculators without any complexity.</p>
+
+<p>Whether you are a student, professional, or business owner, Calculator Hubs helps you save time and effort. Instead of searching multiple tools, everything is integrated into one single platform. This makes it highly efficient and reliable.</p>
+
+<p>The website is optimized for both desktop and mobile users, ensuring smooth performance across devices. With a clean interface and responsive design, users can quickly access any tool they need. Speed and simplicity are our top priorities.</p>
+
+<p>We continuously improve and add new features to enhance the functionality of the platform. Upcoming updates include charts, history tracking, and more advanced calculators. Our goal is to make this the best free calculator hub online.</p>
+
+<p>Calculator Hubs is completely free to use and aims to provide value to users worldwide. With accurate results and easy navigation, it becomes a must-have tool for everyday calculations. Start exploring and simplify your work today.</p>
+</div>
+
+
+
+<!-- CURRENCY -->
+<div id="currency" class="calculator">
 <h2>Currency Converter</h2>
-<input type="number" id="amount" value="1">
+
+<input id="amount" type="number" value="1"><br>
 <select id="from"></select>
-<select id="to"></select>
+<select id="to"></select><br>
+
 <button onclick="convert()">Convert</button>
+
 <h3 id="result"></h3>
 <p id="date"></p>
-<canvas id="chart"></canvas>
-<button onclick="back()">⬅ Back</button>
+<ul id="history"></ul>
+
+<button onclick="back()">Back</button>
 </div>
 
-<div id="bmi" class="box">
+<!-- BMI -->
+<div id="bmi" class="calculator">
 <h2>BMI Calculator</h2>
-<input id="w" placeholder="Weight">
-<input id="h" placeholder="Height cm">
-<button onclick="bmi()">Calculate</button>
-<h3 id="bmiRes"></h3>
-<button onclick="back()">⬅ Back</button>
+<input id="weight" placeholder="kg"><br>
+<input id="height" placeholder="cm"><br>
+<button onclick="calcBMI()">Calculate</button>
+<h3 id="bmiResult"></h3>
+<button onclick="back()">Back</button>
 </div>
 
-<div id="age" class="box">
+<!-- AGE -->
+<div id="age" class="calculator">
 <h2>Age Calculator</h2>
-<input type="date" id="dob">
-<button onclick="ageCalc()">Calculate</button>
-<h3 id="ageRes"></h3>
-<button onclick="back()">⬅ Back</button>
+<input type="date" id="d1"><br>
+<input type="date" id="d2"><br>
+<button onclick="calcAge()">Calculate</button>
+<h3 id="ageResult"></h3>
+<button onclick="back()">Back</button>
 </div>
 
-<div id="gst" class="box">
+<!-- GST -->
+<div id="gst" class="calculator">
 <h2>GST Calculator</h2>
-<input id="p" placeholder="Amount">
-<input id="r" placeholder="GST %">
-<button onclick="gst()">Calculate</button>
-<h3 id="gstRes"></h3>
-<button onclick="back()">⬅ Back</button>
+<input id="gstAmt" placeholder="Amount"><br>
+
+<select id="gstRate">
+<option value="5">5%</option>
+<option value="12">12%</option>
+<option value="18">18%</option>
+<option value="28">28%</option>
+</select><br>
+
+<button onclick="calcGST()">Calculate</button>
+<h3 id="gstResult"></h3>
+
+<div class="keypad">
+<button onclick="addNum('gstAmt',1)">1</button>
+<button onclick="addNum('gstAmt',2)">2</button>
+<button onclick="addNum('gstAmt',3)">3</button>
+<button onclick="addNum('gstAmt',4)">4</button>
+<button onclick="addNum('gstAmt',5)">5</button>
+<button onclick="addNum('gstAmt',6)">6</button>
+<button onclick="addNum('gstAmt',7)">7</button>
+<button onclick="addNum('gstAmt',8)">8</button>
+<button onclick="addNum('gstAmt',9)">9</button>
+<button onclick="addNum('gstAmt',0)">0</button>
 </div>
 
-<div id="emi" class="box">
-<h2>EMI Calculator</h2>
-<input id="loan" placeholder="Loan">
-<input id="rate" placeholder="Interest">
-<input id="months" placeholder="Months">
-<button onclick="emi()">Calculate</button>
-<h3 id="emiRes"></h3>
-<button onclick="back()">⬅ Back</button>
+<button onclick="back()">Back</button>
 </div>
 
-<div id="basic" class="box">
+<!-- BASIC -->
+<div id="basic" class="calculator">
 <h2>Basic Calculator</h2>
-<input id="basicIn">
+<input id="basicInput"><br>
 
 <div class="keypad">
-<button onclick="b('7')">7</button>
-<button onclick="b('8')">8</button>
-<button onclick="b('9')">9</button>
-<button onclick="b('/')">/</button>
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('+')">+</button>
 
-<button onclick="b('4')">4</button>
-<button onclick="b('5')">5</button>
-<button onclick="b('6')">6</button>
-<button onclick="b('*')">*</button>
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('-')">-</button>
 
-<button onclick="b('1')">1</button>
-<button onclick="b('2')">2</button>
-<button onclick="b('3')">3</button>
-<button onclick="b('-')">-</button>
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('*')">*</button>
 
-<button onclick="b('0')">0</button>
-<button onclick="b('.')">.</button>
-<button onclick="calcB()">=</button>
-<button onclick="b('+')">+</button>
+<button onclick="add('0')">0</button>
+<button onclick="add('.')">.</button>
+<button onclick="calc()">=</button>
+<button onclick="add('/')">/</button>
 </div>
 
-<h3 id="basicRes"></h3>
-<button onclick="back()">⬅ Back</button>
+<button onclick="back()">Back</button>
 </div>
 
-<div id="sci" class="box">
+<!-- SCIENTIFIC -->
+<div id="sci" class="calculator">
 <h2>Scientific Calculator</h2>
-<input id="sciIn">
+<input id="sciInput"><br>
 
 <div class="keypad">
-<button onclick="s('Math.sin(')">sin</button>
-<button onclick="s('Math.cos(')">cos</button>
-<button onclick="s('Math.tan(')">tan</button>
-<button onclick="s('Math.PI')">π</button>
+<button onclick="addSci('sin(')">sin</button>
+<button onclick="addSci('cos(')">cos</button>
+<button onclick="addSci('tan(')">tan</button>
+<button onclick="addSci('Math.PI')">π</button>
 
-<button onclick="s('7')">7</button>
-<button onclick="s('8')">8</button>
-<button onclick="s('9')">9</button>
-<button onclick="s('/')">/</button>
+<button onclick="addSci('log(')">log</button>
+<button onclick="addSci('sqrt(')">√</button>
+<button onclick="addSci('pow(')">x^y</button>
+<button onclick="addSci('Math.E')">e</button>
 
-<button onclick="s('4')">4</button>
-<button onclick="s('5')">5</button>
-<button onclick="s('6')">6</button>
-<button onclick="s('*')">*</button>
+<button onclick="addSci('1')">1</button>
+<button onclick="addSci('2')">2</button>
+<button onclick="addSci('3')">3</button>
+<button onclick="addSci('+')">+</button>
 
-<button onclick="s('1')">1</button>
-<button onclick="s('2')">2</button>
-<button onclick="s('3')">3</button>
-<button onclick="s('-')">-</button>
+<button onclick="addSci('4')">4</button>
+<button onclick="addSci('5')">5</button>
+<button onclick="addSci('6')">6</button>
+<button onclick="addSci('-')">-</button>
 
-<button onclick="s('0')">0</button>
-<button onclick="s('.')">.</button>
-<button onclick="calcS()">=</button>
-<button onclick="s('+')">+</button>
+<button onclick="addSci('7')">7</button>
+<button onclick="addSci('8')">8</button>
+<button onclick="addSci('9')">9</button>
+<button onclick="addSci('*')">*</button>
+
+<button onclick="addSci('0')">0</button>
+<button onclick="calcSci()">=</button>
+<button onclick="addSci('/')">/</button>
 </div>
 
-<h3 id="sciRes"></h3>
-<button onclick="back()">⬅ Back</button>
-</div>
-
-<!-- 🔥 6 BIG PARAGRAPHS BELOW ALL CALCULATORS -->
-
-<div class="big-info">
-<p>Calculator Hubs provides a wide range of online tools designed to simplify everyday calculations. Whether you need financial calculations like EMI and GST or personal tools like BMI and age calculation, everything is available in one place.</p>
-
-<p>The platform focuses on accuracy and speed, ensuring users get instant results without any complexity. It eliminates the need for manual calculations and reduces errors.</p>
-
-<p>The currency converter uses real-time exchange rates to provide accurate global currency comparisons. This helps travelers, businesses, and students make better financial decisions.</p>
-
-<p>Health-related tools like BMI and age calculator help users track their fitness and personal data effectively. These tools are simple yet powerful for everyday usage.</p>
-
-<p>Advanced tools like scientific calculators support trigonometric and mathematical functions, making them ideal for students and professionals working with complex problems.</p>
-
-<p>Overall, Calculator Hubs aims to deliver a complete, user-friendly, and efficient experience across all devices, helping users save time and effort.</p>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-<p>About | Privacy | Terms | Contact</p>
-<p>© 2026 Calculator Hubs</p>
+<button onclick="back()">Back</button>
 </div>
 
 <script>
-let rates={};
+// NAV
+function show(id){
+document.querySelector('.grid').style.display="none";
+document.getElementById(id).style.display="block";
+}
+function back(){
+document.querySelector('.grid').style.display="grid";
+document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
+}
 
-async function loadRates(){
+// CURRENCY
+let rates={}, history=[];
+async function load(){
 let res=await fetch("https://api.exchangerate-api.com/v4/latest/USD");
 let data=await res.json();
 rates=data.rates;
@@ -225,47 +233,65 @@ for(let c in rates){
 from.add(new Option(c,c));
 to.add(new Option(c,c));
 }
-from.value="USD";
-to.value="INR";
+from.value="USD"; to.value="INR";
 }
-
-function show(id){
-document.querySelector('.grid').style.display="none";
-document.getElementById(id).style.display="block";
-}
-
-function back(){
-document.querySelector('.grid').style.display="grid";
-document.querySelectorAll('.box').forEach(b=>b.style.display="none");
-}
-
 function convert(){
-let res=amount.value*(rates[to.value]/rates[from.value]);
-document.getElementById("result").innerText=res.toFixed(2);
-document.getElementById("date").innerText=new Date().toLocaleString();
+let amt=amount.value;
+let rate=rates[to.value]/rates[from.value];
+let result=amt*rate;
 
-new Chart(document.getElementById("chart"),{
-type:'line',
-data:{labels:["1","2","3","4","5"],
-datasets:[{data:[res-2,res-1,res,res+1,res+2]}]}
-});
+let text=amt+" "+from.value+" = "+result.toFixed(2)+" "+to.value;
+document.getElementById("result").innerText=text;
+
+let now=new Date().toLocaleString();
+document.getElementById("date").innerText="Date: "+now;
+
+history.unshift(text+" ("+now+")");
+document.getElementById("history").innerHTML=
+history.map(h=>"<li>"+h+"</li>").join("");
 }
 
-function bmi(){bmiRes.innerText=(w.value/((h.value/100)**2)).toFixed(2);}
-function ageCalc(){
-let d=new Date(dob.value),n=new Date();
-let days=Math.floor((n-d)/(1000*60*60*24));
-ageRes.innerText=Math.floor(days/365)+" yrs "+Math.floor(days%365/30)+" months "+days%30+" days";
+// BMI
+function calcBMI(){
+let w=weight.value,h=height.value/100;
+let b=w/(h*h);
+bmiResult.innerText="BMI: "+b.toFixed(2);
 }
-function gst(){gstRes.innerText=Number(p.value)+(p.value*r.value/100);}
-function emi(){
-let P=loan.value,r=rate.value/12/100,n=months.value;
-emiRes.innerText=(P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1)).toFixed(2);
+
+// AGE (years + months + days)
+function calcAge(){
+let d1=new Date(document.getElementById("d1").value);
+let d2=new Date(document.getElementById("d2").value);
+
+let diff=d2-d1;
+let days=Math.floor(diff/(1000*60*60*24));
+let months=Math.floor(days/30);
+let years=Math.floor(days/365);
+
+ageResult.innerText=
+years+" years, "+months%12+" months, "+days%30+" days";
 }
-function b(v){basicIn.value+=v;}
-function calcB(){basicRes.innerText=eval(basicIn.value);}
-function s(v){sciIn.value+=v;}
-function calcS(){sciRes.innerText=eval(sciIn.value);}
+
+// GST
+function calcGST(){
+let amt=gstAmt.value;
+let rate=gstRate.value;
+let gst=amt*rate/100;
+gstResult.innerText="GST: "+gst+" Total: "+(Number(amt)+gst);
+}
+function addNum(id,n){
+document.getElementById(id).value+=n;
+}
+
+// BASIC
+function add(v){basicInput.value+=v;}
+function calc(){basicInput.value=eval(basicInput.value);}
+
+// SCI
+function addSci(v){sciInput.value+=v;}
+function calcSci(){sciInput.value=eval(sciInput.value);}
+
+load();
 </script>
 
 </body>
