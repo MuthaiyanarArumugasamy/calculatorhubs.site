@@ -3,7 +3,7 @@
 <head>
 <title>Calculator Hubs</title>
 
-<!-- ✅ Google Analytics START -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-34T264646Y"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -11,36 +11,25 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-34T264646Y');
 </script>
-<!-- ✅ Google Analytics END -->
 
 <style>
 body {font-family:Arial;background:#f5f7fa;text-align:center;margin:0;}
-
 .header {background:#4CAF50;color:white;padding:25px;}
-h1 {margin:0;}
-
 .grid {
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:15px;
 padding:20px;
 }
-
 .card {
 background:white;padding:20px;border-radius:10px;
 cursor:pointer;box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
-.card:hover {background:#e8f5e9;}
-
 .calculator {
 display:none;background:white;width:350px;margin:20px auto;
 padding:20px;border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
-
 button {padding:10px;margin:5px;background:green;color:white;border:none;}
-
-.keypad button {width:60px;height:40px;}
 </style>
 </head>
 
@@ -48,7 +37,92 @@ button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
 <div class="header">
 <h1>Calculator Hubs</h1>
-<p>All-in-one advanced calculators</p>
 </div>
 
-<!-- (rest of your code same...) -->
+<!-- MENU -->
+<div class="grid" id="menu">
+<div class="card" onclick="show('bmi')">BMI</div>
+<div class="card" onclick="show('age')">Age</div>
+<div class="card" onclick="show('gst')">GST</div>
+<div class="card" onclick="show('basic')">Basic</div>
+</div>
+
+<!-- BMI -->
+<div id="bmi" class="calculator">
+<h2>BMI</h2>
+<input id="weight" placeholder="kg"><br>
+<input id="height" placeholder="cm"><br>
+<button onclick="calcBMI()">Calculate</button>
+<h3 id="bmiResult"></h3>
+<button onclick="back()">Back</button>
+</div>
+
+<!-- AGE -->
+<div id="age" class="calculator">
+<h2>Age</h2>
+<input type="date" id="d1"><br>
+<input type="date" id="d2"><br>
+<button onclick="calcAge()">Calculate</button>
+<h3 id="ageResult"></h3>
+<button onclick="back()">Back</button>
+</div>
+
+<!-- GST -->
+<div id="gst" class="calculator">
+<h2>GST</h2>
+<input id="gstAmt" placeholder="Amount"><br>
+<select id="gstRate">
+<option value="5">5%</option>
+<option value="12">12%</option>
+<option value="18">18%</option>
+<option value="28">28%</option>
+</select><br>
+<button onclick="calcGST()">Calculate</button>
+<h3 id="gstResult"></h3>
+<button onclick="back()">Back</button>
+</div>
+
+<!-- BASIC -->
+<div id="basic" class="calculator">
+<h2>Basic</h2>
+<input id="basicInput"><br>
+<button onclick="calc()">=</button>
+<button onclick="back()">Back</button>
+</div>
+
+<script>
+function show(id){
+document.getElementById("menu").style.display="none";
+document.getElementById(id).style.display="block";
+}
+function back(){
+document.getElementById("menu").style.display="grid";
+document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
+}
+
+function calcBMI(){
+let w=weight.value,h=height.value/100;
+bmiResult.innerText="BMI: "+(w/(h*h)).toFixed(2);
+}
+
+function calcAge(){
+let d1=new Date(document.getElementById("d1").value);
+let d2=new Date(document.getElementById("d2").value);
+let days=Math.floor((d2-d1)/(1000*60*60*24));
+ageResult.innerText=days+" days";
+}
+
+function calcGST(){
+let amt=gstAmt.value;
+let rate=gstRate.value;
+let gst=amt*rate/100;
+gstResult.innerText="Total: "+(Number(amt)+gst);
+}
+
+function calc(){
+basicInput.value=eval(basicInput.value);
+}
+</script>
+
+</body>
+</html>
