@@ -149,21 +149,7 @@ text-align:left;
 </div>
 
 <!-- SCI -->
-<div id="sci" class="calculator">
-<h2>Scientific Calculator</h2>
-<input id="sciInput"><br>
-<button onclick="addSci('sin(')">sin</button>
-<button onclick="addSci('cos(')">cos</button>
-<button onclick="addSci('tan(')">tan</button>
-<button onclick="addSci('Math.PI')">π</button>
-<button onclick="addSci('log(')">log</button>
-<button onclick="addSci('sqrt(')">√</button>
-<button onclick="addSci('Math.E')">e</button>
-<button onclick="addSci('1')">1</button>
-<button onclick="addSci('2')">2</button>
-<button onclick="addSci('3')">3</button>
-<button onclick="calcSci()">=</button>
-<button onclick="back()">Back</button>
+
 </div>
 
 <script>
@@ -179,8 +165,60 @@ document.querySelector('.grid').style.display="grid";
 document.getElementById("homeInfo").style.display="block"; // 🔥 show paragraph
 document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
 }
+<div id="sci" class="calculator">
+<h2>Ultra Scientific Calculator</h2>
 
-// rest same...
+<input id="sciInput" placeholder="Enter expression"><br>
+
+<button onclick="addSci('Math.sin(')">sin</button>
+<button onclick="addSci('Math.cos(')">cos</button>
+<button onclick="addSci('Math.tan(')">tan</button>
+<button onclick="addSci('Math.asin(')">sin⁻¹</button>
+
+<button onclick="addSci('Math.acos(')">cos⁻¹</button>
+<button onclick="addSci('Math.atan(')">tan⁻¹</button>
+<button onclick="addSci('Math.log10(')">log</button>
+<button onclick="addSci('Math.log(')">ln</button>
+
+<button onclick="addSci('Math.sqrt(')">√</button>
+<button onclick="addSci('**2')">x²</button>
+<button onclick="addSci('**')">xʸ</button>
+<button onclick="reciprocal()">1/x</button>
+
+<button onclick="addSci('Math.PI')">π</button>
+<button onclick="addSci('Math.E')">e</button>
+<button onclick="addSci('%')">%</button>
+<button onclick="factorial()">x!</button>
+
+<button onclick="addSci('(')">(</button>
+<button onclick="addSci(')')">)</button>
+<button onclick="delSci()">⌫</button>
+<button onclick="clearSci()">C</button>
+
+<button onclick="addSci('7')">7</button>
+<button onclick="addSci('8')">8</button>
+<button onclick="addSci('9')">9</button>
+<button onclick="addSci('/')">÷</button>
+
+<button onclick="addSci('4')">4</button>
+<button onclick="addSci('5')">5</button>
+<button onclick="addSci('6')">6</button>
+<button onclick="addSci('*')">×</button>
+
+<button onclick="addSci('1')">1</button>
+<button onclick="addSci('2')">2</button>
+<button onclick="addSci('3')">3</button>
+<button onclick="addSci('-')">-</button>
+
+<button onclick="addSci('0')">0</button>
+<button onclick="addSci('.')">.</button>
+<button onclick="calcSci()">=</button>
+<button onclick="addSci('+')">+</button>
+
+<br>
+<button onclick="back()">Back</button>
+</div>
+
 
 let rates={}, history=[];
 async function load(){
