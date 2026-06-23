@@ -3,33 +3,43 @@
 <head>
 <title>Calculator Hubs</title>
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-34T264646Y"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-34T264646Y');
-</script>
-
 <style>
 body {font-family:Arial;background:#f5f7fa;text-align:center;margin:0;}
+
 .header {background:#4CAF50;color:white;padding:25px;}
+h1 {margin:0;}
+
 .grid {
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:15px;
 padding:20px;
 }
+
 .card {
 background:white;padding:20px;border-radius:10px;
 cursor:pointer;box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
+.card:hover {background:#e8f5e9;}
+
 .calculator {
 display:none;background:white;width:350px;margin:20px auto;
 padding:20px;border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
+
 button {padding:10px;margin:5px;background:green;color:white;border:none;}
+
+.keypad button {width:60px;height:40px;}
+
+.info {
+background:white;
+margin:20px;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+text-align:left;
+}
 </style>
 </head>
 
@@ -37,19 +47,52 @@ button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
 <div class="header">
 <h1>Calculator Hubs</h1>
+<p>All-in-one advanced calculators</p>
 </div>
 
 <!-- MENU -->
-<div class="grid" id="menu">
-<div class="card" onclick="show('bmi')">BMI</div>
-<div class="card" onclick="show('age')">Age</div>
-<div class="card" onclick="show('gst')">GST</div>
-<div class="card" onclick="show('basic')">Basic</div>
+<div class="grid">
+<div class="card" onclick="show('currency')">💱 Currency</div>
+<div class="card" onclick="show('bmi')">⚖️ BMI</div>
+<div class="card" onclick="show('age')">🎂 Age</div>
+<div class="card" onclick="show('gst')">💰 GST</div>
+<div class="card" onclick="show('basic')">🔢 Basic</div>
+<div class="card" onclick="show('sci')">📐 Scientific</div>
+</div>
+
+<!-- ✅ FRONT PAGE PARAGRAPH -->
+<div class="info" id="homeInfo">
+<h2>Calculator Hubs</h2>
+
+<p>Calculator Hubs is a powerful all-in-one platform designed to provide fast and accurate calculations for daily needs. From financial tools to health and math calculators, everything is available in one place.</p>
+
+<p>Our platform includes advanced tools like currency converters, GST calculators, and more. Each calculator gives quick and reliable results for users.</p>
+
+<p>This website is designed for students, professionals, and businesses to save time and effort in daily calculations.</p>
+
+<p>It works smoothly on both mobile and desktop devices with a clean and simple interface.</p>
+
+<p>We are continuously improving the platform with new features and advanced tools.</p>
+
+<p>Calculator Hubs is free to use and helps simplify everyday calculations easily.</p>
+</div>
+
+<!-- CURRENCY -->
+<div id="currency" class="calculator">
+<h2>Currency Converter</h2>
+<input id="amount" type="number" value="1"><br>
+<select id="from"></select>
+<select id="to"></select><br>
+<button onclick="convert()">Convert</button>
+<h3 id="result"></h3>
+<p id="date"></p>
+<ul id="history"></ul>
+<button onclick="back()">Back</button>
 </div>
 
 <!-- BMI -->
 <div id="bmi" class="calculator">
-<h2>BMI</h2>
+<h2>BMI Calculator</h2>
 <input id="weight" placeholder="kg"><br>
 <input id="height" placeholder="cm"><br>
 <button onclick="calcBMI()">Calculate</button>
@@ -59,7 +102,7 @@ button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
 <!-- AGE -->
 <div id="age" class="calculator">
-<h2>Age</h2>
+<h2>Age Calculator</h2>
 <input type="date" id="d1"><br>
 <input type="date" id="d2"><br>
 <button onclick="calcAge()">Calculate</button>
@@ -69,7 +112,7 @@ button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
 <!-- GST -->
 <div id="gst" class="calculator">
-<h2>GST</h2>
+<h2>GST Calculator</h2>
 <input id="gstAmt" placeholder="Amount"><br>
 <select id="gstRate">
 <option value="5">5%</option>
@@ -84,20 +127,88 @@ button {padding:10px;margin:5px;background:green;color:white;border:none;}
 
 <!-- BASIC -->
 <div id="basic" class="calculator">
-<h2>Basic</h2>
+<h2>Basic Calculator</h2>
 <input id="basicInput"><br>
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('+')">+</button>
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('-')">-</button>
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('*')">*</button>
+<button onclick="add('0')">0</button>
+<button onclick="add('.')">.</button>
 <button onclick="calc()">=</button>
+<button onclick="add('/')">/</button>
+<button onclick="back()">Back</button>
+</div>
+
+<!-- SCI -->
+<div id="sci" class="calculator">
+<h2>Scientific Calculator</h2>
+<input id="sciInput"><br>
+<button onclick="addSci('sin(')">sin</button>
+<button onclick="addSci('cos(')">cos</button>
+<button onclick="addSci('tan(')">tan</button>
+<button onclick="addSci('Math.PI')">π</button>
+<button onclick="addSci('log(')">log</button>
+<button onclick="addSci('sqrt(')">√</button>
+<button onclick="addSci('Math.E')">e</button>
+<button onclick="addSci('1')">1</button>
+<button onclick="addSci('2')">2</button>
+<button onclick="addSci('3')">3</button>
+<button onclick="calcSci()">=</button>
 <button onclick="back()">Back</button>
 </div>
 
 <script>
+// NAV
 function show(id){
-document.getElementById("menu").style.display="none";
+document.querySelector('.grid').style.display="none";
+document.getElementById("homeInfo").style.display="none"; // 🔥 hide paragraph
 document.getElementById(id).style.display="block";
 }
+
 function back(){
-document.getElementById("menu").style.display="grid";
+document.querySelector('.grid').style.display="grid";
+document.getElementById("homeInfo").style.display="block"; // 🔥 show paragraph
 document.querySelectorAll('.calculator').forEach(c=>c.style.display="none");
+}
+
+// rest same...
+
+let rates={}, history=[];
+async function load(){
+let res=await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+let data=await res.json();
+rates=data.rates;
+
+for(let c in rates){
+from.add(new Option(c,c));
+to.add(new Option(c,c));
+}
+from.value="USD"; to.value="INR";
+}
+
+function convert(){
+let amt=amount.value;
+let rate=rates[to.value]/rates[from.value];
+let result=amt*rate;
+
+let text=amt+" "+from.value+" = "+result.toFixed(2)+" "+to.value;
+document.getElementById("result").innerText=text;
+
+let now=new Date().toLocaleString();
+document.getElementById("date").innerText="Date: "+now;
+
+history.unshift(text+" ("+now+")");
+document.getElementById("history").innerHTML=
+history.map(h=>"<li>"+h+"</li>").join("");
 }
 
 function calcBMI(){
@@ -106,22 +217,23 @@ bmiResult.innerText="BMI: "+(w/(h*h)).toFixed(2);
 }
 
 function calcAge(){
-let d1=new Date(document.getElementById("d1").value);
-let d2=new Date(document.getElementById("d2").value);
+let d1=new Date(d1.value), d2=new Date(d2.value);
 let days=Math.floor((d2-d1)/(1000*60*60*24));
-ageResult.innerText=days+" days";
+ageResult.innerText=Math.floor(days/365)+" years";
 }
 
 function calcGST(){
-let amt=gstAmt.value;
-let rate=gstRate.value;
+let amt=gstAmt.value, rate=gstRate.value;
 let gst=amt*rate/100;
-gstResult.innerText="Total: "+(Number(amt)+gst);
+gstResult.innerText="GST: "+gst;
 }
 
-function calc(){
-basicInput.value=eval(basicInput.value);
-}
+function add(v){basicInput.value+=v;}
+function calc(){basicInput.value=eval(basicInput.value);}
+function addSci(v){sciInput.value+=v;}
+function calcSci(){sciInput.value=eval(sciInput.value);}
+
+load();
 </script>
 
 </body>
