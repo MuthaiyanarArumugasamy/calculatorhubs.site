@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<section class="hero">
+<h2>EMI Calculator</h2>
+
+<p>Calculate your monthly loan EMI instantly.</p>
+
+<input type="number" id="loan" placeholder="Loan Amount"><br><br>
+
+<input type="number" id="rate" placeholder="Interest Rate (%)"><br><br>
+
+<input type="number" id="years" placeholder="Loan Tenure (Years)"><br><br>
+
+<button onclick="calculateEMI()">Calculate EMI</button>
+
+<h3 id="result"></h3>
+
+</section>
+
+<section class="content">
+
+<h2>About EMI Calculator</h2>
+
+<p>
+An EMI (Equated Monthly Installment) Calculator helps you estimate the monthly amount you need to pay for a loan. Simply enter the loan amount, annual interest rate, and repayment period to get an instant estimate.
+</p>
+
+<h2>Benefits</h2>
+
+<ul>
+<li>Easy to use</li>
+<li>Fast calculation</li>
+<li>Free forever</li>
+<li>Works on all devices</li>
+</ul>
+
+</section>
+
+<footer>
+<p>© 2026 CalculatorHubs</p>
+</footer>
+
+<script>
+
+function calculateEMI(){
+
+let P=parseFloat(document.getElementById("loan").value);
+
+let annualRate=parseFloat(document.getElementById("rate").value);
+
+let years=parseFloat(document.getElementById("years").value);
+
+if(!P || !annualRate || !years){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+let r=annualRate/12/100;
+
+let n=years*12;
+
+let emi=(P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+
+document.getElementById("result").innerHTML="Monthly EMI: ₹"+emi.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
