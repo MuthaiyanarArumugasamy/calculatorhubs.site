@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<section class="hero">
+<h2>Age Calculator</h2>
+<p>Calculate your exact age in years, months and days.</p>
+
+<input type="date" id="dob">
+<br><br>
+
+<button onclick="calculateAge()">Calculate Age</button>
+
+<h3 id="result"></h3>
+
+</section>
+
+<section class="content">
+
+<h2>About Age Calculator</h2>
+
+<p>
+The Age Calculator helps you calculate your exact age from your date of birth. It is useful for school admissions, passport applications, job applications and many other situations where your precise age is required.
+</p>
+
+<h2>How to Use</h2>
+
+<ul>
+<li>Select your date of birth.</li>
+<li>Click Calculate Age.</li>
+<li>Your age will be displayed instantly.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<p><strong>Is this calculator free?</strong><br>Yes. It is completely free.</p>
+
+<p><strong>Is my data stored?</strong><br>No. Everything is calculated in your browser.</p>
+
+</section>
+
+<footer>
+
+<p>© 2026 CalculatorHubs</p>
+
+</footer>
+
+<script>
+function calculateAge(){
+
+let dob=document.getElementById("dob").value;
+
+if(dob==""){
+alert("Please select your Date of Birth");
+return;
+}
+
+let birth=new Date(dob);
+
+let today=new Date();
+
+let age=today.getFullYear()-birth.getFullYear();
+
+let month=today.getMonth()-birth.getMonth();
+
+if(month<0 || (month===0 && today.getDate()<birth.getDate())){
+age--;
+}
+
+document.getElementById("result").innerHTML="Your Age is "+age+" Years";
+
+}
+</script>
+
+</body>
+</html>
