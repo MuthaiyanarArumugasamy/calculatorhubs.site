@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<h2>SIP Calculator</h2>
+
+<p>Estimate your SIP investment returns.</p>
+
+<input type="number" id="monthly" placeholder="Monthly Investment (₹)"><br><br>
+
+<input type="number" id="rate" placeholder="Annual Return (%)"><br><br>
+
+<input type="number" id="years" placeholder="Investment Period (Years)"><br><br>
+
+<button onclick="calculateSIP()">Calculate</button>
+
+<h3 id="result"></h3>
+
+</section>
+
+<section class="content">
+
+<h2>About SIP Calculator</h2>
+
+<p>
+A SIP (Systematic Investment Plan) Calculator helps estimate the future value of your monthly investments based on the expected annual return and investment period.
+</p>
+
+</section>
+
+<footer>
+<p>© 2026 CalculatorHubs</p>
+</footer>
+
+<script>
+
+function calculateSIP(){
+
+let monthly=parseFloat(document.getElementById("monthly").value);
+
+let annualRate=parseFloat(document.getElementById("rate").value);
+
+let years=parseFloat(document.getElementById("years").value);
+
+if(!monthly || !annualRate || !years){
+alert("Please fill all fields");
+return;
+}
+
+let r=annualRate/12/100;
+let n=years*12;
+
+let maturity=monthly*((Math.pow(1+r,n)-1)/r)*(1+r);
+
+document.getElementById("result").innerHTML=
+"Estimated Maturity Amount: ₹"+maturity.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
