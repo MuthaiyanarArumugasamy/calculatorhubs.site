@@ -1,70 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Currency Converter | CalculatorHubs</title>
-<link rel="stylesheet" href="../style.css">
+  <title>Global Currency Converter</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 10px gray;
+    }
+    input, select, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+    }
+    button {
+      background: green;
+      color: white;
+      border: none;
+    }
+    h2 { text-align: center; }
+  </style>
 </head>
-
 <body>
 
-<header>
-<h1>CalculatorHubs</h1>
-<nav>
-<a href="../index.html">Home</a>
-</nav>
-</header>
+<div class="box">
+  <h2>Global Currency Converter</h2>
 
-<section class="hero">
+  <input type="number" id="amount" placeholder="Enter Amount">
 
-<h2>Currency Converter</h2>
+  <select id="from"></select>
+  <select id="to"></select>
 
-<p>Convert currencies using a simple exchange rate.</p>
+  <button onclick="convert()">Convert</button>
 
-<input type="number" id="amount" placeholder="Amount"><br><br>
-
-<input type="number" id="rate" placeholder="Exchange Rate"><br><br>
-
-<button onclick="convertCurrency()">Convert</button>
-
-<h3 id="result"></h3>
-
-</section>
-
-<section class="content">
-
-<h2>About Currency Converter</h2>
-
-<p>
-This calculator converts an amount using the exchange rate you enter. Enter the amount and the exchange rate to calculate the converted value.
-</p>
-
-</section>
-
-<footer>
-<p>© 2026 CalculatorHubs</p>
-</footer>
+  <h3 id="result"></h3>
+</div>
 
 <script>
+const currencies = {
+  USD: 1,
+  INR: 83,
+  EUR: 0.92,
+  GBP: 0.78,
+  JPY: 155,
+  AUD: 1.5,
+  CAD: 1.35,
+  CNY: 7.2,
+  SGD: 1.34,
+  CHF: 0.9,
+  ZAR: 18,
+  NZD: 1.6,
+  AED: 3.67,
+  SAR: 3.75,
+  KRW: 1350,
+  RUB: 90,
+  BRL: 5.1,
+  MXN: 17,
+  IDR: 16000,
+  TRY: 32,
+  MYR: 4.7
+};
 
-function convertCurrency(){
+// fill dropdown
+let from = document.getElementById("from");
+let to = document.getElementById("to");
 
-let amount=parseFloat(document.getElementById("amount").value);
-let rate=parseFloat(document.getElementById("rate").value);
-
-if(!amount || !rate){
-alert("Please fill all fields");
-return;
+for (let key in currencies) {
+  from.innerHTML += `<option value="${key}">${key}</option>`;
+  to.innerHTML += `<option value="${key}">${key}</option>`;
 }
 
-let converted=amount*rate;
+from.value = "INR";
+to.value = "USD";
 
-document.getElementById("result").innerHTML=
-"Converted Amount: "+converted.toFixed(2);
+function convert() {
+  let amount = document.getElementById("amount").value;
+  let f = from.value;
+  let t = to.value;
 
+  let result = (amount / currencies[f]) * currencies[t];
+
+  document.getElementById("result").innerText =
+    result.toFixed(2) + " " + t;
 }
-
 </script>
 
 </body>
