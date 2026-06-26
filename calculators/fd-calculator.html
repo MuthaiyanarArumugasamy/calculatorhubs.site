@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FD Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<h2>FD Calculator</h2>
+
+<p>Calculate the maturity amount of your Fixed Deposit.</p>
+
+<input type="number" id="principal" placeholder="Deposit Amount (₹)"><br><br>
+
+<input type="number" id="rate" placeholder="Annual Interest Rate (%)"><br><br>
+
+<input type="number" id="years" placeholder="Deposit Period (Years)"><br><br>
+
+<button onclick="calculateFD()">Calculate</button>
+
+<h3 id="result"></h3>
+
+</section>
+
+<section class="content">
+
+<h2>About FD Calculator</h2>
+
+<p>
+This Fixed Deposit Calculator estimates the maturity amount using annual compound interest. It helps you plan your savings and compare different investment options.
+</p>
+
+</section>
+
+<footer>
+<p>© 2026 CalculatorHubs</p>
+</footer>
+
+<script>
+
+function calculateFD(){
+
+let p=parseFloat(document.getElementById("principal").value);
+let r=parseFloat(document.getElementById("rate").value);
+let t=parseFloat(document.getElementById("years").value);
+
+if(!p || !r || !t){
+alert("Please fill all fields");
+return;
+}
+
+let maturity = p * Math.pow((1 + r/100), t);
+
+document.getElementById("result").innerHTML =
+"Maturity Amount: ₹" + maturity.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
