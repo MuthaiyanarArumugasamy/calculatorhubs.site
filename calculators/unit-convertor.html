@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Converter | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<h2>Unit Converter</h2>
+
+<p>Convert kilometers to miles instantly.</p>
+
+<input type="number" id="km" placeholder="Enter Kilometers"><br><br>
+
+<button onclick="convertUnit()">Convert</button>
+
+<h3 id="result"></h3>
+
+</section>
+
+<section class="content">
+
+<h2>About Unit Converter</h2>
+
+<p>
+This calculator converts kilometers (km) to miles. It is useful for travel, education, and everyday calculations.
+</p>
+
+</section>
+
+<footer>
+<p>© 2026 CalculatorHubs</p>
+</footer>
+
+<script>
+
+function convertUnit(){
+
+let km=parseFloat(document.getElementById("km").value);
+
+if(!km){
+alert("Please enter a value");
+return;
+}
+
+let miles=km*0.621371;
+
+document.getElementById("result").innerHTML=
+km+" km = "+miles.toFixed(2)+" miles";
+
+}
+
+</script>
+
+</body>
+</html>
