@@ -1,98 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Global Currency Converter</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .box {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 320px;
-      box-shadow: 0 0 10px gray;
-    }
-    input, select, button {
-      width: 100%;
-      margin: 8px 0;
-      padding: 10px;
-    }
-    button {
-      background: green;
-      color: white;
-      border: none;
-    }
-    h2 { text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.container{
+max-width:600px;
+margin:40px auto;
+padding:20px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+
+button{
+background:#0b7a2f;
+color:#fff;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#095f25;
+}
+
+#result{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+.content{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+padding:20px;
+}
+</style>
+
 </head>
+
 <body>
 
-<div class="box">
-  <h2>Global Currency Converter</h2>
+<header>
+<h1>CalculatorHubs</h1>
 
-  <input type="number" id="amount" placeholder="Enter Amount">
+<nav>
+<a href="../index.html">Home</a>
+</nav>
 
-  <select id="from"></select>
-  <select id="to"></select>
+</header>
 
-  <button onclick="convert()">Convert</button>
+<div class="container">
 
-  <h3 id="result"></h3>
+<h2>Global Currency Converter</h2>
+
+<input type="number" id="amount" placeholder="Enter Amount">
+
+<select id="from"></select>
+
+<select id="to"></select>
+
+<button onclick="convert()">Convert Currency</button>
+
+<h3 id="result"></h3>
+
 </div>
 
+<section class="content">
+
+<h2>About Currency Converter</h2>
+
+<p>
+CalculatorHubs Currency Converter allows users to convert one currency into another within seconds. Simply enter an amount, choose the source currency and destination currency, then click the Convert button to get the result instantly.
+</p>
+
+<p>
+This tool is useful for travellers, students, online shoppers, freelancers, business owners and anyone dealing with international payments. It supports many of the world's most popular currencies.
+</p>
+
+<h2>Why Use This Currency Converter?</h2>
+
+<p>
+Using an online currency converter helps you estimate the value of money when exchanging between countries. It eliminates manual calculations and saves time.
+</p>
+
+<p>
+Whether you're planning an international vacation, paying overseas clients, purchasing products from foreign websites, or comparing prices globally, this calculator makes the process easier.
+</p>
+
+<p>
+The calculator is simple, mobile-friendly, free to use, and works instantly without requiring registration.
+</p>
+
+<p>
+Please note that exchange rates used in this calculator are sample values for educational purposes. Actual exchange rates may vary depending on your bank or financial institution.
+</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>How does this calculator work?</h3>
+
+<p>
+The calculator divides the entered amount by the source currency value and multiplies it by the destination currency value.
+</p>
+
+<h3>Can I convert multiple currencies?</h3>
+
+<p>
+Yes. You can choose any available currency from the dropdown list.
+</p>
+
+<h3>Are exchange rates updated automatically?</h3>
+
+<p>
+No. This version uses predefined exchange rates. Live exchange rates require an external API.
+</p>
+
+<h3>Is this calculator free?</h3>
+
+<p>
+Yes. CalculatorHubs provides this tool completely free for everyone.
+</p>
+
+</section>
+
+<footer>
+
+<p>© 2026 CalculatorHubs. All Rights Reserved.</p>
+
+</footer>
+
 <script>
-const currencies = {
-  USD: 1,
-  INR: 83,
-  EUR: 0.92,
-  GBP: 0.78,
-  JPY: 155,
-  AUD: 1.5,
-  CAD: 1.35,
-  CNY: 7.2,
-  SGD: 1.34,
-  CHF: 0.9,
-  ZAR: 18,
-  NZD: 1.6,
-  AED: 3.67,
-  SAR: 3.75,
-  KRW: 1350,
-  RUB: 90,
-  BRL: 5.1,
-  MXN: 17,
-  IDR: 16000,
-  TRY: 32,
-  MYR: 4.7
+
+const currencies={
+
+USD:1,
+INR:83,
+EUR:0.92,
+GBP:0.78,
+JPY:155,
+AUD:1.50,
+CAD:1.35,
+CNY:7.20,
+SGD:1.34,
+CHF:0.90,
+AED:3.67,
+SAR:3.75,
+MYR:4.70,
+NZD:1.60,
+ZAR:18,
+RUB:90,
+KRW:1350,
+HKD:7.8,
+THB:36,
+PHP:58,
+IDR:16000,
+TRY:32,
+BRL:5.1,
+MXN:17
+
 };
 
-// fill dropdown
-let from = document.getElementById("from");
-let to = document.getElementById("to");
+const from=document.getElementById("from");
+const to=document.getElementById("to");
 
-for (let key in currencies) {
-  from.innerHTML += `<option value="${key}">${key}</option>`;
-  to.innerHTML += `<option value="${key}">${key}</option>`;
+for(let currency in currencies){
+
+from.innerHTML+=`<option value="${currency}">${currency}</option>`;
+
+to.innerHTML+=`<option value="${currency}">${currency}</option>`;
+
 }
 
-from.value = "INR";
-to.value = "USD";
+from.value="USD";
+to.value="INR";
 
-function convert() {
-  let amount = document.getElementById("amount").value;
-  let f = from.value;
-  let t = to.value;
+function convert(){
 
-  let result = (amount / currencies[f]) * currencies[t];
+let amount=parseFloat(document.getElementById("amount").value);
 
-  document.getElementById("result").innerText =
-    result.toFixed(2) + " " + t;
+if(isNaN(amount)){
+
+alert("Please enter an amount.");
+
+return;
+
 }
+
+let result=(amount/currencies[from.value])*currencies[to.value];
+
+document.getElementById("result").innerHTML=
+
+amount+" "+from.value+" = "+result.toFixed(2)+" "+to.value;
+
+}
+
 </script>
 
 </body>
