@@ -1,90 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Calculator | CalculatorHubs</title>
-<link rel="stylesheet" href="../style.css">
-</head>
+<div class="container">
 
-<body>
-
-<header>
-<h1>CalculatorHubs</h1>
-<nav>
-<a href="../index.html">Home</a>
-</nav>
-</header>
-
-<section class="hero">
 <h2>Age Calculator</h2>
-<p>Calculate your exact age in years, months and days.</p>
 
+<label>Date of Birth</label>
 <input type="date" id="dob">
-<br><br>
+
+<label>Calculate Age On</label>
+<input type="date" id="today">
 
 <button onclick="calculateAge()">Calculate Age</button>
 
 <h3 id="result"></h3>
 
-</section>
-
-<section class="content">
-
-<h2>About Age Calculator</h2>
-
-<p>
-The Age Calculator helps you calculate your exact age from your date of birth. It is useful for school admissions, passport applications, job applications and many other situations where your precise age is required.
-</p>
-
-<h2>How to Use</h2>
-
-<ul>
-<li>Select your date of birth.</li>
-<li>Click Calculate Age.</li>
-<li>Your age will be displayed instantly.</li>
-</ul>
-
-<h2>Frequently Asked Questions</h2>
-
-<p><strong>Is this calculator free?</strong><br>Yes. It is completely free.</p>
-
-<p><strong>Is my data stored?</strong><br>No. Everything is calculated in your browser.</p>
-
-</section>
-
-<footer>
-
-<p>© 2026 CalculatorHubs</p>
-
-</footer>
+</div>
 
 <script>
+
 function calculateAge(){
 
 let dob=document.getElementById("dob").value;
+let today=document.getElementById("today").value;
 
-if(dob==""){
-alert("Please select your Date of Birth");
+if(dob=="" || today==""){
+alert("Please select both dates.");
 return;
 }
 
 let birth=new Date(dob);
+let current=new Date(today);
 
-let today=new Date();
+let years=current.getFullYear()-birth.getFullYear();
+let months=current.getMonth()-birth.getMonth();
+let days=current.getDate()-birth.getDate();
 
-let age=today.getFullYear()-birth.getFullYear();
-
-let month=today.getMonth()-birth.getMonth();
-
-if(month<0 || (month===0 && today.getDate()<birth.getDate())){
-age--;
+if(days<0){
+months--;
+let lastMonth=new Date(current.getFullYear(),current.getMonth(),0);
+days+=lastMonth.getDate();
 }
 
-document.getElementById("result").innerHTML="Your Age is "+age+" Years";
+if(months<0){
+years--;
+months+=12;
+}
+
+document.getElementById("result").innerHTML=
+`
+<b>Age Result</b><br><br>
+
+Years : ${years}<br>
+Months : ${months}<br>
+Days : ${days}
+
+`;
 
 }
+
 </script>
-
-</body>
-</html>
