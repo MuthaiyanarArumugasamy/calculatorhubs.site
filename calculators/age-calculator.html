@@ -1,3 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:500px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-top:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+background:#f7f7f7;
+border-radius:8px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+}
+
+.content{
+max-width:900px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+line-height:1.8;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>CalculatorHubs</h1>
+
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+
+</header>
+
 <div class="container">
 
 <h2>Age Calculator</h2>
@@ -10,9 +110,59 @@
 
 <button onclick="calculateAge()">Calculate Age</button>
 
-<h3 id="result"></h3>
+<div id="result">Your age will appear here.</div>
 
 </div>
+
+<section class="content">
+
+<h2>About Age Calculator</h2>
+
+<p>
+The Age Calculator helps you calculate the exact age between two dates in years, months and days. It is useful for students, employees, passport applications, government forms and many other situations.
+</p>
+
+<h2>Why Use This Age Calculator?</h2>
+
+<p>
+Instead of calculating your age manually, simply select your Date of Birth and the date on which you want to calculate your age. The calculator instantly provides accurate results.
+</p>
+
+<p>
+This tool is completely free, mobile-friendly and works on all modern devices. It saves time and eliminates calculation mistakes.
+</p>
+
+<h2>Benefits</h2>
+
+<ul>
+<li>Instant age calculation</li>
+<li>Shows years, months and days</li>
+<li>Easy to use</li>
+<li>Free online calculator</li>
+<li>Works on mobile and desktop</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>Is this calculator free?</h3>
+
+<p>Yes. It is completely free.</p>
+
+<h3>Can I calculate age for any date?</h3>
+
+<p>Yes. Choose any date in the second field.</p>
+
+<h3>Does it work on mobile?</h3>
+
+<p>Yes. It is fully responsive.</p>
+
+</section>
+
+<footer>
+
+<p>© 2026 CalculatorHubs. All Rights Reserved.</p>
+
+</footer>
 
 <script>
 
@@ -22,8 +172,11 @@ let dob=document.getElementById("dob").value;
 let today=document.getElementById("today").value;
 
 if(dob=="" || today==""){
+
 alert("Please select both dates.");
+
 return;
+
 }
 
 let birth=new Date(dob);
@@ -34,26 +187,36 @@ let months=current.getMonth()-birth.getMonth();
 let days=current.getDate()-birth.getDate();
 
 if(days<0){
+
 months--;
+
 let lastMonth=new Date(current.getFullYear(),current.getMonth(),0);
+
 days+=lastMonth.getDate();
+
 }
 
 if(months<0){
+
 years--;
+
 months+=12;
+
 }
 
 document.getElementById("result").innerHTML=
-`
-<b>Age Result</b><br><br>
 
-Years : ${years}<br>
-Months : ${months}<br>
-Days : ${days}
+"<b>"+years+"</b> Years <br><br>" +
 
-`;
+"<b>"+months+"</b> Months <br><br>" +
+
+"<b>"+days+"</b> Days";
 
 }
 
+document.getElementById("today").valueAsDate=new Date();
+
 </script>
+
+</body>
+</html>
