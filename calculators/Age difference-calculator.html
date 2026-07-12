@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Difference Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.container{
+max-width:600px;
+margin:40px auto;
+padding:20px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+input,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+button{
+background:#0b7a2f;
+color:#fff;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+#result{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav><a href="../index.html">Home</a></nav>
+</header>
+
+<div class="container">
+<h2>Age Difference Calculator</h2>
+
+<label>First Date of Birth</label>
+<input type="date" id="dob1">
+
+<label>Second Date of Birth</label>
+<input type="date" id="dob2">
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function calculate(){
+const d1 = new Date(document.getElementById("dob1").value);
+const d2 = new Date(document.getElementById("dob2").value);
+
+if(isNaN(d1) || isNaN(d2)){
+alert("Please select both dates.");
+return;
+}
+
+const diff = Math.abs(d2 - d1);
+const days = Math.floor(diff / (1000*60*60*24));
+const years = Math.floor(days / 365);
+const months = Math.floor((days % 365) / 30);
+const remainingDays = (days % 365) % 30;
+
+document.getElementById("result").innerHTML =
+`Age Difference: <br>${years} Years, ${months} Months, ${remainingDays} Days`;
+}
+</script>
+
+</body>
+</html>
