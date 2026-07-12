@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Hike Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.container{
+max-width:600px;
+margin:40px auto;
+padding:20px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+input,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+button{
+background:#0b7a2f;
+color:#fff;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+button:hover{
+background:#095f25;
+}
+#result{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<div class="container">
+
+<h2>Salary Hike Calculator</h2>
+
+<input type="number" id="salary" placeholder="Current Salary">
+
+<input type="number" id="hike" placeholder="Hike Percentage (%)">
+
+<button onclick="calculateSalary()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function calculateSalary(){
+
+const salary = parseFloat(document.getElementById("salary").value);
+const hike = parseFloat(document.getElementById("hike").value);
+
+if(isNaN(salary) || isNaN(hike)){
+alert("Please enter valid values.");
+return;
+}
+
+const increase = salary * hike / 100;
+const newSalary = salary + increase;
+
+document.getElementById("result").innerHTML =
+`
+<p>Salary Increase: ₹${increase.toFixed(2)}</p>
+<p><strong>New Salary: ₹${newSalary.toFixed(2)}</strong></p>
+`;
+
+}
+</script>
+
+</body>
+</html>
