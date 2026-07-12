@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Fat Calculator | CalculatorHubs</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.container{
+max-width:600px;
+margin:40px auto;
+padding:20px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+button{
+background:#0b7a2f;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+button:hover{
+background:#095f25;
+}
+#result{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>CalculatorHubs</h1>
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+</header>
+
+<div class="container">
+
+<h2>Body Fat Calculator</h2>
+
+<input type="number" id="weight" placeholder="Weight (kg)">
+<input type="number" id="height" placeholder="Height (cm)">
+<input type="number" id="age" placeholder="Age">
+
+<select id="gender">
+<option value="male">Male</option>
+<option value="female">Female</option>
+</select>
+
+<button onclick="calculateBodyFat()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function calculateBodyFat(){
+
+const weight = parseFloat(document.getElementById("weight").value);
+const height = parseFloat(document.getElementById("height").value);
+const age = parseFloat(document.getElementById("age").value);
+const gender = document.getElementById("gender").value;
+
+if(isNaN(weight)||isNaN(height)||isNaN(age)){
+alert("Please enter all values.");
+return;
+}
+
+const bmi = weight / ((height/100)*(height/100));
+
+let bodyFat;
+
+if(gender==="male"){
+bodyFat = (1.20*bmi)+(0.23*age)-16.2;
+}else{
+bodyFat = (1.20*bmi)+(0.23*age)-5.4;
+}
+
+document.getElementById("result").innerHTML =
+`Estimated Body Fat: <b>${bodyFat.toFixed(1)}%</b>`;
+}
+</script>
+
+</body>
+</html>
