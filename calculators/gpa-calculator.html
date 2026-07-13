@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GPA Calculator | CalculatorHubs.site</title>
+
+<meta name="description"
+content="Free GPA Calculator to calculate your Grade Point Average (GPA) instantly.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:12px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>GPA Calculator</h2>
+
+<p>
+
+Enter your total grade points and total credits.
+
+</p>
+
+<input
+type="number"
+id="gradePoints"
+placeholder="Total Grade Points">
+
+<input
+type="number"
+id="credits"
+placeholder="Total Credits">
+
+<button onclick="calculateGPA()">
+
+Calculate GPA
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your GPA will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is GPA?</h2>
+
+<p>
+
+GPA (Grade Point Average) measures your academic performance for a semester. It is calculated by dividing the total grade points earned by the total credit hours.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+GPA = Total Grade Points ÷ Total Credits
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Total Grade Points = 72
+
+</p>
+
+<p>
+
+Total Credits = 9
+
+</p>
+
+<p>
+
+GPA = 72 ÷ 9 = 8.00
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function calculateGPA(){
+
+let gradePoints=parseFloat(document.getElementById("gradePoints").value);
+
+let credits=parseFloat(document.getElementById("credits").value);
+
+if(isNaN(gradePoints)||isNaN(credits)||credits<=0){
+
+document.getElementById("result").innerHTML="Please enter valid values.";
+
+return;
+
+}
+
+let gpa=gradePoints/credits;
+
+document.getElementById("result").innerHTML=
+
+"Your GPA is <br><b>"+gpa.toFixed(2)+"</b>";
+
+}
+
+</script>
+
+</body>
+
+</html>
