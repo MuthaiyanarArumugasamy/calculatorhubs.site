@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Countdown Calculator | CalculatorHubs.site</title>
+
+<meta name="description"
+content="Free Countdown Calculator to find the remaining time until any future date and time.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+padding:30px;
+background:#fff;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:15px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:20px;
+text-align:center;
+font-weight:bold;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>Countdown Calculator</h2>
+
+<p>
+
+Select a future date and time.
+
+</p>
+
+<input
+type="datetime-local"
+id="targetDate">
+
+<button onclick="startCountdown()">
+
+Start Countdown
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Countdown will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is a Countdown Calculator?</h2>
+
+<p>
+
+A Countdown Calculator calculates the remaining time between the current date and a future date. It displays the result in days, hours, minutes, and seconds.
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Today's Date: July 13, 2026
+
+</p>
+
+<p>
+
+Target Date: December 31, 2026
+
+</p>
+
+<p>
+
+The calculator will display the remaining days, hours, minutes and seconds.
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+let timer;
+
+function startCountdown(){
+
+clearInterval(timer);
+
+let target=new Date(document.getElementById("targetDate").value).getTime();
+
+if(isNaN(target)){
+
+document.getElementById("result").innerHTML="Please select a valid date.";
+
+return;
+
+}
+
+timer=setInterval(function(){
+
+let now=new Date().getTime();
+
+let distance=target-now;
+
+if(distance<=0){
+
+clearInterval(timer);
+
+document.getElementById("result").innerHTML="🎉 Countdown Finished!";
+
+return;
+
+}
+
+let days=Math.floor(distance/(1000*60*60*24));
+
+let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+
+let seconds=Math.floor((distance%(1000*60))/1000);
+
+document.getElementById("result").innerHTML=
+
+"<h3>"+days+" Days</h3>"+
+
+"<h3>"+hours+" Hours</h3>"+
+
+"<h3>"+minutes+" Minutes</h3>"+
+
+"<h3>"+seconds+" Seconds</h3>";
+
+},1000);
+
+}
+
+</script>
+
+</body>
+
+</html>
