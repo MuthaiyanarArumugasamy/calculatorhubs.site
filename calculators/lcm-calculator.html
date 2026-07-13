@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LCM Calculator | CalculatorHubs.site</title>
+
+<meta name="description"
+content="Free LCM Calculator to find the Least Common Multiple of two numbers instantly.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:12px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>LCM Calculator</h2>
+
+<p>
+
+Enter two numbers to find their Least Common Multiple (LCM).
+
+</p>
+
+<input
+type="number"
+id="num1"
+placeholder="Enter First Number">
+
+<input
+type="number"
+id="num2"
+placeholder="Enter Second Number">
+
+<button onclick="calculateLCM()">
+
+Calculate LCM
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your LCM will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is LCM?</h2>
+
+<p>
+
+LCM (Least Common Multiple) is the smallest positive number that is exactly divisible by both numbers.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+LCM = (First Number × Second Number) ÷ GCD
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+LCM of 12 and 18 = 36
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function gcd(a,b){
+
+while(b!=0){
+
+let temp=b;
+b=a%b;
+a=temp;
+
+}
+
+return a;
+
+}
+
+function calculateLCM(){
+
+let num1=parseInt(document.getElementById("num1").value);
+
+let num2=parseInt(document.getElementById("num2").value);
+
+if(isNaN(num1)||isNaN(num2)||num1<=0||num2<=0){
+
+document.getElementById("result").innerHTML="Please enter valid positive numbers.";
+
+return;
+
+}
+
+let lcm=(num1*num2)/gcd(num1,num2);
+
+document.getElementById("result").innerHTML=
+
+"LCM = <br><b>"+lcm+"</b>";
+
+}
+
+</script>
+
+</body>
+
+</html>
