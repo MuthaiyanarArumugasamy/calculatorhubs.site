@@ -462,3 +462,27 @@ if (yearElement) {
 
 console.log("%cCalculatorHubs.site", "color:#2563eb;font-size:22px;font-weight:bold;");
 console.log("%cWebsite Loaded Successfully!", "color:green;font-size:14px;");
+function calculateBill(){
+
+    let units = document.getElementById("units").value;
+    let bill = 0;
+
+    if(units <= 100){
+        bill = units * 1.5;
+    }
+    else if(units <= 200){
+        bill = (100 * 1.5) + ((units-100) * 2.5);
+    }
+    else if(units <= 500){
+        bill = (100 * 1.5) + (100 * 2.5) + ((units-200) * 4);
+    }
+    else{
+        bill = (100 * 1.5) + (100 * 2.5) + (300 * 4) + ((units-500) * 6);
+    }
+
+    let fixedCharge = 50;
+    let total = bill + fixedCharge;
+
+    document.getElementById("result").innerHTML =
+    "Your Electricity Bill = ₹ " + total.toFixed(2);
+}
