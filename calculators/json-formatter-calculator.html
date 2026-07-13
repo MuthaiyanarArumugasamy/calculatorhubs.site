@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>JSON Formatter</title>
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    background:linear-gradient(120deg,#667eea,#764ba2);
+    margin:0;
+    padding:20px;
+}
+
+
+/* Main Tool Box */
+
+.container{
+    background:white;
+    max-width:600px;
+    margin:auto;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px gray;
+    text-align:center;
+}
+
+
+h1{
+    color:#333;
+}
+
+
+textarea{
+    width:95%;
+    height:200px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #aaa;
+    font-size:15px;
+    resize:none;
+}
+
+
+button{
+
+    padding:12px 25px;
+    margin:10px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+
+}
+
+
+button:hover{
+    background:#0056b3;
+}
+
+
+
+#output{
+
+    background:#f4f4f4;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    text-align:left;
+    white-space:pre-wrap;
+    overflow:auto;
+}
+
+
+
+.error{
+    color:red;
+    font-weight:bold;
+}
+
+
+
+/* SEO Content Boxes */
+
+
+.info-section{
+
+    max-width:600px;
+    margin:25px auto;
+
+}
+
+
+
+.info-box{
+
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    text-align:left;
+
+}
+
+
+
+.info-box h2{
+
+    color:green;
+    margin-top:0;
+
+}
+
+
+
+.info-box p{
+
+    color:#555;
+    line-height:1.6;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>JSON Formatter</h1>
+
+
+<textarea id="jsonInput" placeholder='Paste your JSON here...
+
+Example:
+{"name":"Anu","age":20}'></textarea>
+
+
+<br>
+
+
+<button onclick="formatJSON()">
+Format JSON
+</button>
+
+
+<button onclick="minifyJSON()">
+Minify JSON
+</button>
+
+
+<div id="output">
+Output will appear here...
+</div>
+
+
+</div>
+
+
+
+
+<!-- SEO Content -->
+
+
+<div class="info-section">
+
+
+<div class="info-box">
+
+<h2>Why use JSON Formatter?</h2>
+
+<p>
+JSON Formatter helps developers to convert
+unformatted JSON data into a clean and readable
+structure. It makes debugging, editing and
+understanding JSON files easier.
+</p>
+
+</div>
+
+
+
+
+<div class="info-box">
+
+<h2>What is JSON Formatter?</h2>
+
+<p>
+A JSON Formatter is an online tool that formats
+JavaScript Object Notation (JSON) data by adding
+proper spacing, indentation and structure.
+It also helps to identify invalid JSON syntax.
+</p>
+
+</div>
+
+
+
+
+<div class="info-box">
+
+<h2>Benefits of JSON Formatter</h2>
+
+<p>
+• Makes JSON easy to read<br>
+• Finds JSON errors quickly<br>
+• Converts minified JSON into formatted data<br>
+• Useful for developers and programmers
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function formatJSON(){
+
+let input=document.getElementById("jsonInput").value;
+
+
+try{
+
+let jsonData=JSON.parse(input);
+
+
+document.getElementById("output").innerHTML=
+JSON.stringify(jsonData,null,4);
+
+
+}
+
+catch(error){
+
+document.getElementById("output").innerHTML=
+"<span class='error'>❌ Invalid JSON Format</span>";
+
+}
+
+
+}
+
+
+
+
+function minifyJSON(){
+
+
+let input=document.getElementById("jsonInput").value;
+
+
+try{
+
+
+let jsonData=JSON.parse(input);
+
+
+document.getElementById("output").innerHTML=
+JSON.stringify(jsonData);
+
+
+}
+
+
+catch(error){
+
+
+document.getElementById("output").innerHTML=
+"<span class='error'>❌ Invalid JSON Format</span>";
+
+
+}
+
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
