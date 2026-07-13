@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Room Area Calculator</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:linear-gradient(120deg,#f6d365,#fda085);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    background:white;
+    width:350px;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 15px gray;
+}
+
+h1{
+    color:#333;
+}
+
+input{
+    width:90%;
+    padding:12px;
+    margin:10px;
+    border-radius:8px;
+    border:1px solid gray;
+}
+
+select{
+    width:95%;
+    padding:12px;
+    margin:10px;
+    border-radius:8px;
+}
+
+button{
+    background:#28a745;
+    color:white;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#218838;
+}
+
+#result{
+    margin-top:20px;
+    color:blue;
+    font-size:20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>Room Area Calculator</h1>
+
+<input type="number" id="length" placeholder="Enter Length">
+
+<input type="number" id="width" placeholder="Enter Width">
+
+
+<select id="unit">
+    <option value="feet">Feet</option>
+    <option value="meter">Meter</option>
+</select>
+
+
+<button onclick="calculateArea()">Calculate Area</button>
+
+
+<div id="result"></div>
+
+
+</div>
+
+
+<script>
+
+function calculateArea(){
+
+    let length = Number(document.getElementById("length").value);
+    let width = Number(document.getElementById("width").value);
+    let unit = document.getElementById("unit").value;
+
+    let area = length * width;
+
+
+    if(unit=="meter"){
+        area = area * 10.7639;
+    }
+
+
+    document.getElementById("result").innerHTML =
+    "Room Area = " + area.toFixed(2) + " sq ft";
+
+}
+
+</script>
+
+
+</body>
+</html>
