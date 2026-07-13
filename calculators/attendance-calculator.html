@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attendance Calculator | CalculatorHubs.site</title>
+
+<meta name="description" content="Free Attendance Calculator to calculate attendance percentage instantly.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:12px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>Attendance Calculator</h2>
+
+<p>
+
+Enter the total classes and attended classes.
+
+</p>
+
+<input
+type="number"
+id="total"
+placeholder="Total Classes">
+
+<input
+type="number"
+id="attended"
+placeholder="Classes Attended">
+
+<button onclick="calculateAttendance()">
+
+Calculate Attendance
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your attendance will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is Attendance Percentage?</h2>
+
+<p>
+
+Attendance percentage shows how many classes you attended out of the total classes conducted.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+Attendance % = (Classes Attended ÷ Total Classes) × 100
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Total Classes = 100
+
+</p>
+
+<p>
+
+Attended = 85
+
+</p>
+
+<p>
+
+Attendance = (85 ÷ 100) × 100 = 85%
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function calculateAttendance(){
+
+let total=parseFloat(document.getElementById("total").value);
+
+let attended=parseFloat(document.getElementById("attended").value);
+
+if(isNaN(total)||isNaN(attended)||total<=0){
+
+document.getElementById("result").innerHTML="Please enter valid values.";
+
+return;
+
+}
+
+if(attended>total){
+
+document.getElementById("result").innerHTML="Attended classes cannot be greater than total classes.";
+
+return;
+
+}
+
+let percentage=(attended/total)*100;
+
+let status="";
+
+if(percentage>=75){
+
+status="✅ Eligible";
+
+}else{
+
+status="❌ Attendance Below 75%";
+
+}
+
+document.getElementById("result").innerHTML=
+
+"Attendance = <br><b>"+percentage.toFixed(2)+"%</b><br>"+status;
+
+}
+
+</script>
+
+</body>
+
+</html>
