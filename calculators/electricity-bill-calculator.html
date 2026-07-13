@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Electricity Bill Calculator</title>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(120deg,#84fab0,#8fd3f4);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    background:white;
+    width:350px;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0px 0px 15px gray;
+}
+
+h1{
+    color:#333;
+}
+
+input{
+    width:90%;
+    padding:12px;
+    margin:15px;
+    border:1px solid #aaa;
+    border-radius:8px;
+}
+
+button{
+    background:#007bff;
+    color:white;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#result{
+    margin-top:20px;
+    color:green;
+    font-size:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Electricity Bill Calculator</h1>
+
+<input type="number" id="units" placeholder="Enter Units Consumed">
+
+<button onclick="calculateBill()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+
+<script>
+
+function calculateBill(){
+
+    let units = Number(document.getElementById("units").value);
+    let bill = 0;
+
+    if(units <= 100){
+        bill = units * 1.5;
+    }
+    else if(units <= 200){
+        bill = (100*1.5) + ((units-100)*2.5);
+    }
+    else if(units <= 500){
+        bill = (100*1.5) + (100*2.5) + ((units-200)*4);
+    }
+    else{
+        bill = (100*1.5) + (100*2.5) + (300*4) + ((units-500)*6);
+    }
+
+    let total = bill + 50;
+
+    document.getElementById("result").innerHTML =
+    "Electricity Bill = ₹ " + total.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
