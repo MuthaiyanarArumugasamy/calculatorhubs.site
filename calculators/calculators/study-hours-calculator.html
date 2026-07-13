@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Study Hours Calculator | CalculatorHubs.site</title>
+
+<meta name="description"
+content="Free Study Hours Calculator to calculate your total study hours per day and per week.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:12px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table,th,td{
+border:1px solid #ddd;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#2563eb;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>Study Hours Calculator</h2>
+
+<p>
+
+Enter your study hours per day and the number of study days in a week.
+
+</p>
+
+<input
+type="number"
+id="hours"
+placeholder="Study Hours Per Day">
+
+<input
+type="number"
+id="days"
+placeholder="Study Days Per Week">
+
+<button onclick="calculateStudyHours()">
+
+Calculate
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your study plan will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>How It Works</h2>
+
+<p>
+
+This calculator estimates your total study hours in a week based on your daily study routine.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+Weekly Study Hours = Study Hours Per Day × Study Days Per Week
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Study Hours Per Day = 4
+
+</p>
+
+<p>
+
+Study Days Per Week = 6
+
+</p>
+
+<p>
+
+Weekly Study Hours = 4 × 6 = 24 Hours
+
+</p>
+
+<h2>Recommended Study Time</h2>
+
+<table>
+
+<tr>
+
+<th>Daily Study Hours</th>
+
+<th>Suggestion</th>
+
+</tr>
+
+<tr>
+
+<td>1 - 2 Hours</td>
+
+<td>Light Study</td>
+
+</tr>
+
+<tr>
+
+<td>3 - 4 Hours</td>
+
+<td>Good Preparation</td>
+
+</tr>
+
+<tr>
+
+<td>5 - 6 Hours</td>
+
+<td>Exam Preparation</td>
+
+</tr>
+
+<tr>
+
+<td>7+ Hours</td>
+
+<td>Competitive Exams</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function calculateStudyHours(){
+
+let hours=parseFloat(document.getElementById("hours").value);
+
+let days=parseFloat(document.getElementById("days").value);
+
+if(isNaN(hours)||isNaN(days)||hours<=0||days<=0||days>7){
+
+document.getElementById("result").innerHTML="Please enter valid values.";
+
+return;
+
+}
+
+let weekly=hours*days;
+
+let monthly=weekly*4;
+
+let level="";
+
+if(hours<=2){
+
+level="📘 Light Study";
+
+}else if(hours<=4){
+
+level="📗 Good Preparation";
+
+}else if(hours<=6){
+
+level="📙 Exam Preparation";
+
+}else{
+
+level="📕 Competitive Exam Preparation";
+
+}
+
+document.getElementById("result").innerHTML=
+
+"<b>Daily Study :</b> "+hours.toFixed(1)+" Hours<br><br>"+
+
+"<b>Weekly Study :</b> "+weekly.toFixed(1)+" Hours<br><br>"+
+
+"<b>Monthly Study :</b> "+monthly.toFixed(1)+" Hours<br><br>"+
+
+"<b>Recommendation :</b> "+level;
+
+}
+
+</script>
+
+</body>
+
+</html>
