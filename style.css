@@ -1,51 +1,837 @@
-/* Calculator Cards */
+/* ===========================
+   GOOGLE FONT
+=========================== */
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:25px;
-    padding:50px 40px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
-.card{
-    background:#fff;
-    border-radius:18px;
-    padding:28px;
-    text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-    transition:all .3s ease;
-    border:1px solid #eef2f7;
+html{
+    scroll-behavior:smooth;
 }
 
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 15px 35px rgba(37,99,235,.18);
-}
-
-.card h3{
-    font-size:24px;
-    margin-bottom:12px;
+body{
+    background:#f5f7fb;
     color:#222;
-}
-
-.card p{
-    color:#666;
     line-height:1.6;
-    margin-bottom:20px;
 }
 
-.card a{
-    display:inline-block;
-    padding:12px 28px;
-    background:linear-gradient(90deg,#2563eb,#3b82f6);
-    color:#fff;
+/* ===========================
+   CONTAINER
+=========================== */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+header{
+    background:#ffffff;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+header .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.logo a{
     text-decoration:none;
-    border-radius:10px;
-    font-weight:bold;
+    font-size:30px;
+    font-weight:700;
+    color:#1d4ed8;
+}
+
+.logo span{
+    color:#16a34a;
+}
+
+/* ===========================
+   NAVIGATION
+=========================== */
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:28px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#222;
+    font-weight:500;
     transition:.3s;
 }
 
-.card a:hover{
-    transform:scale(1.05);
-    background:linear-gradient(90deg,#1d4ed8,#2563eb);
+nav a:hover{
+    color:#2563eb;
+}
+
+.menu-icon{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:#fff;
+    padding:90px 0;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:50px;
+    align-items:center;
+}
+
+.hero h1{
+    font-size:50px;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.hero img{
+    width:100%;
+    max-width:500px;
+    display:block;
+    margin:auto;
+}
+
+/* ===========================
+   SEARCH
+=========================== */
+
+.search-box{
+    display:flex;
+    margin-bottom:25px;
+}
+
+.search-box input{
+
+    width:100%;
+    padding:16px;
+    border:none;
+    outline:none;
+    border-radius:10px 0 0 10px;
+    font-size:16px;
+}
+
+.search-box button{
+
+    border:none;
+    background:#16a34a;
+    color:#fff;
+    padding:16px 30px;
+    cursor:pointer;
+    border-radius:0 10px 10px 0;
+    font-size:16px;
+    transition:.3s;
+}
+
+.search-box button:hover{
+
+    background:#15803d;
+
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.hero-buttons{
+
+    display:flex;
+    gap:15px;
+}
+
+.btn{
+
+    display:inline-block;
+    background:#16a34a;
+    color:white;
+    padding:14px 30px;
+    border-radius:8px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn:hover{
+
+    background:#15803d;
+}
+
+.btn2{
+
+    display:inline-block;
+    border:2px solid white;
+    color:white;
+    padding:14px 30px;
+    border-radius:8px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn2:hover{
+
+    background:white;
+    color:#2563eb;
+}
+
+/* ===========================
+   STATS
+=========================== */
+
+.stats{
+
+    background:white;
+    padding:70px 0;
+}
+
+.stats-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.stats-grid div{
+
+    background:#f8fafc;
+    text-align:center;
+    padding:35px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.stats-grid div:hover{
+
+    transform:translateY(-8px);
+}
+
+.stats-grid h2{
+
+    font-size:40px;
+    color:#2563eb;
+}
+
+.stats-grid p{
+
+    margin-top:10px;
+}
+
+/* ===========================
+   SECTION TITLE
+=========================== */
+
+.title{
+
+    text-align:center;
+    font-size:38px;
+    margin-bottom:15px;
+}
+
+.subtitle{
+
+    text-align:center;
+    color:#666;
+    margin-bottom:50px;
+}
+
+/* ===========================
+   CATEGORY
+=========================== */
+
+.categories{
+
+    padding:90px 0;
+}
+
+.category-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.category-card{
+
+    background:white;
+    border-radius:15px;
+    padding:30px;
+    text-align:center;
+    transition:.3s;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.category-card:hover{
+
+    transform:translateY(-8px);
+}
+
+.category-card i{
+
+    font-size:50px;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.category-card h3{
+
+    margin-bottom:15px;
+}
+
+.category-card p{
+
+    color:#666;
+    margin-bottom:20px;
+}
+
+.category-card a{
+
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+}
+/* ===================================
+   POPULAR CALCULATORS
+=================================== */
+
+.popular{
+    padding:90px 0;
+    background:#ffffff;
+}
+
+.calculator-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.calculator-card{
+    background:#ffffff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.35s;
+    border-top:5px solid #2563eb;
+}
+
+.calculator-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 35px rgba(0,0,0,.15);
+}
+
+.calculator-card h3{
+    color:#1f2937;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.calculator-card p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.calculator-card a{
+    display:inline-block;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.calculator-card a:hover{
+    color:#16a34a;
+}
+
+/* ===================================
+   LATEST CALCULATORS
+=================================== */
+
+.latest{
+    background:#f8fafc;
+    padding:90px 0;
+}
+
+.latest-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.latest-card{
+    background:white;
+    border-radius:15px;
+    padding:30px;
+    transition:.35s;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.latest-card:hover{
+    transform:translateY(-8px);
+}
+
+.latest-card h3{
+    margin-bottom:15px;
+    color:#1e40af;
+}
+
+.latest-card p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.latest-card a{
+    text-decoration:none;
+    font-weight:600;
+    color:#16a34a;
+}
+
+/* ===================================
+   WHY CHOOSE US
+=================================== */
+
+.why{
+    padding:90px 0;
+    background:white;
+}
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.why-card{
+    background:#f8fafc;
+    border-radius:15px;
+    text-align:center;
+    padding:35px;
+    transition:.35s;
+}
+
+.why-card:hover{
+    transform:translateY(-8px);
+    background:#2563eb;
+    color:white;
+}
+
+.why-card i{
+    font-size:45px;
+    color:#16a34a;
+    margin-bottom:20px;
+}
+
+.why-card:hover i{
+    color:white;
+}
+
+.why-card h3{
+    margin-bottom:15px;
+}
+
+/* ===================================
+   ARTICLES
+=================================== */
+
+.articles{
+    padding:90px 0;
+    background:#f5f7fb;
+}
+
+.article-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.article-card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.article-card:hover{
+    transform:translateY(-10px);
+}
+
+.article-card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.article-card h3{
+    padding:20px 20px 10px;
+    color:#1f2937;
+}
+
+.article-card p{
+    padding:0 20px 20px;
+    color:#666;
+}
+
+.article-card a{
+    display:inline-block;
+    margin:0 20px 20px;
+    text-decoration:none;
+    font-weight:600;
+    color:#2563eb;
+}
+
+.article-card a:hover{
+    color:#16a34a;
+}
+
+/* ===================================
+   ABOUT SECTION
+=================================== */
+
+.about-home{
+    padding:90px 0;
+    background:white;
+}
+
+.about-home p{
+    font-size:17px;
+    color:#555;
+    line-height:1.9;
+    max-width:950px;
+    margin:20px auto;
+    text-align:center;
+}
+
+/* ===================================
+   SIMPLE ANIMATIONS
+=================================== */
+
+.category-card,
+.calculator-card,
+.latest-card,
+.article-card,
+.why-card,
+.stats-grid div{
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+/* ===================================
+   FAQ
+=================================== */
+
+.faq{
+    padding:90px 0;
+    background:#ffffff;
+}
+
+.faq-item{
+    background:#f8fafc;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+}
+
+.faq-item h3{
+    color:#2563eb;
+    margin-bottom:12px;
+}
+
+.faq-item p{
+    color:#555;
+    line-height:1.8;
+}
+
+/* ===================================
+   NEWSLETTER
+=================================== */
+
+.newsletter{
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:#fff;
+    padding:80px 20px;
+    text-align:center;
+}
+
+.newsletter h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.newsletter p{
+    margin-bottom:30px;
+}
+
+.newsletter form{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.newsletter input{
+    width:380px;
+    max-width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+    font-size:16px;
+}
+
+.newsletter button{
+    background:#16a34a;
+    color:#fff;
+    border:none;
+    padding:15px 30px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    transition:.3s;
+}
+
+.newsletter button:hover{
+    background:#15803d;
+}
+
+/* ===================================
+   CTA
+=================================== */
+
+.cta{
+    padding:80px 20px;
+    text-align:center;
+    background:#f5f7fb;
+}
+
+.cta h2{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.cta p{
+    color:#666;
+    margin-bottom:30px;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+footer{
+    background:#111827;
+    color:#ffffff;
+    padding:70px 0 20px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:35px;
+}
+
+.footer-grid h3{
+    margin-bottom:20px;
+    color:#ffffff;
+}
+
+.footer-grid p{
+    color:#d1d5db;
+    line-height:1.8;
+}
+
+.footer-grid ul{
+    list-style:none;
+}
+
+.footer-grid li{
+    margin-bottom:12px;
+}
+
+.footer-grid a{
+    text-decoration:none;
+    color:#d1d5db;
+    transition:.3s;
+}
+
+.footer-grid a:hover{
+    color:#ffffff;
+}
+
+.copyright{
+    margin-top:50px;
+    border-top:1px solid rgba(255,255,255,.15);
+    padding-top:20px;
+    text-align:center;
+    color:#d1d5db;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:992px){
+
+.hero-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+}
+
+.hero img{
+    margin-top:40px;
+    max-width:350px;
+}
+
+.stats-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:768px){
+
+nav{
+    display:none;
+}
+
+.menu-icon{
+    display:block;
+}
+
+.hero h1{
+    font-size:36px;
+}
+
+.title{
+    font-size:30px;
+}
+
+.search-box{
+    flex-direction:column;
+}
+
+.search-box input{
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+.search-box button{
+    border-radius:8px;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+.btn,
+.btn2{
+    width:100%;
+    text-align:center;
+}
+
+.stats-grid{
+    grid-template-columns:1fr;
+}
+
+.footer-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+}
+
+.newsletter form{
+    flex-direction:column;
+}
+
+.newsletter input,
+.newsletter button{
+    width:100%;
+}
+
+}
+
+@media(max-width:480px){
+
+.hero{
+    padding:60px 0;
+}
+
+.hero h1{
+    font-size:30px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+.title{
+    font-size:26px;
+}
+
+.category-card,
+.calculator-card,
+.latest-card,
+.article-card,
+.why-card{
+    padding:22px;
+}
+
+.newsletter h2{
+    font-size:28px;
+}
+
+.cta h2{
+    font-size:30px;
+}
+
+.logo a{
+    font-size:24px;
+}
+
 }
