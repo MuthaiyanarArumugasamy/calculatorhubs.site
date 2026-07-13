@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Marks Percentage Calculator | CalculatorHubs.site</title>
+
+<meta name="description"
+content="Free Marks Percentage Calculator to calculate exam percentage instantly.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:12px 0;
+font-size:17px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table,th,td{
+border:1px solid #ddd;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#2563eb;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>Marks Percentage Calculator</h2>
+
+<p>
+
+Enter your obtained marks and total marks.
+
+</p>
+
+<input
+type="number"
+id="obtained"
+placeholder="Obtained Marks">
+
+<input
+type="number"
+id="total"
+placeholder="Total Marks">
+
+<button onclick="calculatePercentage()">
+
+Calculate Percentage
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your percentage will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is Marks Percentage?</h2>
+
+<p>
+
+Marks percentage shows how much you scored out of the total marks in an examination.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+Percentage = (Obtained Marks ÷ Total Marks) × 100
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Obtained Marks = 450
+
+</p>
+
+<p>
+
+Total Marks = 500
+
+</p>
+
+<p>
+
+Percentage = (450 ÷ 500) × 100 = 90%
+
+</p>
+
+<h2>Percentage Grade Reference</h2>
+
+<table>
+
+<tr>
+<th>Percentage</th>
+<th>Grade</th>
+</tr>
+
+<tr>
+<td>90% - 100%</td>
+<td>A+</td>
+</tr>
+
+<tr>
+<td>80% - 89%</td>
+<td>A</td>
+</tr>
+
+<tr>
+<td>70% - 79%</td>
+<td>B+</td>
+</tr>
+
+<tr>
+<td>60% - 69%</td>
+<td>B</td>
+</tr>
+
+<tr>
+<td>50% - 59%</td>
+<td>C</td>
+</tr>
+
+<tr>
+<td>Below 50%</td>
+<td>Needs Improvement</td>
+</tr>
+
+</table>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function calculatePercentage(){
+
+let obtained=parseFloat(document.getElementById("obtained").value);
+
+let total=parseFloat(document.getElementById("total").value);
+
+if(isNaN(obtained)||isNaN(total)||total<=0){
+
+document.getElementById("result").innerHTML="Please enter valid marks.";
+
+return;
+
+}
+
+if(obtained>total){
+
+document.getElementById("result").innerHTML="Obtained marks cannot be greater than total marks.";
+
+return;
+
+}
+
+let percentage=(obtained/total)*100;
+
+let grade="";
+
+if(percentage>=90){
+
+grade="A+";
+
+}else if(percentage>=80){
+
+grade="A";
+
+}else if(percentage>=70){
+
+grade="B+";
+
+}else if(percentage>=60){
+
+grade="B";
+
+}else if(percentage>=50){
+
+grade="C";
+
+}else{
+
+grade="Needs Improvement";
+
+}
+
+document.getElementById("result").innerHTML=
+
+"Percentage = <br><b>"+percentage.toFixed(2)+"%</b><br><br>Grade : <b>"+grade+"</b>";
+
+}
+
+</script>
+
+</body>
+
+</html>
