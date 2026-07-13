@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Base64 Encoder Decoder</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(120deg,#43cea2,#185a9d);
+    margin:0;
+    padding:20px;
+}
+
+
+.container{
+
+    max-width:600px;
+    background:white;
+    margin:auto;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px gray;
+    text-align:center;
+
+}
+
+
+h1{
+    color:#333;
+}
+
+
+textarea{
+
+    width:95%;
+    height:150px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid gray;
+    font-size:15px;
+
+}
+
+
+
+button{
+
+    padding:12px 20px;
+    margin:10px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#0056b3;
+
+}
+
+
+
+#result{
+
+    background:#f4f4f4;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    text-align:left;
+    word-wrap:break-word;
+
+}
+
+
+
+/* Info Boxes */
+
+
+.info-section{
+
+    max-width:600px;
+    margin:25px auto;
+
+}
+
+
+.info-box{
+
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px #ccc;
+
+}
+
+
+.info-box h2{
+
+    color:green;
+
+}
+
+
+.info-box p{
+
+    color:#555;
+    line-height:1.6;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>Base64 Encoder & Decoder</h1>
+
+
+<textarea id="inputText" placeholder="Enter text here..."></textarea>
+
+
+<br>
+
+
+<button onclick="encodeText()">
+Encode
+</button>
+
+
+<button onclick="decodeText()">
+Decode
+</button>
+
+
+<div id="result">
+Result will appear here...
+</div>
+
+
+</div>
+
+
+
+
+<div class="info-section">
+
+
+<div class="info-box">
+
+<h2>Why use Base64 Encoder?</h2>
+
+<p>
+Base64 Encoder converts text or data into a safe
+format that can be transferred through websites,
+APIs and emails without data corruption.
+</p>
+
+</div>
+
+
+
+<div class="info-box">
+
+<h2>What is Base64 Encoder?</h2>
+
+<p>
+Base64 is an encoding method that converts
+binary data into readable ASCII characters.
+It is commonly used for images, files and data
+transmission.
+</p>
+
+</div>
+
+
+
+<div class="info-box">
+
+<h2>Benefits of Base64 Encoding</h2>
+
+<p>
+• Easy data transfer<br>
+• Used in web development<br>
+• Supports image and file encoding<br>
+• Helps store binary data as text
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function encodeText(){
+
+let text=document.getElementById("inputText").value;
+
+
+let encoded=btoa(text);
+
+
+document.getElementById("result").innerHTML=
+"<b>Encoded:</b><br>"+encoded;
+
+
+}
+
+
+
+
+function decodeText(){
+
+
+let text=document.getElementById("inputText").value;
+
+
+try{
+
+
+let decoded=atob(text);
+
+
+document.getElementById("result").innerHTML=
+"<b>Decoded:</b><br>"+decoded;
+
+
+}
+
+catch(error){
+
+
+document.getElementById("result").innerHTML=
+"<span style='color:red'>❌ Invalid Base64 Format</span>";
+
+
+}
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
