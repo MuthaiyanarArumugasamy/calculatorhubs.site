@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Average Calculator | CalculatorHubs.site</title>
+
+<meta name="description" content="Free Average Calculator to find the average (mean) of numbers instantly.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+.calculator{
+max-width:700px;
+margin:40px auto;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.calculator input{
+width:100%;
+padding:12px;
+font-size:17px;
+margin:15px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:14px;
+font-size:18px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#f3f4f6;
+border-radius:10px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+
+.info{
+max-width:900px;
+margin:40px auto;
+line-height:1.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>
+
+<a href="../index.html">
+
+CalculatorHubs.site
+
+</a>
+
+</h1>
+
+</div>
+
+</header>
+
+<div class="calculator">
+
+<h2>Average Calculator</h2>
+
+<p>
+
+Enter numbers separated by commas.
+
+</p>
+
+<input
+type="text"
+id="numbers"
+placeholder="Example: 10,20,30,40,50">
+
+<button onclick="calculateAverage()">
+
+Calculate Average
+
+</button>
+
+<div
+class="result"
+id="result">
+
+Your result will appear here.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<h2>What is Average?</h2>
+
+<p>
+
+The average (mean) is the sum of all numbers divided by the total number of values.
+
+</p>
+
+<h2>Formula</h2>
+
+<p>
+
+Average = (Sum of Numbers) ÷ (Total Numbers)
+
+</p>
+
+<h2>Example</h2>
+
+<p>
+
+Numbers: 10, 20, 30, 40, 50
+
+</p>
+
+<p>
+
+Sum = 150
+
+</p>
+
+<p>
+
+Count = 5
+
+</p>
+
+<p>
+
+Average = 150 ÷ 5 = 30
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 CalculatorHubs.site
+
+</p>
+
+</footer>
+
+<script>
+
+function calculateAverage(){
+
+let input=document.getElementById("numbers").value;
+
+if(input.trim()==""){
+
+document.getElementById("result").innerHTML="Please enter numbers.";
+
+return;
+
+}
+
+let arr=input.split(",");
+
+let sum=0;
+
+let count=0;
+
+for(let i=0;i<arr.length;i++){
+
+let num=parseFloat(arr[i]);
+
+if(!isNaN(num)){
+
+sum+=num;
+
+count++;
+
+}
+
+}
+
+if(count==0){
+
+document.getElementById("result").innerHTML="Invalid input.";
+
+return;
+
+}
+
+let average=sum/count;
+
+document.getElementById("result").innerHTML=
+
+"Average = <br><b>"+average.toFixed(2)+"</b>";
+
+}
+
+</script>
+
+</body>
+</html>
