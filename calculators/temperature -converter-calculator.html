@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter | CalculatorHubs</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+padding:20px;
+}
+.container{
+max-width:600px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+button{
+background:#ff5722;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+button:hover{
+background:#e64a19;
+}
+#result{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Temperature Converter</h1>
+
+<input type="number" id="value" placeholder="Enter Temperature">
+
+<select id="from">
+<option value="C">Celsius</option>
+<option value="F">Fahrenheit</option>
+<option value="K">Kelvin</option>
+</select>
+
+<select id="to">
+<option value="C">Celsius</option>
+<option value="F">Fahrenheit</option>
+<option value="K">Kelvin</option>
+</select>
+
+<button onclick="convert()">Convert</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function convert(){
+
+let value=parseFloat(document.getElementById("value").value);
+
+if(isNaN(value)){
+alert("Enter a valid temperature");
+return;
+}
+
+let from=document.getElementById("from").value;
+let to=document.getElementById("to").value;
+
+let c;
+
+if(from=="C") c=value;
+if(from=="F") c=(value-32)*5/9;
+if(from=="K") c=value-273.15;
+
+let result;
+
+if(to=="C") result=c;
+if(to=="F") result=(c*9/5)+32;
+if(to=="K") result=c+273.15;
+
+document.getElementById("result").innerHTML=
+result.toFixed(2)+" °"+to;
+
+}
+
+</script>
+
+</body>
+</html>
