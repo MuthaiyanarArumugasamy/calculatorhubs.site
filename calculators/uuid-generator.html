@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UUID Generator</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:20px;
+}
+.container{
+max-width:700px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+text-align:center;
+}
+h1{
+margin-bottom:20px;
+}
+input{
+width:100%;
+padding:12px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:5px;
+margin-bottom:15px;
+}
+button{
+padding:12px 20px;
+margin:5px;
+border:none;
+border-radius:5px;
+background:#007bff;
+color:#fff;
+font-size:16px;
+cursor:pointer;
+}
+button:hover{
+background:#0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>UUID Generator</h1>
+
+<input type="text" id="uuid" readonly>
+
+<button onclick="generateUUID()">Generate UUID</button>
+<button onclick="copyUUID()">Copy</button>
+
+</div>
+
+<script>
+function generateUUID(){
+if(window.crypto && crypto.randomUUID){
+document.getElementById("uuid").value = crypto.randomUUID();
+}else{
+let uuid='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+let r=Math.random()*16|0;
+let v=c==='x'?r:(r&0x3|0x8);
+return v.toString(16);
+});
+document.getElementById("uuid").value=uuid;
+}
+}
+
+function copyUUID(){
+let text=document.getElementById("uuid");
