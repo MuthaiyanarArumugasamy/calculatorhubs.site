@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weight Converter | CalculatorHubs</title>
+
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:20px;}
+.container{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,.2);}
+input,select,button{width:100%;padding:12px;margin:10px 0;font-size:16px;}
+button{background:#28a745;color:#fff;border:none;border-radius:5px;cursor:pointer;}
+button:hover{background:#218838;}
+#result{margin-top:20px;font-size:22px;font-weight:bold;text-align:center;}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Weight Converter</h1>
+
+<input type="number" id="value" placeholder="Enter Weight">
+
+<select id="from">
+<option value="1">Kilogram</option>
+<option value="0.001">Gram</option>
+<option value="2.20462">Pound</option>
+<option value="35.274">Ounce</option>
+</select>
+
+<select id="to">
+<option value="1">Kilogram</option>
+<option value="0.001">Gram</option>
+<option value="2.20462">Pound</option>
+<option value="35.274">Ounce</option>
+</select>
+
+<button onclick="convert()">Convert</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function convert(){
+
+let value=parseFloat(document.getElementById("value").value);
+
+if(isNaN(value)){
+alert("Enter a valid weight");
+return;
+}
+
+let from=parseFloat(document.getElementById("from").value);
+let to=parseFloat(document.getElementById("to").value);
+
+let kg=value/from;
+let answer=kg*to;
+
+document.getElementById("result").innerHTML=
+answer.toFixed(4);
+
+}
+</script>
+
+</body>
+</html>
