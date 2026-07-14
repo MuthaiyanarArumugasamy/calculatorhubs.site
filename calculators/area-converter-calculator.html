@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Area Converter | CalculatorHubs</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+padding:20px;
+}
+.container{
+max-width:600px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+}
+button{
+background:#ff9800;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+button:hover{
+background:#e68900;
+}
+#result{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Area Converter</h1>
+
+<input type="number" id="value" placeholder="Enter Area">
+
+<select id="from">
+<option value="1">Square Meter</option>
+<option value="1000000">Square Kilometer</option>
+<option value="0.092903">Square Foot</option>
+<option value="4046.856">Acre</option>
+<option value="10000">Hectare</option>
+</select>
+
+<select id="to">
+<option value="1">Square Meter</option>
+<option value="1000000">Square Kilometer</option>
+<option value="0.092903">Square Foot</option>
+<option value="4046.856">Acre</option>
+<option value="10000">Hectare</option>
+</select>
+
+<button onclick="convert()">Convert</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function convert(){
+
+let value=parseFloat(document.getElementById("value").value);
+
+if(isNaN(value)){
+alert("Enter a valid area");
+return;
+}
+
+let from=parseFloat(document.getElementById("from").value);
+let to=parseFloat(document.getElementById("to").value);
+
+let sqm=value*from;
+let answer=sqm/to;
+
+document.getElementById("result").innerHTML=
+answer.toFixed(6);
+
+}
+</script>
+
+</body>
+</html>
