@@ -21,41 +21,7 @@ if (menuIcon) {
     });
 }
 
-/* ===================================
-   CALCULATOR SEARCH
-=================================== */
 
-const searchInput = document.querySelector(".search-box input");
-
-if (searchInput) {
-
-    searchInput.addEventListener("keyup", function () {
-
-        let value = this.value.toLowerCase();
-
-        let cards = document.querySelectorAll(
-            ".calculator-card, .category-card, .latest-card"
-        );
-
-        cards.forEach(card => {
-
-            let text = card.innerText.toLowerCase();
-
-            if (text.indexOf(value) > -1) {
-
-                card.style.display = "block";
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-    });
-
-}
 
 /* ===================================
    SMOOTH SCROLL
