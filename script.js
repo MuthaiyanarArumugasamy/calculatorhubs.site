@@ -470,4 +470,43 @@ searchInput.addEventListener("keydown", function(e) {
         searchCalculator();
     }
 });
+/* ===================================
+   SEARCH REDIRECT
+=================================== */
 
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+
+const calculators = {
+    "age": "calculators/age-calculator.html",
+    "bmi": "calculators/bmi-calculator.html",
+    "emi": "calculators/emi-calculator.html",
+    "gst": "calculators/gst-calculator.html",
+    "percentage": "calculators/percentage-calculator.html",
+    "loan": "calculators/loan-calculator.html",
+    "fd": "calculators/fd-calculator.html",
+    "sip": "calculators/sip-calculator.html",
+    "currency": "calculators/currency-converter.html",
+    "converter": "calculators/currency-converter.html"
+};
+
+function searchCalculator() {
+    const value = searchInput.value.toLowerCase().trim();
+
+    for (const key in calculators) {
+        if (value.includes(key)) {
+            window.location.href = calculators[key];
+            return;
+        }
+    }
+
+    alert("Calculator not found!");
+}
+
+searchButton.addEventListener("click", searchCalculator);
+
+searchInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        searchCalculator();
+    }
+});
