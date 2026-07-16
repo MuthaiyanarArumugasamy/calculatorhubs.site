@@ -412,8 +412,12 @@ if (yearElement) {
 =================================== */
 
 console.log("%cCalculatorHubs.site", "color:#2563eb;font-size:22px;font-weight:bold;");
-console.log("%cWebsite Loaded Successfully!", "color:green;font-size:14px;");/* ===================================
-   SEARCH REDIRECT
+console.log("%cWebsite Loaded Successfully!", "color:green;font-size:14px;");
+console.log(window.location.href);
+console.log(document.getElementById("searchInput").value);
+
+
+ /*  SEARCH REDIRECT
 =================================== */
 
 const searchInput = document.getElementById("searchInput");
