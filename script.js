@@ -462,38 +462,3 @@ if (yearElement) {
 
 console.log("%cCalculatorHubs.site", "color:#2563eb;font-size:22px;font-weight:bold;");
 console.log("%cWebsite Loaded Successfully!", "color:green;font-size:14px;");
-const searchInput = document.querySelector(".search-box input");
-const searchBtn = document.querySelector(".search-box button");
-
-function searchCalculator() {
-    const search = searchInput.value.toLowerCase().trim();
-
-    const cards = document.querySelectorAll(".calculator-card");
-
-    let found = false;
-
-    cards.forEach(card => {
-        const title = card.querySelector("h3").textContent.toLowerCase();
-
-        if (title.includes(search)) {
-            card.scrollIntoView({ behavior: "smooth", block: "center" });
-            card.style.border = "3px solid #28a745";
-            setTimeout(() => {
-                card.style.border = "";
-            }, 3000);
-            found = true;
-        }
-    });
-
-    if (!found) {
-        alert("Calculator not found!");
-    }
-}
-
-searchBtn.addEventListener("click", searchCalculator);
-
-searchInput.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        searchCalculator();
-    }
-});
