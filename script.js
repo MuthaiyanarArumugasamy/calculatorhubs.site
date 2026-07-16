@@ -373,21 +373,6 @@ if (newsletterForm) {
 
 }
 
-/* ===================================
-   SEARCH BUTTON
-=================================== */
-
-const searchButton = document.querySelector(".search-box button");
-
-if (searchButton && searchInput) {
-
-    searchButton.addEventListener("click", () => {
-
-        searchInput.dispatchEvent(new KeyboardEvent("keyup"));
-
-    });
-
-}
 
 /* ===================================
    DARK MODE
@@ -462,3 +447,61 @@ if (yearElement) {
 
 console.log("%cCalculatorHubs.site", "color:#2563eb;font-size:22px;font-weight:bold;");
 console.log("%cWebsite Loaded Successfully!", "color:green;font-size:14px;");
+
+/* ===================================
+   SEARCH REDIRECT
+=================================== */
+
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+
+const calculators = {
+    "age": "calculators/age-calculator.html",
+    "age calculator": "calculators/age-calculator.html",
+
+    "bmi": "calculators/bmi-calculator.html",
+    "bmi calculator": "calculators/bmi-calculator.html",
+
+    "emi": "calculators/emi-calculator.html",
+    "emi calculator": "calculators/emi-calculator.html",
+
+    "gst": "calculators/gst-calculator.html",
+    "gst calculator": "calculators/gst-calculator.html",
+
+    "percentage": "calculators/percentage-calculator.html",
+    "percentage calculator": "calculators/percentage-calculator.html",
+
+    "loan": "calculators/loan-calculator.html",
+
+    "sip": "calculators/sip-calculator.html",
+
+    "fd": "calculators/fd-calculator.html",
+
+    "currency": "calculators/currency-converter.html",
+
+    "discount": "calculators/discount-calculator.html",
+
+    "attendance": "calculators/attendance-calculator.html",
+
+    "cgpa": "calculators/cgpa-calculator.html"
+};
+
+function searchCalculator() {
+
+    const value = searchInput.value.toLowerCase().trim();
+
+    if (calculators[value]) {
+        window.location.href = calculators[value];
+    } else {
+        alert("Calculator not found!");
+    }
+}
+
+searchButton.addEventListener("click", searchCalculator);
+
+searchInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        searchCalculator();
+    }
+});
+
