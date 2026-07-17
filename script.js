@@ -419,55 +419,60 @@ console.log(document.getElementById("searchInput").value);
 
  /*  SEARCH REDIRECT
 =================================== */
-
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 
-const calculators = {
-    "age": "calculators/age-calculator.html",
-    "bmi": "calculators/bmi-calculator.html",
-    "emi": "calculators/emi-calculator.html",
-    "gst": "calculators/gst-calculator.html",
-    "percentage": "calculators/percentage-calculator.html",
-    "loan": "calculators/loan-calculator.html",
-    "fd": "calculators/fd-calculator.html",
-    "sip": "calculators/sip-calculator.html",
-    "currency": "calculators/currency-converter.html",
-    "converter": "calculators/currency-converter.html",
-    "currency converter": "calculators/currency-converter.html",
-    "attendance": "calculators/attendance-calculator.html",
-    "cgpa": "calculators/cgpa-calculator.html"
-};
-
 function searchCalculator() {
+    const search = searchInput.value.trim().toLowerCase();
 
-    if (!searchInput) return;
+    const pages = {
+        "health": "Health-calculator.html",
+        "finance": "Finance-calculator.html",
+        "math": "Math-calculator.html",
+        "education": "Education-calculator.html",
+        "converter": "Converter-calculator.html",
+        "converters": "Converter-calculator.html",
+        "date": "Date & Time-calculator.html",
+        "time": "Date & Time-calculator.html",
+        "home": "Home-calculator.html",
+        "developer": "Developer-calculator.html",
 
-    const value = searchInput.value.trim().toLowerCase();
+        "age": "calculators/age-calculator.html",
+        "age calculator": "calculators/age-calculator.html",
 
-    for (let key in calculators) {
-        if (value.includes(key)) {
-            window.location.href = calculators[key];
-            return;
-        }
+        "bmi": "calculators/bmi-calculator.html",
+        "bmi calculator": "calculators/bmi-calculator.html",
+
+        "emi": "calculators/emi-calculator.html",
+        "emi calculator": "calculators/emi-calculator.html",
+
+        "gst": "calculators/gst-calculator.html",
+        "gst calculator": "calculators/gst-calculator.html",
+
+        "percentage": "calculators/percentage-calculator.html",
+
+        "loan": "calculators/loan-calculator.html",
+
+        "fd": "calculators/fd-calculator.html",
+
+        "currency": "calculators/currency-converter.html",
+
+        "sip": "calculators/sip-calculator.html"
+    };
+
+    if (pages[search]) {
+        window.location.href = pages[search];
+    } else {
+        alert("No calculator found for: " + search);
     }
-
-    alert("Calculator not found!");
 }
 
-if (searchButton) {
-    searchButton.addEventListener("click", searchCalculator);
-}
+searchButton.addEventListener("click", searchCalculator);
 
-if (searchInput) {
-    searchInput.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-            searchCalculator();
-        }
-    });
-}
+searchInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        searchCalculator();
+    }
+});
 
-
-
-
-
+c
