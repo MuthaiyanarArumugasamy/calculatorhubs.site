@@ -31,3 +31,39 @@
 </div>
 
 </div>
+
+<div class="calculator-card">
+    <h3>Simple Interest Calculator</h3>
+    <p>Calculate simple interest, total amount, and maturity value instantly.</p>
+
+    <a href="finance/simple-interest/">
+        <button>Open Calculator</button>
+    </a>
+</div>
+
+<ul>
+    <li><a href="finance/simple-interest/">Simple Interest Calculator</a></li>
+</ul>
+
+{
+    name: "Simple Interest Calculator",
+    category: "Finance",
+    url: "finance/simple-interest/"
+}
+
+FV=PV(1+r)^n
+
+function calculateSI() {
+    let principal = parseFloat(document.getElementById("principal").value);
+    let rate = parseFloat(document.getElementById("rate").value);
+    let time = parseFloat(document.getElementById("time").value);
+
+    let interest = (principal * rate * time) / 100;
+    let total = principal + interest;
+
+    document.getElementById("result").innerHTML =
+        "Simple Interest: ₹" + interest.toFixed(2) +
+        "<br>Total Amount: ₹" + total.toFixed(2);
+}
+
+https://calculatorhubs.site/finance/simple-interest/
