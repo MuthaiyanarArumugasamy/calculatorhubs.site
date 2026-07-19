@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadratic Equation Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+}
+.container{
+max-width:600px;
+margin:60px auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
+}
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+box-sizing:border-box;
+}
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+button:hover{
+background:#1d4ed8;
+}
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef6ff;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Quadratic Equation Calculator</h1>
+
+<label>Coefficient a</label>
+<input type="number" id="a">
+
+<label>Coefficient b</label>
+<input type="number" id="b">
+
+<label>Coefficient c</label>
+<input type="number" id="c">
+
+<button onclick="solve()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function solve(){
+
+let a=parseFloat(document.getElementById("a").value);
+let b=parseFloat(document.getElementById("b").value);
+let c=parseFloat(document.getElementById("c").value);
+
+if(isNaN(a)||isNaN(b)||isNaN(c)||a===0){
+document.getElementById("result").innerHTML="Enter valid values (a ≠ 0)";
+return;
+}
+
+let d=b*b-4*a*c;
+
+if(d<0){
+document.getElementById("result").innerHTML="No Real Roots";
+return;
+}
+
+let x1=(-b+Math.sqrt(d))/(2*a);
+let x2=(-b-Math.sqrt(d))/(2*a);
+
+document.getElementById("result").innerHTML=
+"Root 1 = "+x1.toFixed(2)+"<br>Root 2 = "+x2.toFixed(2);
+
+}
+</script>
+
+</body>
+</html>
