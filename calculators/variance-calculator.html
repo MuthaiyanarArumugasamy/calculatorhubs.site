@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variance Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+}
+.container{
+max-width:600px;
+margin:60px auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
+}
+textarea{
+width:100%;
+height:120px;
+padding:12px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:10px;
+box-sizing:border-box;
+}
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+button:hover{
+background:#1d4ed8;
+}
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef6ff;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Variance Calculator</h1>
+
+<p>Enter numbers separated by commas.</p>
+
+<textarea id="numbers" placeholder="10,20,30,40,50"></textarea>
+
+<button onclick="calculateVariance()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateVariance(){
+
+let values=document.getElementById("numbers").value
+.split(",")
+.map(Number)
+.filter(n=>!isNaN(n));
+
+if(values.length===0){
+document.getElementById("result").innerHTML="Enter valid numbers.";
+return;
+}
+
+let mean=values.reduce((a,b)=>a+b,0)/values.length;
+
+let variance=values.reduce((sum,n)=>sum+Math.pow(n-mean,2),0)/values.length;
+
+document.getElementById("result").innerHTML=
+"Variance = "+variance.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
