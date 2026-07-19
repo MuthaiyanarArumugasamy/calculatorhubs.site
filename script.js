@@ -439,6 +439,26 @@ const pages = {
   "loan": "calculators/loan-calculator.html",
   "fd": "calculators/fd-calculator.html",
   "currency": "calculators/currency-converter.html"
+   {
+    name: "Loan Eligibility Calculator",
+    url: "loan-eligibility-calculator.html"
+},
+{
+    name: "Savings Goal Calculator",
+    url: "savings-goal-calculator.html"
+},
+{
+    name: "Inflation Calculator",
+    url: "inflation-calculator.html"
+},
+{
+    name: "Emergency Fund Calculator",
+    url: "emergency-fund-calculator.html"
+},
+{
+    name: "Net Worth Calculator",
+    url: "net-worth-calculator.html"
+}
 };
 
 document.getElementById("searchButton").addEventListener("click", function () {
