@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+}
+.container{
+max-width:600px;
+margin:60px auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-bottom:20px;
+}
+input{
+padding:12px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:10px;
+}
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+margin-top:10px;
+}
+button:hover{
+background:#1d4ed8;
+}
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef6ff;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Matrix Addition Calculator</h1>
+
+<h3>Matrix A</h3>
+<div class="grid">
+<input type="number" id="a11">
+<input type="number" id="a12">
+<input type="number" id="a21">
+<input type="number" id="a22">
+</div>
+
+<h3>Matrix B</h3>
+<div class="grid">
+<input type="number" id="b11">
+<input type="number" id="b12">
+<input type="number" id="b21">
+<input type="number" id="b22">
+</div>
+
+<button onclick="calculate()">Add Matrices</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function calculate(){
+
+let a11=Number(document.getElementById("a11").value);
+let a12=Number(document.getElementById("a12").value);
+let a21=Number(document.getElementById("a21").value);
+let a22=Number(document.getElementById("a22").value);
+
+let b11=Number(document.getElementById("b11").value);
+let b12=Number(document.getElementById("b12").value);
+let b21=Number(document.getElementById("b21").value);
+let b22=Number(document.getElementById("b22").value);
+
+document.getElementById("result").innerHTML=
+`Result Matrix:<br>
+${a11+b11} &nbsp;&nbsp; ${a12+b12}<br>
+${a21+b21} &nbsp;&nbsp; ${a22+b22}`;
+}
+</script>
+
+</body>
+</html>
