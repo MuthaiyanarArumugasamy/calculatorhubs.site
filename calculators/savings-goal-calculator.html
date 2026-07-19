@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Savings Goal Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:600px;
+margin:60px auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef6ff;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Savings Goal Calculator</h1>
+
+<label>Target Savings (₹)</label>
+<input type="number" id="goal">
+
+<label>Time (Months)</label>
+<input type="number" id="months">
+
+<button onclick="calculateSavings()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateSavings(){
+
+let goal=parseFloat(document.getElementById("goal").value);
+let months=parseFloat(document.getElementById("months").value);
+
+if(isNaN(goal)||isNaN(months)||months<=0){
+
+document.getElementById("result").innerHTML="Enter valid values.";
+return;
+
+}
+
+let monthly=goal/months;
+
+document.getElementById("result").innerHTML=
+"Monthly Savings Needed<br>₹"+
+monthly.toLocaleString("en-IN",{maximumFractionDigits:2});
+
+}
+
+</script>
+
+</body>
+</html>
