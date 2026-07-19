@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savings Goal Calculator</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+.container{
+    max-width:420px;
+    margin:30px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+h2{text-align:center;}
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    box-sizing:border-box;
+}
+button{
+    width:100%;
+    padding:12px;
+    background:#0b7dda;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+.result{
+    margin-top:20px;
+    font-size:20px;
+    text-align:center;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Savings Goal Calculator</h2>
+
+<input type="number" id="goal" placeholder="Target Amount">
+
+<input type="number" id="current" placeholder="Current Savings">
+
+<input type="number" id="months" placeholder="Months to Reach Goal">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let goal=parseFloat(document.getElementById("goal").value)||0;
+
+let current=parseFloat(document.getElementById("current").value)||0;
+
+let months=parseFloat(document.getElementById("months").value)||0;
+
+if(months<=0){
+
+document.getElementById("result").innerHTML="Enter valid months";
+
+return;
+
+}
+
+let monthly=(goal-current)/months;
+
+if(monthly<0) monthly=0;
+
+document.getElementById("result").innerHTML=
+"Monthly Savings Needed<br>₹ "+monthly.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
