@@ -1,70 +1,131 @@
-<section class="calculators-section">
-  <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <h2 class="section-title">Finance Calculators</h2>
+<title>Finance Calculators | CalculatorHubs</title>
 
-    <div class="calculator-grid">
+<link rel="stylesheet" href="style.css">
 
-      <div class="calculator-card">
-        <h3>EMI Calculator</h3>
-        <p>Calculate your monthly EMI.</p>
-        <a href="calculators/emi-calculator.html">Open Calculator →</a>
-      </div>
+<style>
 
-      <div class="calculator-card">
-        <h3>GST Calculator</h3>
-        <p>Calculate GST instantly.</p>
-        <a href="calculators/gst-calculator.html">Open Calculator →</a>
-      </div>
+.hero{
+background:linear-gradient(135deg,#2563eb,#1e40af);
+color:#fff;
+padding:80px 20px;
+text-align:center;
+}
 
-      <div class="calculator-card">
-        <h3>SIP Calculator</h3>
-        <p>Estimate your SIP returns.</p>
-        <a href="calculators/sip-calculator.html">Open Calculator →</a>
-      </div>
+.hero h1{
+font-size:42px;
+margin-bottom:15px;
+}
 
-      <div class="calculator-card">
-        <h3>FD Calculator</h3>
-        <p>Calculate Fixed Deposit maturity.</p>
-        <a href="calculators/fd-calculator.html">Open Calculator →</a>
-      </div>
+.hero p{
+font-size:18px;
+opacity:.9;
+}
 
-      <div class="calculator-card">
-        <h3>Loan Calculator</h3>
-        <p>Estimate your monthly loan payments.</p>
-        <a href="calculators/loan-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-section{
+padding:70px 20px;
+background:#f8fafc;
+}
 
-      <div class="calculator-card">
-        <h3>Loan Eligibility Calculator</h3>
-        <p>Check your loan eligibility instantly.</p>
-        <a href="calculators/loan-eligibility-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-section h2{
+text-align:center;
+font-size:38px;
+margin-bottom:50px;
+}
 
-      <div class="calculator-card">
-        <h3>Savings Goal Calculator</h3>
-        <p>Plan your savings target easily.</p>
-        <a href="calculators/savings-goal-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+max-width:1200px;
+margin:auto;
+}
 
-      <div class="calculator-card">
-        <h3>Inflation Calculator</h3>
-        <p>Measure the impact of inflation.</p>
-        <a href="calculators/inflation-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-card{
+background:#fff;
+padding:35px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,.08);
+border-top:6px solid #2563eb;
+transition:.3s;
+}
 
-      <div class="calculator-card">
-        <h3>Emergency Fund Calculator</h3>
-        <p>Calculate emergency savings needs.</p>
-        <a href="calculators/emergency-fund-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 45px rgba(37,99,235,.25);
+}
 
-      <div class="calculator-card">
-        <h3>Net Worth Calculator</h3>
-        <p>Calculate your total net worth.</p>
-        <a href="calculators/net-worth-calculator.html">Open Calculator →</a>
-      </div>
+.calculator-card h3{
+font-size:30px;
+margin-bottom:15px;
+}
 
-    </div>
-  </div>
+.calculator-card p{
+color:#666;
+margin-bottom:25px;
+line-height:1.6;
+}
+
+.calculator-card a{
+color:#2563eb;
+font-weight:bold;
+text-decoration:none;
+font-size:18px;
+}
+
+.calculator-card a:hover{
+text-decoration:underline;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="hero">
+
+<h1>Finance Calculators</h1>
+
+<p>Free online Finance Calculators for students, investors and professionals.</p>
+
 </section>
+
+<section class="calculator-section">
+
+<h2>Finance Calculators</h2>
+
+<div class="calculator-grid">
+
+<div class="calculator-card">
+<h3>EMI Calculator</h3>
+<p>Calculate your monthly EMI.</p>
+<a href="calculators/emi-calculator.html">Open Calculator →</a>
+</div>
+
+<div class="calculator-card">
+<h3>GST Calculator</h3>
+<p>Calculate GST instantly.</p>
+<a href="calculators/gst-calculator.html">Open Calculator →</a>
+</div>
+
+<div class="calculator-card">
+<h3>SIP Calculator</h3>
+<p>Estimate your SIP returns.</p>
+<a href="calculators/sip-calculator.html">Open Calculator →</a>
+</div>
+
+<div class="calculator-card">
+<h3>FD Calculator</h3>
+<p>Calculate Fixed Deposit maturity.</p>
+<a href="calculators/fd-calculator.html">Open Calculator →</a>
+</div>
+
+<div class="calculator-card">
+<h3>Loan Calculator</h3>
+<p>Estimate your monthly loan payments.</
