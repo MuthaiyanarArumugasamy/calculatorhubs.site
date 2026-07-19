@@ -440,14 +440,12 @@ const pages = {
   "fd": "calculators/fd-calculator.html",
   "currency": "calculators/currency-converter.html",
 
-  /* 👇 New calculators */
   "loan eligibility": "calculators/loan-eligibility-calculator.html",
   "savings goal": "calculators/savings-goal-calculator.html",
   "inflation": "calculators/inflation-calculator.html",
   "emergency fund": "calculators/emergency-fund-calculator.html",
   "net worth": "calculators/net-worth-calculator.html"
 };
-
 document.getElementById("searchButton").addEventListener("click", function () {
   let query = document.getElementById("searchInput").value.toLowerCase().trim();
 
