@@ -445,6 +445,11 @@ const pages = {
   "inflation": "calculators/inflation-calculator.html",
   "emergency fund": "calculators/emergency-fund-calculator.html",
   "net worth": "calculators/net-worth-calculator.html"
+   "quadratic": "calculators/quadratic-calculator.html",
+   "matrix": "calculators/matrix-calculator.html",
+   "variance": "calculators/variance-calculator.html",
+   "pythagorean": "calculators/pythagorean-calculator.html",
+   "prime": "calculators/prime-number-calculator.html"
 };
 document.getElementById("searchButton").addEventListener("click", function () {
   let query = document.getElementById("searchInput").value.toLowerCase().trim();
