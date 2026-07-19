@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inflation Calculator | CalculatorHubs</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:600px;
+margin:60px auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+background:#eef6ff;
+border-radius:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Inflation Calculator</h1>
+
+<label>Current Amount (₹)</label>
+<input type="number" id="amount">
+
+<label>Inflation Rate (%)</label>
+<input type="number" id="rate">
+
+<label>Years</label>
+<input type="number" id="years">
+
+<button onclick="calculateInflation()">Calculate</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateInflation(){
+
+let amount=parseFloat(document.getElementById("amount").value);
+let rate=parseFloat(document.getElementById("rate").value);
+let years=parseFloat(document.getElementById("years").value);
+
+if(isNaN(amount)||isNaN(rate)||isNaN(years)){
+
+document.getElementById("result").innerHTML="Enter valid values.";
+return;
+
+}
+
+let future=amount*Math.pow((1+rate/100),years);
+
+document.getElementById("result").innerHTML=
+"Future Value<br>₹"+
+future.toLocaleString("en-IN",{maximumFractionDigits:2});
+
+}
+
+</script>
+
+</body>
+</html>
