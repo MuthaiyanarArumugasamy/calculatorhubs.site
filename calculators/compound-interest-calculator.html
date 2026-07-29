@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound Interest Calculator | CalculatorHubs</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:500px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+h2{
+    text-align:center;
+    color:#0077cc;
+}
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px;
+}
+button{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:#0077cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:18px;
+    cursor:pointer;
+}
+button:hover{
+    background:#005fa3;
+}
+.result{
+    margin-top:20px;
+    padding:15px;
+    background:#eaf8ea;
+    border-radius:8px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Compound Interest Calculator</h2>
+
+<label>Principal Amount (₹)</label>
+<input type="number" id="principal" placeholder="100000">
+
+<label>Annual Interest Rate (%)</label>
+<input type="number" id="rate" placeholder="8">
+
+<label>Time (Years)</label>
+<input type="number" id="time" placeholder="5">
+
+<label>Compounded</label>
+<select id="compound">
+<option value="1">Yearly</option>
+<option value="2">Half-Yearly</option>
+<option value="4">Quarterly</option>
+<option value="12">Monthly</option>
+<option value="365">Daily</option>
+</select>
+
+<button onclick="calculateCI()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculateCI(){
+
+let P=parseFloat(document.getElementById("principal").value);
+
+let R=parseFloat(document.getElementById("rate").value);
+
+let T=parseFloat(document.getElementById("time").value);
+
+let N=parseFloat(document.getElementById("compound").value);
+
+if(isNaN(P)||isNaN(R)||isNaN(T)){
+document.getElementById("result").innerHTML="Please enter all values.";
+return;
+}
+
+let amount=P*Math.pow((1+R/(100*N)),N*T);
+
+let interest=amount-P;
+
+document.getElementById("result").innerHTML=
+"<b>Total Amount:</b> ₹"+amount.toFixed(2)+
+"<br><b>Interest Earned:</b> ₹"+interest.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
