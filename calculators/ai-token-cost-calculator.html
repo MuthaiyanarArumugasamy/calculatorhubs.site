@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Token Cost Calculator | CalculatorHubs</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7fb;
+padding:20px;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+h2{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:6px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:20px;
+background:#eef4ff;
+padding:15px;
+border-radius:8px;
+line-height:1.8;
+font-size:18px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>AI Token Cost Calculator</h2>
+
+<label>Input Tokens</label>
+<input type="number" id="inputTokens" placeholder="100000">
+
+<label>Output Tokens</label>
+<input type="number" id="outputTokens" placeholder="50000">
+
+<label>Input Cost (per 1 Million Tokens) ($)</label>
+<input type="number" id="inputPrice" value="5" step="0.01">
+
+<label>Output Cost (per 1 Million Tokens) ($)</label>
+<input type="number" id="outputPrice" value="15" step="0.01">
+
+<button onclick="calculateCost()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculateCost(){
+
+let inputTokens=parseFloat(document.getElementById("inputTokens").value);
+let outputTokens=parseFloat(document.getElementById("outputTokens").value);
+let inputPrice=parseFloat(document.getElementById("inputPrice").value);
+let outputPrice=parseFloat(document.getElementById("outputPrice").value);
+
+if(isNaN(inputTokens)||isNaN(outputTokens)||isNaN(inputPrice)||isNaN(outputPrice)){
+document.getElementById("result").innerHTML="Please enter all values.";
+return;
+}
+
+let inputCost=(inputTokens/1000000)*inputPrice;
+let outputCost=(outputTokens/1000000)*outputPrice;
+let total=inputCost+outputCost;
+
+document.getElementById("result").innerHTML=
+"<b>Input Cost:</b> $"+inputCost.toFixed(4)+
+"<br><b>Output Cost:</b> $"+outputCost.toFixed(4)+
+"<br><b>Total Cost:</b> $"+total.toFixed(4);
+
+}
+
+</script>
+
+</body>
+</html>
