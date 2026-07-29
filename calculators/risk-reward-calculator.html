@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Reward Calculator | CalculatorHubs</title>
+
+<style>
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+margin:0;
+padding:20px;
+background:#f4f4f4;
+}
+.container{
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+h2{
+text-align:center;
+color:#1e88e5;
+}
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:16px;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#1e88e5;
+color:#fff;
+border:none;
+border-radius:5px;
+font-size:18px;
+cursor:pointer;
+}
+.result{
+margin-top:20px;
+padding:15px;
+background:#eef7ff;
+border-radius:8px;
+line-height:1.8;
+font-size:18px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Risk Reward Calculator</h2>
+
+<label>Entry Price</label>
+<input type="number" id="entry" step="0.01">
+
+<label>Stop Loss</label>
+<input type="number" id="stop" step="0.01">
+
+<label>Target Price</label>
+<input type="number" id="target" step="0.01">
+
+<button onclick="calculateRisk()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculateRisk(){
+
+let entry=parseFloat(document.getElementById("entry").value);
+let stop=parseFloat(document.getElementById("stop").value);
+let target=parseFloat(document.getElementById("target").value);
+
+if(isNaN(entry)||isNaN(stop)||isNaN(target)){
+document.getElementById("result").innerHTML="Please enter all values.";
+return;
+}
+
+let risk=Math.abs(entry-stop);
+let reward=Math.abs(target-entry);
+
+if(risk===0){
+document.getElementById("result").innerHTML="Risk cannot be zero.";
+return;
+}
+
+let ratio=reward/risk;
+
+document.getElementById("result").innerHTML=
+"<b>Risk:</b> "+risk.toFixed(2)+
+"<br><b>Reward:</b> "+reward.toFixed(2)+
+"<br><b>Risk : Reward Ratio</b> = 1 : "+ratio.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
