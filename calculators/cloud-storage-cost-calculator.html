@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Storage Cost Calculator | CalculatorHubs</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:500px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+h2{
+    text-align:center;
+    color:#0078D4;
+}
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+button{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:#0078D4;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    font-size:17px;
+    cursor:pointer;
+}
+.result{
+    margin-top:20px;
+    background:#eef7ff;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Cloud Storage Cost Calculator</h2>
+
+<label>Storage Required (GB)</label>
+<input type="number" id="storage" placeholder="500">
+
+<label>Cost Per GB ($)</label>
+<input type="number" id="price" step="0.01" placeholder="0.02">
+
+<button onclick="calculateStorage()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculateStorage(){
+
+let storage=parseFloat(document.getElementById("storage").value);
+let price=parseFloat(document.getElementById("price").value);
+
+if(isNaN(storage)||isNaN(price)||storage<=0||price<=0){
+document.getElementById("result").innerHTML="Please enter valid values.";
+return;
+}
+
+let monthly=storage*price;
+let yearly=monthly*12;
+
+document.getElementById("result").innerHTML=
+"<b>Monthly Cost:</b> $"+monthly.toFixed(2)+
+"<br><b>Yearly Cost:</b> $"+yearly.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
