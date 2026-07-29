@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAS Storage Calculator | CalculatorHubs</title>
+
+<style>
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+margin:0;
+padding:20px;
+background:#f5f5f5;
+}
+.container{
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+h2{
+text-align:center;
+color:#6c63ff;
+}
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#6c63ff;
+color:#fff;
+border:none;
+border-radius:5px;
+font-size:18px;
+cursor:pointer;
+}
+.result{
+margin-top:20px;
+padding:15px;
+background:#f3f1ff;
+border-radius:8px;
+line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>NAS Storage Calculator</h2>
+
+<label>Number of Drives</label>
+<input type="number" id="drives" placeholder="4">
+
+<label>Drive Size (TB)</label>
+<input type="number" id="size" placeholder="8">
+
+<label>RAID Type</label>
+<select id="raid">
+<option value="1">RAID 0</option>
+<option value="2">RAID 1</option>
+<option value="3">RAID 5</option>
+<option value="4">RAID 6</option>
+</select>
+
+<button onclick="calculateNAS()">Calculate</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+function calculateNAS(){
+
+let drives=parseInt(document.getElementById("drives").value);
+let size=parseFloat(document.getElementById("size").value);
+let raid=document.getElementById("raid").value;
+
+if(isNaN(drives)||isNaN(size)||drives<2||size<=0){
+document.getElementById("result").innerHTML="Enter valid values.";
+return;
+}
+
+let usable=0;
+
+if(raid=="1"){
+usable=drives*size;
+}
+else if(raid=="2"){
+usable=(drives/2)*size;
+}
+else if(raid=="3"){
+usable=(drives-1)*size;
+}
+else if(raid=="4"){
+usable=(drives-2)*size;
+}
+
+document.getElementById("result").innerHTML=
+"<b>Raw Capacity:</b> "+(drives*size).toFixed(2)+" TB<br>"+
+"<b>Usable Capacity:</b> "+usable.toFixed(2)+" TB";
+
+}
+
+</script>
+
+</body>
+</html>
