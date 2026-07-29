@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volumetric Weight Calculator | CalculatorHubs</title>
+
+<style>
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+margin:0;
+padding:20px;
+background:#f5f5f5;
+}
+.container{
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+h2{
+text-align:center;
+color:#0077cc;
+}
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:16px;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#0077cc;
+color:#fff;
+border:none;
+border-radius:5px;
+font-size:18px;
+cursor:pointer;
+}
+.result{
+margin-top:20px;
+padding:15px;
+background:#eef7ff;
+border-radius:8px;
+line-height:1.8;
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Volumetric Weight Calculator</h2>
+
+<label>Length (cm)</label>
+<input type="number" id="length">
+
+<label>Width (cm)</label>
+<input type="number" id="width">
+
+<label>Height (cm)</label>
+<input type="number" id="height">
+
+<label>Courier Divisor</label>
+<select id="divisor">
+<option value="5000">5000 (Air)</option>
+<option value="6000">6000 (Express)</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let l=parseFloat(document.getElementById("length").value);
+let w=parseFloat(document.getElementById("width").value);
+let h=parseFloat(document.getElementById("height").value);
+let d=parseFloat(document.getElementById("divisor").value);
+
+if(isNaN(l)||isNaN(w)||isNaN(h)||l<=0||w<=0||h<=0){
+document.getElementById("result").innerHTML="Please enter valid values.";
+return;
+}
+
+let volume=l*w*h;
+let weight=volume/d;
+
+document.getElementById("result").innerHTML=
+"<b>Package Volume:</b> "+volume.toFixed(0)+" cm³<br>"+
+"<b>Volumetric Weight:</b> "+weight.toFixed(2)+" kg";
+
+}
+
+</script>
+
+</body>
+</html>
