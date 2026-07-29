@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internet Download Time Calculator | CalculatorHubs</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+padding:20px;
+}
+.container{
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+h2{
+text-align:center;
+color:#0077cc;
+}
+label{
+font-weight:bold;
+display:block;
+margin-top:15px;
+}
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:16px;
+}
+button{
+width:100%;
+margin-top:20px;
+padding:12px;
+background:#0077cc;
+color:#fff;
+border:none;
+border-radius:5px;
+font-size:18px;
+cursor:pointer;
+}
+.result{
+margin-top:20px;
+padding:15px;
+background:#e8f5e9;
+border-radius:8px;
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Internet Download Time Calculator</h2>
+
+<label>File Size</label>
+<input type="number" id="size" placeholder="Enter file size">
+
+<select id="sizeUnit">
+<option value="1">MB</option>
+<option value="1024">GB</option>
+</select>
+
+<label>Internet Speed (Mbps)</label>
+<input type="number" id="speed" placeholder="100">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let size=parseFloat(document.getElementById("size").value);
+let unit=parseFloat(document.getElementById("sizeUnit").value);
+let speed=parseFloat(document.getElementById("speed").value);
+
+if(isNaN(size)||isNaN(speed)||size<=0||speed<=0){
+document.getElementById("result").innerHTML="Please enter valid values.";
+return;
+}
+
+let totalMB=size*unit;
+
+let seconds=(totalMB*8)/speed;
+
+let h=Math.floor(seconds/3600);
+let m=Math.floor((seconds%3600)/60);
+let s=Math.round(seconds%60);
+
+document.getElementById("result").innerHTML=
+"<b>Estimated Download Time</b><br><br>"+
+h+" Hours "+m+" Minutes "+s+" Seconds";
+
+}
+
+</script>
+
+</body>
+</html>
