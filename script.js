@@ -444,7 +444,7 @@ const pages = {
   "savings goal": "calculators/savings-goal-calculator.html",
   "inflation": "calculators/inflation-calculator.html",
   "emergency fund": "calculators/emergency-fund-calculator.html",
-  "net worth": "calculators/net-worth-calculator.html"
+  "net worth": "calculators/net-worth-calculator.html",
    "quadratic": "calculators/quadratic-calculator.html",
    "matrix": "calculators/matrix-calculator.html",
    "variance": "calculators/variance-calculator.html",
