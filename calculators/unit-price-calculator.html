@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unit Price Calculator | CalculatorHubs</title>
+
+<meta name="description"
+content="Use the free CalculatorHubs Unit Price Calculator to compare the price per unit, kilogram, gram, litre or millilitre of different products.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:600px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.product-box{
+border:1px solid #ddd;
+padding:18px;
+margin-top:20px;
+border-radius:8px;
+background:#fafafa;
+}
+
+.product-box h3{
+margin-top:0;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-top:12px;
+}
+
+input,
+select{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+background:#f7f7f7;
+border-radius:8px;
+font-size:17px;
+line-height:1.8;
+}
+
+.result-item{
+margin-bottom:8px;
+}
+
+.winner{
+font-weight:bold;
+}
+
+.content{
+max-width:900px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+line-height:1.8;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+.content h2{
+text-align:left;
+margin-top:30px;
+}
+
+.content h3{
+margin-top:20px;
+}
+
+@media(max-width:600px){
+
+.container,
+.content{
+margin:20px 12px;
+padding:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>CalculatorHubs</h1>
+
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+
+</header>
+
+
+<!-- CALCULATOR -->
+
+<div class="container">
+
+<h2>Unit Price Calculator</h2>
+
+<p>
+Compare two products to find which one offers the better price per
+unit.
+</p>
+
+
+<!-- PRODUCT A -->
+
+<div class="product-box">
+
+<h3>Product A</h3>
+
+<label>Price</label>
+
+<input
+type="number"
+id="priceA"
+placeholder="Enter price"
+min="0"
+step="any"
+>
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="quantityA"
+placeholder="Enter quantity"
+min="0"
+step="any"
+>
+
+
+<label>Unit</label>
+
+<select id="unitA">
+
+<option value="item">Item</option>
+<option value="g">Gram (g)</option>
+<option value="kg">Kilogram (kg)</option>
+<option value="ml">Millilitre (ml)</option>
+<option value="l">Litre (L)</option>
+
+</select>
+
+</div>
+
+
+<!-- PRODUCT B -->
+
+<div class="product-box">
+
+<h3>Product B</h3>
+
+<label>Price</label>
+
+<input
+type="number"
+id="priceB"
+placeholder="Enter price"
+min="0"
+step="any"
+>
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="quantityB"
+placeholder="Enter quantity"
+min="0"
+step="any"
+>
+
+
+<label>Unit</label>
+
+<select id="unitB">
+
+<option value="item">Item</option>
+<option value="g">Gram (g)</option>
+<option value="kg">Kilogram (kg)</option>
+<option value="ml">Millilitre (ml)</option>
+<option value="l">Litre (L)</option>
+
+</select>
+
+</div>
+
+
+<button onclick="calculateUnitPrice()">
+Compare Unit Prices
+</button>
+
+
+<div id="result">
+Your comparison will appear here.
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<section class="content">
+
+<h2>About Unit Price Calculator</h2>
+
+<p>
+The CalculatorHubs Unit Price Calculator helps you compare the
+cost of two products based on their quantity. Instead of comparing
+only the package prices, you can compare the price per gram,
+kilogram, millilitre, litre or item.
+</p>
+
+<p>
+This can be useful when shopping for groceries, household products,
+personal-care products and other packaged goods.
+</p>
+
+
+<h2>How to Use the Unit Price Calculator</h2>
+
+<ol>
+
+<li>
+Enter the price of Product A.
+</li>
+
+<li>
+Enter the quantity and select its unit.
+</li>
+
+<li>
+Enter the price and quantity of Product B.
+</li>
+
+<li>
+Select the appropriate unit for Product B.
+</li>
+
+<li>
+Click Compare Unit Prices.
+</li>
+
+<li>
+The calculator will compare the normalized unit prices.
+</li>
+
+</ol>
+
+
+<h2>What Is Unit Price?</h2>
+
+<p>
+Unit price is the cost of a product for a standard quantity or
+single unit. It makes it easier to compare products that are sold
+in different package sizes.
+</p>
+
+<p>
+For example, one product may cost ₹100 for 500 grams while another
+costs ₹180 for 1 kilogram. Comparing only the package price can be
+misleading. Unit price provides a fairer comparison.
+</p>
+
+
+<h2>Unit Price Formula</h2>
+
+<p>
+The basic formula is:
+</p>
+
+<p>
+<strong>
+Unit Price = Product Price ÷ Product Quantity
+</strong>
+</p>
+
+<p>
+For products measured in grams or millilitres, the calculator
+converts quantities to a common base before comparing them.
+</p>
+
+
+<h2>Example</h2>
+
+<p>
+Suppose Product A costs ₹100 for 500 grams.
+</p>
+
+<p>
+Its price per kilogram is:
+</p>
+
+<p>
+₹100 ÷ 500 × 1000 = ₹200 per kg.
+</p>
+
+<p>
+Suppose Product B costs ₹180 for 1 kilogram.
+</p>
+
+<p>
+Its price per kilogram is ₹180.
+</p>
+
+<p>
+Therefore, Product B has the lower unit price and is cheaper per
+kilogram.
+</p>
+
+
+<h2>Why Compare Unit Prices?</h2>
+
+<ul>
+
+<li>Helps identify the better-value product.</li>
+
+<li>Useful when package sizes are different.</li>
+
+<li>Reduces confusion caused by different quantities.</li>
+
+<li>Useful for grocery shopping.</li>
+
+<li>Helps compare bulk and smaller packages.</li>
+
+<li>Saves time during price comparisons.</li>
+
+</ul>
+
+
+<h2>Important Note</h2>
+
+<p>
+For the most accurate comparison, Product A and Product B should
+represent the same type of product and use compatible units.
+For example, compare grams with kilograms or millilitres with
+litres rather than comparing unrelated measurements.
+</p>
+
+
+<h2>Frequently Asked Questions</h2>
+
+
+<h3>What is a unit price?</h3>
+
+<p>
+Unit price is the price of a product for one standard unit of
+measurement or one individual item.
+</p>
+
+
+<h3>Why is unit price useful?</h3>
+
+<p>
+Unit price makes it easier to compare products with different
+package sizes and determine which option provides better value.
+</p>
+
+
+<h3>Can I compare grams and kilograms?</h3>
+
+<p>
+Yes. The calculator converts the quantities to a common measurement
+before comparing their unit prices.
+</p>
+
+
+<h3>Can I compare millilitres and litres?</h3>
+
+<p>
+Yes. Millilitres and litres are automatically normalized for the
+comparison.
+</p>
+
+
+<h3>Can I compare products sold individually?</h3>
+
+<p>
+Yes. Select Item as the unit when comparing products sold by the
+number of items.
+</p>
+
+
+<h3>Is the Unit Price Calculator free?</h3>
+
+<p>
+Yes. The CalculatorHubs Unit Price Calculator is free to use
+without creating an account.
+</p>
+
+
+<h2>Related Calculators</h2>
+
+<ul>
+
+<li>
+<a href="discount-calculator.html">
+Discount Calculator
+</a>
+</li>
+
+<li>
+<a href="profit-margin-calculator.html">
+Profit Margin Calculator
+</a>
+</li>
+
+<li>
+<a href="weight-converter-calculator.html">
+Weight Converter
+</a>
+</li>
+
+<li>
+<a href="volumetric-weight-calculator.html">
+Volumetric Weight Calculator
+</a>
+</li>
+
+</ul>
+
+</section>
+
+
+<footer>
+
+<p>
+© 2026 CalculatorHubs. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+function convertToBase(quantity,unit){
+
+if(unit==="kg"){
+return quantity * 1000;
+}
+
+if(unit==="g"){
+return quantity;
+}
+
+if(unit==="l"){
+return quantity * 1000;
+}
+
+if(unit==="ml"){
+return quantity;
+}
+
+return quantity;
+
+}
+
+
+function calculateUnitPrice(){
+
+let priceA=parseFloat(
+document.getElementById("priceA").value
+);
+
+let quantityA=parseFloat(
+document.getElementById("quantityA").value
+);
+
+let unitA=document.getElementById("unitA").value;
+
+
+let priceB=parseFloat(
+document.getElementById("priceB").value
+);
+
+let quantityB=parseFloat(
+document.getElementById("quantityB").value
+);
+
+let unitB=document.getElementById("unitB").value;
+
+
+if(
+isNaN(priceA) ||
+isNaN(quantityA) ||
+isNaN(priceB) ||
+isNaN(quantityB)
+){
+
+alert("Please enter price and quantity for both products.");
+
+return;
+
+}
+
+
+if(
+priceA<0 ||
+priceB<0 ||
+quantityA<=0 ||
+quantityB<=0
+){
+
+alert("Please enter valid positive quantities and prices.");
+
+return;
+
+}
+
+
+/*
+For item comparisons, both products must use Item.
+For weight comparisons, both must use g/kg.
+For volume comparisons, both must use ml/l.
+*/
+
+let weightUnits=["g","kg"];
+let volumeUnits=["ml","l"];
+
+
+let typeA=
+weightUnits.includes(unitA) ? "weight" :
+volumeUnits.includes(unitA) ? "volume" :
+"item";
+
+
+let typeB=
+weightUnits.includes(unitB) ? "weight" :
+volumeUnits.includes(unitB) ? "volume" :
+"item";
+
+
+if(typeA!==typeB){
+
+alert(
+"Please compare compatible units. Use weight units together, volume units together, or Item for both products."
+);
+
+return;
+
+}
+
+
+let unitPriceA;
+let unitPriceB;
+let displayUnit;
+
+
+if(typeA==="weight"){
+
+let baseA=convertToBase(quantityA,unitA);
+let baseB=convertToBase(quantityB,unitB);
+
+unitPriceA=(priceA/baseA)*1000;
+unitPriceB=(priceB/baseB)*1000;
+
+displayUnit="kg";
+
+}
+else if(typeA==="volume"){
+
+let baseA=convertToBase(quantityA,unitA);
+let baseB=convertToBase(quantityB,unitB);
+
+unitPriceA=(priceA/baseA)*1000;
+unitPriceB=(priceB/baseB)*1000;
+
+displayUnit="L";
+
+}
+else{
+
+unitPriceA=priceA/quantityA;
+unitPriceB=priceB/quantityB;
+
+displayUnit="item";
+
+}
+
+
+let difference=Math.abs(unitPriceA-unitPriceB);
+
+let cheaper="";
+
+
+if(unitPriceA<unitPriceB){
+
+cheaper="Product A offers the better unit price.";
+
+}
+else if(unitPriceB<unitPriceA){
+
+cheaper="Product B offers the better unit price.";
+
+}
+else{
+
+cheaper="Both products have the same unit price.";
+
+}
+
+
+document.getElementById("result").innerHTML=
+
+"<div class='result-item'>" +
+"<b>Product A:</b> ₹" +
+unitPriceA.toFixed(2) +
+" per " +
+displayUnit +
+"</div>" +
+
+"<div class='result-item'>" +
+"<b>Product B:</b> ₹" +
+unitPriceB.toFixed(2) +
+" per " +
+displayUnit +
+"</div>" +
+
+"<div class='result-item'>" +
+"<b>Difference:</b> ₹" +
+difference.toFixed(2) +
+" per " +
+displayUnit +
+"</div>" +
+
+"<div class='result-item winner'>" +
+cheaper +
+"</div>";
+
+}
+
+</script>
+
+</body>
+
+</html>
