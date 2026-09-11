@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profit Margin Calculator | CalculatorHubs</title>
+
+<meta name="description"
+content="Use the free CalculatorHubs Profit Margin Calculator to calculate profit, loss, profit margin, markup percentage and selling price.">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:500px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-top:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+background:#f7f7f7;
+border-radius:8px;
+font-size:17px;
+line-height:1.8;
+}
+
+.result-item{
+margin-bottom:8px;
+}
+
+.content{
+max-width:900px;
+margin:40px auto;
+background:#fff;
+padding:25px;
+line-height:1.8;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+.content h2{
+text-align:left;
+margin-top:30px;
+}
+
+.content h3{
+margin-top:20px;
+}
+
+@media(max-width:600px){
+
+.container,
+.content{
+margin:20px 12px;
+padding:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>CalculatorHubs</h1>
+
+<nav>
+<a href="../index.html">Home</a>
+</nav>
+
+</header>
+
+
+<!-- CALCULATOR -->
+
+<div class="container">
+
+<h2>Profit Margin Calculator</h2>
+
+<label>Cost Price</label>
+
+<input
+type="number"
+id="costPrice"
+placeholder="Enter cost price"
+min="0"
+step="any"
+>
+
+
+<label>Selling Price</label>
+
+<input
+type="number"
+id="sellingPrice"
+placeholder="Enter selling price"
+min="0"
+step="any"
+>
+
+
+<button onclick="calculateProfitMargin()">
+Calculate Profit Margin
+</button>
+
+
+<div id="result">
+Your profit or loss will appear here.
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<section class="content">
+
+<h2>About Profit Margin Calculator</h2>
+
+<p>
+The CalculatorHubs Profit Margin Calculator helps you calculate
+profit, loss, profit margin, markup percentage and the difference
+between cost price and selling price.
+</p>
+
+<p>
+This calculator can be useful for business owners, freelancers,
+online sellers, retailers, students and anyone who wants to
+understand the profitability of a product or service.
+</p>
+
+
+<h2>How to Use the Profit Margin Calculator</h2>
+
+<ol>
+
+<li>
+Enter the cost price of the product or service.
+</li>
+
+<li>
+Enter the selling price.
+</li>
+
+<li>
+Click the Calculate Profit Margin button.
+</li>
+
+<li>
+The calculator will display the profit or loss, profit margin and
+markup percentage.
+</li>
+
+</ol>
+
+
+<h2>Profit Margin Formula</h2>
+
+<p>
+Profit is calculated by subtracting the cost price from the selling
+price.
+</p>
+
+<p>
+<strong>Profit = Selling Price − Cost Price</strong>
+</p>
+
+<p>
+Profit margin is calculated as the profit divided by the selling
+price, multiplied by 100.
+</p>
+
+<p>
+<strong>
+Profit Margin = (Profit ÷ Selling Price) × 100
+</strong>
+</p>
+
+<p>
+Markup percentage is calculated using the cost price as the base.
+</p>
+
+<p>
+<strong>
+Markup = (Profit ÷ Cost Price) × 100
+</strong>
+</p>
+
+
+<h2>Example</h2>
+
+<p>
+Suppose a product costs ₹500 and is sold for ₹750.
+</p>
+
+<p>
+Profit = ₹750 − ₹500 = ₹250
+</p>
+
+<p>
+Profit Margin = (₹250 ÷ ₹750) × 100 = 33.33%
+</p>
+
+<p>
+Markup = (₹250 ÷ ₹500) × 100 = 50%
+</p>
+
+<p>
+Therefore, the product has a profit of ₹250, a profit margin of
+33.33% and a markup of 50%.
+</p>
+
+
+<h2>Profit Margin vs Markup</h2>
+
+<p>
+Profit margin and markup are related but they use different
+bases for calculation.
+</p>
+
+<ul>
+
+<li>
+<strong>Profit Margin:</strong> Profit as a percentage of selling price.
+</li>
+
+<li>
+<strong>Markup:</strong> Profit as a percentage of cost price.
+</li>
+
+</ul>
+
+<p>
+For example, if the cost price is ₹100 and the selling price is
+₹150, the profit is ₹50. The profit margin is 33.33%, while the
+markup is 50%.
+</p>
+
+
+<h2>Benefits of Using a Profit Margin Calculator</h2>
+
+<ul>
+
+<li>Quickly calculates profit or loss.</li>
+
+<li>Calculates profit margin percentage.</li>
+
+<li>Calculates markup percentage.</li>
+
+<li>Useful for product pricing decisions.</li>
+
+<li>Helps compare business profitability.</li>
+
+<li>Saves time compared with manual calculations.</li>
+
+<li>Works on desktop and mobile devices.</li>
+
+</ul>
+
+
+<h2>Important Note</h2>
+
+<p>
+The calculation is based only on the cost price and selling price
+entered by the user. Additional business expenses such as taxes,
+shipping, advertising, salaries and operating costs are not included
+unless they are already included in the cost price.
+</p>
+
+
+<h2>Frequently Asked Questions</h2>
+
+
+<h3>What is profit margin?</h3>
+
+<p>
+Profit margin is the percentage of the selling price that represents
+profit. It is calculated by dividing profit by selling price and
+multiplying by 100.
+</p>
+
+
+<h3>What is the difference between profit margin and markup?</h3>
+
+<p>
+Profit margin uses the selling price as its base, while markup uses
+the cost price as its base.
+</p>
+
+
+<h3>Can this calculator calculate a loss?</h3>
+
+<p>
+Yes. If the selling price is lower than the cost price, the calculator
+will show a loss and the corresponding negative percentages.
+</p>
+
+
+<h3>Is the Profit Margin Calculator free?</h3>
+
+<p>
+Yes. The CalculatorHubs Profit Margin Calculator is free to use
+without creating an account.
+</p>
+
+
+<h3>Can I use this calculator for online selling?</h3>
+
+<p>
+Yes. It can be used to estimate the profit and margin of products
+sold through online stores and marketplaces.
+</p>
+
+
+<h3>Does profit margin include taxes and other expenses?</h3>
+
+<p>
+No. The basic calculation uses only the cost price and selling price.
+Other expenses should be included in the cost price if you want them
+to be reflected in the calculation.
+</p>
+
+
+<h2>Related Calculators</h2>
+
+<ul>
+
+<li>
+<a href="break-even-calculator.html">
+Break-Even Calculator
+</a>
+</li>
+
+<li>
+<a href="discount-calculator.html">
+Discount Calculator
+</a>
+</li>
+
+<li>
+<a href="salary-hike-calculator.html">
+Salary Hike Calculator
+</a>
+</li>
+
+</ul>
+
+</section>
+
+
+<footer>
+
+<p>
+© 2026 CalculatorHubs. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+function calculateProfitMargin(){
+
+let cost=parseFloat(
+document.getElementById("costPrice").value
+);
+
+let selling=parseFloat(
+document.getElementById("sellingPrice").value
+);
+
+
+if(isNaN(cost) || isNaN(selling)){
+
+alert("Please enter both cost price and selling price.");
+
+return;
+
+}
+
+
+if(cost < 0 || selling < 0){
+
+alert("Prices cannot be negative.");
+
+return;
+
+}
+
+
+if(cost === 0){
+
+alert("Cost price must be greater than zero.");
+
+return;
+
+}
+
+
+if(selling === 0){
+
+document.getElementById("result").innerHTML=
+
+"<div class='result-item'><b>Loss:</b> ₹" +
+cost.toFixed(2) +
+"</div>" +
+
+"<div class='result-item'><b>Profit Margin:</b> Cannot be calculated</div>" +
+
+"<div class='result-item'><b>Markup:</b> -100.00%</div>";
+
+return;
+
+}
+
+
+let profit=selling-cost;
+
+let profitMargin=(profit/selling)*100;
+
+let markup=(profit/cost)*100;
+
+
+let resultHTML="";
+
+
+if(profit>0){
+
+resultHTML+=
+"<div class='result-item'><b>Profit:</b> ₹" +
+profit.toFixed(2) +
+"</div>";
+
+}
+else if(profit<0){
+
+resultHTML+=
+"<div class='result-item'><b>Loss:</b> ₹" +
+Math.abs(profit).toFixed(2) +
+"</div>";
+
+}
+else{
+
+resultHTML+=
+"<div class='result-item'><b>Result:</b> No Profit, No Loss</div>";
+
+}
+
+
+resultHTML+=
+
+"<div class='result-item'><b>Profit Margin:</b> " +
+profitMargin.toFixed(2) +
+"%</div>" +
+
+"<div class='result-item'><b>Markup:</b> " +
+markup.toFixed(2) +
+"%</div>" +
+
+"<div class='result-item'><b>Cost Price:</b> ₹" +
+cost.toFixed(2) +
+"</div>" +
+
+"<div class='result-item'><b>Selling Price:</b> ₹" +
+selling.toFixed(2) +
+"</div>";
+
+
+document.getElementById("result").innerHTML=resultHTML;
+
+}
+
+</script>
+
+</body>
+
+</html>
