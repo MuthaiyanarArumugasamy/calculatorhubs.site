@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Stack Rush - a fast, addictive stacking game. Build the tallest tower you can.">
+<title>Stack Rush - Free Browser Game | CalculatorHubs</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#0b1020;--panel:#111a30;--text:#f7f8ff;--muted:#aab4cf;--accent:#7c5cff}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at top,#202c52 0,#0b1020 55%,#060912 100%);color:var(--text);display:flex;justify-content:center}
+.game{width:min(100%,520px);min-height:100vh;padding:18px 14px 24px;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.brand{font-weight:900;font-size:22px;letter-spacing:.5px}
+.brand span{color:#9c8aff}
+.stats{display:flex;gap:8px}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 11px;text-align:center;min-width:72px}
+.stat small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.stat b{font-size:18px}
+canvas{width:100%;aspect-ratio:9/14;display:block;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:#080d19;box-shadow:0 18px 50px rgba(0,0,0,.3);touch-action:manipulation}
+.hint{text-align:center;color:var(--muted);font-size:13px;margin:11px 0}
+button{border:0;border-radius:13px;background:var(--accent);color:white;font-weight:800;font-size:16px;padding:13px 18px;min-height:46px;cursor:pointer;box-shadow:0 8px 22px rgba(124,92,255,.28)}
+button:active{transform:scale(.98)}
+#start{display:block;margin:0 auto}
+.overlay{position:fixed;inset:0;background:rgba(3,6,14,.76);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
+.card{width:min(420px,100%);background:#111a30;border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.45)}
+.card h1{margin:0 0 8px;font-size:34px}
+.card p{color:var(--muted);line-height:1.5;margin:8px 0 20px}
+.final{font-size:48px;font-weight:950;margin:8px 0}
+.bestline{color:#cbd3eb;margin-bottom:20px}
+footer{text-align:center;color:#737e9d;font-size:11px;margin-top:auto;padding-top:12px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="game">
+<header>
+  <div class="brand">Calculator<span>Hubs</span></div>
+  <div class="stats">
+    <div class="stat"><small>Score</small><b id="score">0</b></div>
+    <div class="stat"><small>Best</small><b id="best">0</b></div>
+  </div>
+</header>
+
+<canvas id="game" aria-label="Stack Rush game. Tap or click to place the moving block."></canvas>
+<div class="hint">TAP / CLICK to drop the block • Build the highest tower!</div>
+<button id="start" type="button">Start Game</button>
+<footer>Stack Rush • A free CalculatorHubs mini game</footer>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="card">
+    <h1 id="gameTitle">Game Over</h1>
+    <p id="message">Your tower has stopped.</p>
+    <div class="final" id="finalScore">0</div>
+    <div class="bestline">Best score: <b id="finalBest">0</b></div>
+    <button id="again" type="button">Play Again</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const scoreEl = document.getElementById("score");
+  const bestEl = document.getElementById("best");
+  const startBtn = document.getElementById("start");
+  const overlay = document.getElementById("overlay");
+  const againBtn = document.getElementById("again");
+  const finalScore = document.getElementById("finalScore");
+  const finalBest = document.getElementById("finalBest");
+  const title = document.getElementById("gameTitle");
+  const message = document.getElementById("message");
+
+  let W=360,H=560,dpr=1;
+  let blocks=[], moving=null, score=0, best=0, running=false, gameOver=false;
+  let last=0, raf=0, cameraY=0, shake=0;
+  const baseH=28, gap=4;
+
+  try { best = Number(localStorage.getItem("stackRushBest") || 0); } catch(e) {}
+  bestEl.textContent=best;
+
+  function resize(){
+    const rect=canvas.getBoundingClientRect();
+    W=Math.max(280,rect.width);
+    H=Math.max(400,rect.height);
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.floor(W*dpr);
+    canvas.height=Math.floor(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+  window.addEventListener("resize",resize);
+
+  function colorFor(i){
+    const hue=(i*31+245)%360;
+    return `hsl(${hue} 82% 63%)`;
+  }
+
+  function reset(){
+    score=0; scoreEl.textContent="0"; gameOver=false; cameraY=0; shake=0;
+    const width=Math.min(W*.58,240);
+    blocks=[{x:(W-width)/2,y:H-58,w:width,h:baseH,color:colorFor(0)}];
+    moving={x:W-width,y:H-58-baseH-gap,w:width,h:baseH,dir:1,speed:Math.max(150,W*.58),color:colorFor(1)};
+    running=true;
+    overlay.style.display="none";
+    startBtn.style.display="none";
+    last=performance.now();
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(loop);
+  }
+
+  function drop(){
+    if(!running || gameOver) return;
+    const base=blocks[blocks.length-1];
+    const m=moving;
+    const left=Math.max(m.x,base.x);
+    const right=Math.min(m.x+m.w,base.x+base.w);
+    const overlap=right-left;
+    if(overlap<=5){ endGame(); return; }
+
+    const perfect=Math.abs((m.x+m.w/2)-(base.x+base.w/2))<7;
+    const newX=perfect ? base.x : left;
+    const newW=perfect ? base.w : overlap;
+
+    blocks.push({x:newX,y:base.y-baseH-gap,w:newW,h:baseH,color:colorFor(blocks.length)});
+    score++;
+    scoreEl.textContent=score;
+    if(score>best){
+      best=score; bestEl.textContent=best;
+      try{localStorage.setItem("stackRushBest",best)}catch(e){}
+    }
+
+    if(score%5===0) shake=5;
+    if(blocks.length>11){
+      cameraY=Math.max(0,(blocks.length-10)*(baseH+gap));
+    }
+    const y=blocks[blocks.length-1].y-baseH-gap;
+    const speed=Math.min(390,Math.max(150,W*.58)+score*8);
+    moving={x: m.dir>0 ? -m.w : W, y, w:newW,h:baseH,dir:m.dir>0?1:-1,speed,color:colorFor(blocks.length)};
+  }
+
+  function endGame(){
+    running=false;gameOver=true;
+    cancelAnimationFrame(raf);
+    finalScore.textContent=score;
+    finalBest.textContent=best;
+    title.textContent=score>=best && score>0 ? "New Best! 🎉" : "Game Over";
+    message.textContent=score===0 ? "Try timing your first drop!" : `You stacked ${score} block${score===1?"":"s"}. Can you beat it?`;
+    overlay.style.display="flex";
+  }
+
+  function loop(t){
+    if(!running)return;
+    const dt=Math.min(.032,(t-last)/1000); last=t;
+    const m=moving;
+    m.x+=m.dir*m.speed*dt;
+    if(m.x<=-m.w){m.x=-m.w;m.dir=1}
+    if(m.x>=W){m.x=W;m.dir=-1}
+    if(shake>0)shake=Math.max(0,shake-25*dt);
+    draw();
+    raf=requestAnimationFrame(loop);
+  }
+
+  function roundRect(x,y,w,h,r){
+    const rr=Math.min(r,w/2,h/2);
+    ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);
+    ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,"#101a32");g.addColorStop(1,"#070b15");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+    // subtle grid
+    ctx.strokeStyle="rgba(255,255,255,.035)";ctx.lineWidth=1;
+    for(let x=0;x<W;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+    for(let y=0;y<H;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+
+    const sy=H-58;
+    ctx.save();
+    if(shake>0)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
+
+    for(let i=0;i<blocks.length;i++){
+      const b=blocks[i];
+      const y=b.y+cameraY;
+      if(y>H+40||y<-50)continue;
+      ctx.fillStyle=b.color;
+      roundRect(b.x,y,b.w,b.h,7);ctx.fill();
+      ctx.fillStyle="rgba(255,255,255,.16)";
+      roundRect(b.x+2,y+2,Math.max(0,b.w-4),5,3);ctx.fill();
+    }
+
+    if(moving){
+      const y=moving.y+cameraY;
+      if(y>-50&&y<H+40){
+        ctx.fillStyle=moving.color;
+        roundRect(moving.x,y,moving.w,moving.h,7);ctx.fill();
+        ctx.fillStyle="rgba(255,255,255,.18)";
+        roundRect(moving.x+2,y+2,Math.max(0,moving.w-4),5,3);ctx.fill();
+      }
+    }
+
+    ctx.restore();
+    // ground glow
+    const groundY=H-25;
+    ctx.fillStyle="rgba(124,92,255,.16)";
+    ctx.fillRect(0,groundY,W,2);
+  }
+
+  function action(e){
+    e.preventDefault();
+    if(!running){reset();return}
+    drop();
+  }
+
+  canvas.addEventListener("pointerdown",action,{passive:false});
+  startBtn.addEventListener("click",reset);
+  againBtn.addEventListener("click",reset);
+
+  window.addEventListener("keydown",e=>{
+    if((e.code==="Space"||e.code==="Enter") && document.activeElement===document.body){
+      e.preventDefault();
+      if(running)drop(); else reset();
+    }
+  });
+
+  resize();
+})();
+</script>
+</body>
+</html>
