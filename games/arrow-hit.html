@@ -1,1342 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Arrow Hit - CalculatorHubs</title>
-<meta name="description" content="Play Arrow Hit, a fast-paced target shooting game on CalculatorHubs.">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden}
-body{
-  font-family:Arial,sans-serif;
-  background:#08080d;
-  color:#fff;
-  touch-action:none;
-}
-#app{
-  width:100%;
-  height:100%;
-  max-width:520px;
-  margin:auto;
-  background:
-    radial-gradient(circle at 50% 25%,#27213a 0%,#11111b 38%,#07070b 100%);
-  position:relative;
-  overflow:hidden;
-}
-header{
-  height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 16px;
-}
-.logo{
-  font-size:20px;
-  font-weight:900;
-}
-.logo span{color:#ffc928}
-#sound{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  border:1px solid #383845;
-  background:#15151e;
-  color:#fff;
-  font-size:18px;
-}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  padding:0 12px 8px;
-}
-.stat{
-  text-align:center;
-  background:rgba(20,20,30,.9);
-  border:1px solid #30303d;
-  border-radius:12px;
-  padding:7px;
-}
-.stat span{
-  display:block;
-  color:#888895;
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-.stat b{
-  display:block;
-  margin-top:2px;
-  font-size:19px;
-}
-#canvas{
-  width:100%;
-  height:calc(100% - 118px);
-  display:block;
-  touch-action:none;
-}
-.hint{
-  position:absolute;
-  bottom:8px;
-  width:100%;
-  text-align:center;
-  color:#777783;
-  font-size:11px;
-  pointer-events:none;
-}
-#overlay{
-  position:absolute;
-  inset:0;
-  z-index:20;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:rgba(4,4,8,.78);
-  backdrop-filter:blur(8px);
-}
-.card{
-  width:100%;
-  max-width:380px;
-  padding:30px 22px;
-  text-align:center;
-  background:#11111b;
-  border:1px solid #353542;
-  border-radius:25px;
-  box-shadow:0 20px 70px #0008;
-}
-.card h1{
-  font-size:38px;
-  margin-bottom:12px;
-}
-.card h1 span{color:#ffc928}
-.card p{
-  color:#a3a3af;
-  font-size:14px;
-  line-height:1.55;
-}
-.play{
-  width:100%;
-  margin-top:22px;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:#ffc928;
-  color:#111;
-  font-size:17px;
-  font-weight:900;
-  box-shadow:0 5px 0 #9d7600;
-}
-.play:active{
-  transform:translateY(4px);
-  box-shadow:0 1px 0 #9d7600;
-}
-.final{
-  color:#ffc928;
-  font-size:48px;
-  font-weight:900;
-  margin:15px 0 5px;
-}
-.best{
-  color:#888895;
-  font-size:13px;
-}
-.hidden{display:none!important}
-#levelUp{
-  position:absolute;
-  top:135px;
-  left:50%;
-  transform:translateX(-50%);
-  color:#ffc928;
-  font-size:26px;
-  font-weight:900;
-  opacity:0;
-  pointer-events:none;
-  z-index:10;
-}
-.pop{
-  animation:pop .8s ease;
-}
-@keyframes pop{
-  0%{opacity:0;transform:translate(-50%,20px) scale(.7)}
-  30%{opacity:1;transform:translate(-50%,0) scale(1.1)}
-  100%{opacity:0;transform:translate(-50%,-25px) scale(1)}
-}
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Play free online browser games on CalculatorHubs. Try Arrow Hit and more fun games.">
+
+    <meta name="keywords"
+          content="free online games, browser games, Arrow Hit, CalculatorHubs games">
+
+    <title>Games - CalculatorHubs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 50% 20%, #171827 0%, #08080f 45%, #030307 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        header {
+            width: 100%;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(5,5,10,0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #ffc928;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .home-btn:hover {
+            background: #ffc928;
+            color: #111;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .hero-icon {
+            font-size: 55px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 8vw, 58px);
+            line-height: 1.1;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 span {
+            color: #ffc928;
+        }
+
+        .hero p {
+            color: #aaaab7;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* GAMES */
+
+        .games-container {
+            width: min(1000px, 92%);
+            margin: 20px auto 70px;
+        }
+
+        .games-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        /* GAME CARD */
+
+        .game-card {
+            background: rgba(20,20,30,0.88);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+            transition: 0.25s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,201,40,0.5);
+        }
+
+        .game-image {
+            height: 210px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle, #26283b 0%, #10111b 60%, #08080e 100%);
+            font-size: 85px;
+        }
+
+        .game-content {
+            padding: 24px;
+        }
+
+        .game-content h2 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .game-content h2 span {
+            color: #ffc928;
+        }
+
+        .game-content p {
+            color: #a9a9b5;
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 22px;
+        }
+
+        /* PLAY BUTTON */
+
+        .play-btn {
+            display: block;
+            width: 100%;
+            padding: 17px 20px;
+            background: #ffc928;
+            color: #111;
+            text-align: center;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 800;
+            border-radius: 15px;
+            box-shadow: 0 6px 0 #b78d00;
+            transition: 0.15s;
+        }
+
+        .play-btn:hover {
+            background: #ffd84f;
+        }
+
+        .play-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #b78d00;
+        }
+
+        /* COMING SOON */
+
+        .coming-soon {
+            opacity: 0.75;
+        }
+
+        .coming-soon .game-image {
+            filter: grayscale(0.4);
+        }
+
+        .coming-btn {
+            display: block;
+            width: 100%;
+            padding: 17px;
+            text-align: center;
+            border-radius: 15px;
+            background: #292936;
+            color: #aaaab5;
+            font-weight: 700;
+        }
+
+        /* INFO */
+
+        .info {
+            width: min(900px, 92%);
+            margin: 0 auto 70px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            background: rgba(15,15,23,0.8);
+            text-align: center;
+        }
+
+        .info h2 {
+            margin-bottom: 12px;
+        }
+
+        .info p {
+            color: #a5a5b0;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #777783;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #ffc928;
+            text-decoration: none;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px 16px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .home-btn {
+                padding: 8px 13px;
+            }
+
+            .hero {
+                padding: 45px 18px 30px;
+            }
+
+            .hero-icon {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-image {
+                height: 190px;
+                font-size: 75px;
+            }
+
+            .game-content {
+                padding: 21px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="app">
+    <!-- HEADER -->
 
-<header>
-  <div class="logo">Calculator<span>Hubs</span></div>
-  <button id="sound">🔊</button>
-</header>
+    <header>
 
-<div class="stats">
-  <div class="stat">
-    <span>Score</span>
-    <b id="score">0</b>
-  </div>
-  <div class="stat">
-    <span>Level</span>
-    <b id="level">1</b>
-  </div>
-  <div class="stat">
-    <span>Arrows</span>
-    <b id="arrows">8</b>
-  </div>
-</div>
+        <a href="../index.html" class="logo">
+            Calculator<span>Hubs</span>
+        </a>
 
-<canvas id="canvas"></canvas>
+        <a href="../index.html" class="home-btn">
+            ← Home
+        </a>
 
-<div id="levelUp">LEVEL UP!</div>
+    </header>
 
-<div class="hint">
-  Tap anywhere on the target to shoot
-</div>
 
-<div id="overlay">
+    <!-- HERO -->
 
-  <div class="card" id="startCard">
-    <h1>🏹 Arrow <span>Hit</span></h1>
+    <section class="hero">
 
-    <p>
-      Shoot arrows into the rotating target.
-      Don't hit the arrows already stuck in it.
-      How high can you score?
-    </p>
+        <div class="hero-icon">🎮</div>
 
-    <button class="play" id="start">
-      PLAY NOW
-    </button>
-  </div>
+        <h1>
+            Play <span>Games</span>
+        </h1>
 
-  <div class="card hidden" id="gameOverCard">
+        <p>
+            Take a break and enjoy free browser games
+            directly on CalculatorHubs.
+            No downloads. No installation.
+        </p>
 
-    <h1>Game Over</h1>
+    </section>
 
-    <div class="final" id="finalScore">0</div>
 
-    <div class="best">
-      Best Score: <b id="best">0</b>
-    </div>
+    <!-- GAMES -->
 
-    <button class="play" id="restart">
-      PLAY AGAIN
-    </button>
+    <main class="games-container">
 
-  </div>
+        <h2 class="games-title">
+            🔥 Featured Games
+        </h2>
 
-</div>
 
-</div>
+        <div class="games-grid">
 
-<script>
-"use strict";
 
-/* =========================
-   ELEMENTS
-========================= */
+            <!-- ARROW HIT -->
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+            <div class="game-card">
 
-const scoreText = document.getElementById("score");
-const levelText = document.getElementById("level");
-const arrowsText = document.getElementById("arrows");
+                <div class="game-image">
+                    🏹
+                </div>
 
-const overlay = document.getElementById("overlay");
-const startCard = document.getElementById("startCard");
-const gameOverCard = document.getElementById("gameOverCard");
+                <div class="game-content">
 
-const startButton = document.getElementById("start");
-const restartButton = document.getElementById("restart");
+                    <h2>
+                        Arrow <span>Hit</span>
+                    </h2>
 
-const finalScore = document.getElementById("finalScore");
-const bestText = document.getElementById("best");
+                    <p>
+                        Shoot arrows into the rotating target.
+                        Don't hit the arrows already stuck in it.
+                        How high can you score?
+                    </p>
 
-const soundButton = document.getElementById("sound");
-const levelUp = document.getElementById("levelUp");
+                    <!-- WORKING BUTTON -->
 
+                    <a href="./arrow-hit.html"
+                       class="play-btn">
+                        PLAY NOW
+                    </a>
 
-/* =========================
-   VARIABLES
-========================= */
+                </div>
 
-let width = 0;
-let height = 0;
-let ratio = 1;
+            </div>
 
-let playing = false;
 
-let score = 0;
-let level = 1;
-let arrows = 8;
+            <!-- STACK RUSH -->
 
-let bestScore =
-  Number(localStorage.getItem("arrowHitBest") || 0);
+            <div class="game-card">
 
-let rotation = 0;
-let rotationSpeed = 0.012;
+                <div class="game-image">
+                    🧱
+                </div>
 
-let target = {};
+                <div class="game-content">
 
-let flyingArrows = [];
-let stuckArrows = [];
-let particles = [];
+                    <h2>
+                        Stack <span>Rush</span>
+                    </h2>
 
-let soundEnabled = true;
+                    <p>
+                        Stack moving blocks perfectly,
+                        build your tower and beat your
+                        highest score.
+                    </p>
 
+                    <a href="./stack-rush.html"
+                       class="play-btn">
+                        PLAY NOW
+                    </a>
 
-/* =========================
-   RESIZE
-========================= */
+                </div>
 
-function resize(){
+            </div>
 
-  const rect = canvas.getBoundingClientRect();
 
-  width = rect.width;
-  height = rect.height;
+            <!-- COMING SOON -->
 
-  ratio =
-    Math.min(window.devicePixelRatio || 1,2);
+            <div class="game-card coming-soon">
 
-  canvas.width = width * ratio;
-  canvas.height = height * ratio;
+                <div class="game-image">
+                    🎯
+                </div>
 
-  ctx.setTransform(
-    ratio,0,0,ratio,0,0
-  );
+                <div class="game-content">
 
-  createTarget();
-}
+                    <h2>
+                        More <span>Games</span>
+                    </h2>
 
-window.addEventListener("resize",resize);
+                    <p>
+                        More fun and addictive browser
+                        games are coming soon to CalculatorHubs.
+                    </p>
 
+                    <div class="coming-btn">
+                        COMING SOON
+                    </div>
 
-/* =========================
-   TARGET
-========================= */
+                </div>
 
-function createTarget(){
+            </div>
 
-  target = {
 
-    x:width / 2,
+        </div>
 
-    y:height * .34,
+    </main>
 
-    radius:
-      Math.max(
-        58,
-        Math.min(width,height) * .17
-      )
-  };
-}
 
+    <!-- INFO -->
 
-/* =========================
-   START GAME
-========================= */
+    <section class="info">
 
-function startGame(){
+        <h2>
+            🎮 Free Online Browser Games
+        </h2>
 
-  score = 0;
-  level = 1;
-  arrows = 8;
+        <p>
+            Play simple and fun games directly in your
+            browser. CalculatorHubs games are designed
+            for both mobile and desktop devices.
+            No app download is required.
+        </p>
 
-  rotation = 0;
-  rotationSpeed = 0.012;
+    </section>
 
-  flyingArrows = [];
-  stuckArrows = [];
-  particles = [];
 
-  createTarget();
+    <!-- FOOTER -->
 
-  playing = true;
+    <footer>
 
-  updateUI();
+        © 2026
+        <a href="../index.html">
+            CalculatorHubs
+        </a>
+        — Free Online Calculators & Games
 
-  overlay.classList.add("hidden");
+    </footer>
 
-  playTone(600,.05);
-
-  requestAnimationFrame(gameLoop);
-}
-
-
-/* =========================
-   SHOOT
-========================= */
-
-function shoot(){
-
-  if(!playing) return;
-
-  if(arrows <= 0) return;
-
-  const sx = width / 2;
-  const sy = height - 42;
-
-  const dx = target.x - sx;
-  const dy = target.y - sy;
-
-  const distance =
-    Math.sqrt(dx*dx + dy*dy);
-
-  flyingArrows.push({
-
-    x:sx,
-    y:sy,
-
-    vx:(dx / distance) * 16,
-    vy:(dy / distance) * 16,
-
-    checked:false
-  });
-
-  arrows--;
-
-  playTone(700,.04);
-
-  updateUI();
-}
-
-
-/* =========================
-   UPDATE
-========================= */
-
-function update(){
-
-  if(!playing) return;
-
-  rotation += rotationSpeed;
-
-  for(let i=flyingArrows.length-1;i>=0;i--){
-
-    const arrow = flyingArrows[i];
-
-    arrow.x += arrow.vx;
-    arrow.y += arrow.vy;
-
-    const dx =
-      arrow.x - target.x;
-
-    const dy =
-      arrow.y - target.y;
-
-    const distance =
-      Math.sqrt(dx*dx + dy*dy);
-
-    if(distance <= target.radius){
-
-      flyingArrows.splice(i,1);
-
-      handleHit(arrow);
-
-      continue;
-    }
-
-    if(
-      arrow.x < -80 ||
-      arrow.x > width + 80 ||
-      arrow.y < -80
-    ){
-
-      flyingArrows.splice(i,1);
-    }
-  }
-
-  /*
-    Rotate all stuck arrows
-  */
-
-  for(const arrow of stuckArrows){
-
-    arrow.angle += rotationSpeed;
-
-    arrow.x =
-      target.x +
-      Math.cos(
-        arrow.angle
-      ) * target.radius;
-
-    arrow.y =
-      target.y +
-      Math.sin(
-        arrow.angle
-      ) * target.radius;
-  }
-
-  /*
-    Particles
-  */
-
-  for(let i=particles.length-1;i>=0;i--){
-
-    const p = particles[i];
-
-    p.x += p.vx;
-    p.y += p.vy;
-
-    p.vy += .04;
-
-    p.life -= .025;
-
-    if(p.life <= 0)
-      particles.splice(i,1);
-  }
-}
-
-
-/* =========================
-   HIT
-========================= */
-
-function handleHit(arrow){
-
-  const dx =
-    arrow.x - target.x;
-
-  const dy =
-    arrow.y - target.y;
-
-  const angle =
-    Math.atan2(dy,dx) - rotation;
-
-  /*
-    Collision with existing arrows
-  */
-
-  for(const old of stuckArrows){
-
-    let difference =
-      normalizeAngle(
-        angle - old.baseAngle
-      );
-
-    if(Math.abs(difference) < .18){
-
-      createParticles(
-        arrow.x,
-        arrow.y,
-        25,
-        "#ff4757"
-      );
-
-      playTone(130,.25);
-
-      gameOver();
-
-      return;
-    }
-  }
-
-  /*
-    Successful hit
-  */
-
-  stuckArrows.push({
-
-    x:arrow.x,
-    y:arrow.y,
-
-    angle:angle,
-
-    baseAngle:angle
-  });
-
-  score += 10 + level * 2;
-
-  createParticles(
-    arrow.x,
-    arrow.y,
-    15,
-    "#ffc928"
-  );
-
-  playTone(900,.06);
-
-  /*
-    Level up every 50 points
-  */
-
-  const newLevel =
-    Math.floor(score / 50) + 1;
-
-  if(newLevel > level){
-
-    level = newLevel;
-
-    rotationSpeed =
-      0.012 + (level - 1) * .0025;
-
-    showLevelUp();
-
-    playTone(1200,.1);
-  }
-
-  /*
-    Give new arrows
-  */
-
-  if(arrows === 0){
-
-    arrows =
-      Math.min(
-        8 + Math.floor(level / 3),
-        12
-      );
-  }
-
-  updateUI();
-}
-
-
-/* =========================
-   NORMALIZE ANGLE
-========================= */
-
-function normalizeAngle(angle){
-
-  while(angle > Math.PI)
-    angle -= Math.PI * 2;
-
-  while(angle < -Math.PI)
-    angle += Math.PI * 2;
-
-  return angle;
-}
-
-
-/* =========================
-   GAME OVER
-========================= */
-
-function gameOver(){
-
-  playing = false;
-
-  if(score > bestScore){
-
-    bestScore = score;
-
-    localStorage.setItem(
-      "arrowHitBest",
-      bestScore
-    );
-  }
-
-  finalScore.textContent = score;
-  bestText.textContent = bestScore;
-
-  startCard.classList.add("hidden");
-  gameOverCard.classList.remove("hidden");
-
-  overlay.classList.remove("hidden");
-}
-
-
-/* =========================
-   PARTICLES
-========================= */
-
-function createParticles(
-  x,
-  y,
-  count,
-  color
-){
-
-  for(let i=0;i<count;i++){
-
-    const angle =
-      Math.random() *
-      Math.PI * 2;
-
-    const speed =
-      1 + Math.random() * 4;
-
-    particles.push({
-
-      x:x,
-      y:y,
-
-      vx:
-        Math.cos(angle) * speed,
-
-      vy:
-        Math.sin(angle) * speed,
-
-      size:
-        1.5 + Math.random() * 3,
-
-      life:1,
-
-      color:color
-    });
-  }
-}
-
-
-/* =========================
-   DRAW BACKGROUND
-========================= */
-
-function drawBackground(){
-
-  ctx.clearRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-  /*
-    Stars
-  */
-
-  for(let i=0;i<50;i++){
-
-    const x =
-      (i * 97) % width;
-
-    const y =
-      (i * 151) % height;
-
-    ctx.fillStyle =
-      "rgba(255,255,255,.12)";
-
-    ctx.beginPath();
-
-    ctx.arc(
-      x,
-      y,
-      1,
-      0,
-      Math.PI * 2
-    );
-
-    ctx.fill();
-  }
-}
-
-
-/* =========================
-   DRAW TARGET
-========================= */
-
-function drawTarget(){
-
-  const x = target.x;
-  const y = target.y;
-  const r = target.radius;
-
-  ctx.save();
-
-  ctx.translate(x,y);
-
-  ctx.rotate(rotation);
-
-  /*
-    Outer shadow
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r + 8,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#020205";
-
-  ctx.fill();
-
-  /*
-    Outer white
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#ededed";
-
-  ctx.fill();
-
-  /*
-    Dark ring
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r*.77,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#25252d";
-
-  ctx.fill();
-
-  /*
-    Yellow ring
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r*.57,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#ffc928";
-
-  ctx.fill();
-
-  /*
-    Red ring
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r*.36,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#ef4050";
-
-  ctx.fill();
-
-  /*
-    White center
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r*.17,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#fff";
-
-  ctx.fill();
-
-  /*
-    Bullseye
-  */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    r*.075,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle = "#ef4050";
-
-  ctx.fill();
-
-  ctx.restore();
-}
-
-
-/* =========================
-   DRAW STUCK ARROWS
-========================= */
-
-function drawStuckArrows(){
-
-  for(const arrow of stuckArrows){
-
-    const dx =
-      arrow.x - target.x;
-
-    const dy =
-      arrow.y - target.y;
-
-    const angle =
-      Math.atan2(dy,dx);
-
-    ctx.save();
-
-    ctx.translate(
-      arrow.x,
-      arrow.y
-    );
-
-    ctx.rotate(angle);
-
-    /*
-      Arrow shaft
-    */
-
-    ctx.strokeStyle = "#f5f5f5";
-
-    ctx.lineWidth = 4;
-
-    ctx.beginPath();
-
-    ctx.moveTo(-3,0);
-    ctx.lineTo(58,0);
-
-    ctx.stroke();
-
-    /*
-      Arrow head
-    */
-
-    ctx.fillStyle = "#ffc928";
-
-    ctx.beginPath();
-
-    ctx.moveTo(67,0);
-    ctx.lineTo(51,-8);
-    ctx.lineTo(51,8);
-
-    ctx.closePath();
-
-    ctx.fill();
-
-    /*
-      Feathers
-    */
-
-    ctx.strokeStyle = "#ffc928";
-
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(5,0);
-    ctx.lineTo(0,-7);
-
-    ctx.moveTo(5,0);
-    ctx.lineTo(0,7);
-
-    ctx.stroke();
-
-    ctx.restore();
-  }
-}
-
-
-/* =========================
-   DRAW FLYING ARROWS
-========================= */
-
-function drawFlyingArrows(){
-
-  for(const arrow of flyingArrows){
-
-    const angle =
-      Math.atan2(
-        arrow.vy,
-        arrow.vx
-      );
-
-    ctx.save();
-
-    ctx.translate(
-      arrow.x,
-      arrow.y
-    );
-
-    ctx.rotate(angle);
-
-    ctx.strokeStyle = "#fff";
-
-    ctx.lineWidth = 4;
-
-    ctx.beginPath();
-
-    ctx.moveTo(-28,0);
-    ctx.lineTo(22,0);
-
-    ctx.stroke();
-
-    /*
-      Head
-    */
-
-    ctx.fillStyle = "#ffc928";
-
-    ctx.beginPath();
-
-    ctx.moveTo(32,0);
-    ctx.lineTo(18,-8);
-    ctx.lineTo(18,8);
-
-    ctx.closePath();
-
-    ctx.fill();
-
-    /*
-      Feathers
-    */
-
-    ctx.strokeStyle = "#ffc928";
-
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(-20,0);
-    ctx.lineTo(-28,-7);
-
-    ctx.moveTo(-20,0);
-    ctx.lineTo(-28,7);
-
-    ctx.stroke();
-
-    ctx.restore();
-  }
-}
-
-
-/* =========================
-   DRAW SHOOTING ARROW
-========================= */
-
-function drawBottomArrow(){
-
-  const x = width / 2;
-  const y = height - 45;
-
-  ctx.save();
-
-  ctx.translate(x,y);
-
-  ctx.shadowColor = "#ffc928";
-  ctx.shadowBlur = 12;
-
-  ctx.strokeStyle = "#fff";
-
-  ctx.lineWidth = 5;
-
-  ctx.beginPath();
-
-  ctx.moveTo(-25,0);
-  ctx.lineTo(25,0);
-
-  ctx.stroke();
-
-  ctx.shadowBlur = 0;
-
-  ctx.fillStyle = "#ffc928";
-
-  ctx.beginPath();
-
-  ctx.moveTo(36,0);
-  ctx.lineTo(21,-9);
-  ctx.lineTo(21,9);
-
-  ctx.closePath();
-
-  ctx.fill();
-
-  ctx.strokeStyle = "#ffc928";
-
-  ctx.lineWidth = 2;
-
-  ctx.beginPath();
-
-  ctx.moveTo(-21,0);
-  ctx.lineTo(-28,-7);
-
-  ctx.moveTo(-21,0);
-  ctx.lineTo(-28,7);
-
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-
-/* =========================
-   DRAW PARTICLES
-========================= */
-
-function drawParticles(){
-
-  for(const p of particles){
-
-    ctx.globalAlpha =
-      Math.max(0,p.life);
-
-    ctx.fillStyle =
-      p.color;
-
-    ctx.beginPath();
-
-    ctx.arc(
-      p.x,
-      p.y,
-      p.size,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fill();
-  }
-
-  ctx.globalAlpha = 1;
-}
-
-
-/* =========================
-   DRAW
-========================= */
-
-function draw(){
-
-  drawBackground();
-
-  drawTarget();
-
-  drawStuckArrows();
-
-  drawFlyingArrows();
-
-  drawBottomArrow();
-
-  drawParticles();
-
-  /*
-    Level indicator
-  */
-
-  ctx.textAlign = "center";
-
-  ctx.font = "bold 12px Arial";
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.4)";
-
-  ctx.fillText(
-    "LEVEL " + level,
-    width/2,
-    20
-  );
-}
-
-
-/* =========================
-   GAME LOOP
-========================= */
-
-function gameLoop(){
-
-  if(!playing) return;
-
-  update();
-
-  draw();
-
-  requestAnimationFrame(gameLoop);
-}
-
-
-/* =========================
-   UI
-========================= */
-
-function updateUI(){
-
-  scoreText.textContent = score;
-
-  levelText.textContent = level;
-
-  arrowsText.textContent = arrows;
-}
-
-
-/* =========================
-   LEVEL UP
-========================= */
-
-function showLevelUp(){
-
-  levelUp.classList.remove("pop");
-
-  void levelUp.offsetWidth;
-
-  levelUp.classList.add("pop");
-}
-
-
-/* =========================
-   SOUND
-========================= */
-
-let audio = null;
-
-function playTone(
-  frequency,
-  duration
-){
-
-  if(!soundEnabled) return;
-
-  try{
-
-    if(!audio){
-
-      audio =
-        new (
-          window.AudioContext ||
-          window.webkitAudioContext
-        )();
-    }
-
-    const oscillator =
-      audio.createOscillator();
-
-    const gain =
-      audio.createGain();
-
-    oscillator.type = "sine";
-
-    oscillator.frequency.value =
-      frequency;
-
-    gain.gain.setValueAtTime(
-      .04,
-      audio.currentTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      audio.currentTime + duration
-    );
-
-    oscillator.connect(gain);
-
-    gain.connect(audio.destination);
-
-    oscillator.start();
-
-    oscillator.stop(
-      audio.currentTime + duration
-    );
-
-  }catch(error){}
-}
-
-
-/* =========================
-   TOUCH / MOUSE
-========================= */
-
-canvas.addEventListener(
-  "pointerdown",
-  function(event){
-
-    if(!playing) return;
-
-    event.preventDefault();
-
-    shoot();
-  },
-  {passive:false}
-);
-
-
-/* =========================
-   KEYBOARD
-========================= */
-
-window.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.code === "Space"){
-
-      event.preventDefault();
-
-      shoot();
-    }
-
-  }
-);
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-startButton.addEventListener(
-  "click",
-  startGame
-);
-
-restartButton.addEventListener(
-  "click",
-  startGame
-);
-
-soundButton.addEventListener(
-  "click",
-  function(){
-
-    soundEnabled =
-      !soundEnabled;
-
-    soundButton.textContent =
-      soundEnabled ? "🔊" : "🔇";
-
-    if(soundEnabled)
-      playTone(700,.05);
-  }
-);
-
-
-/* =========================
-   INITIALIZE
-========================= */
-
-resize();
-
-bestText.textContent =
-  bestScore;
-
-updateUI();
-
-})();
-</script>
 
 </body>
-  </html>
+</html>
