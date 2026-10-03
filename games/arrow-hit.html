@@ -1,470 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<title>Arrow Hit - CalculatorHubs</title>
 
-    <meta name="description"
-          content="Play free online browser games on CalculatorHubs. Try Arrow Hit and more fun games.">
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-    <meta name="keywords"
-          content="free online games, browser games, Arrow Hit, CalculatorHubs games">
+body{
+    background:#08080f;
+    color:white;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    overflow:hidden;
+    touch-action:none;
+}
 
-    <title>Games - CalculatorHubs</title>
+.top{
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    background:#10101a;
+    border-bottom:1px solid #292936;
+}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:20px;
+    font-weight:bold;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(circle at 50% 20%, #171827 0%, #08080f 45%, #030307 100%);
-            color: white;
-            min-height: 100vh;
-        }
+.logo span{
+    color:#ffc928;
+}
 
-        /* HEADER */
+.back{
+    color:#aaa;
+    text-decoration:none;
+    font-size:14px;
+}
 
-        header {
-            width: 100%;
-            padding: 18px 22px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: rgba(5,5,10,0.85);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+.game{
+    width:100%;
+    max-width:650px;
+    height:calc(100vh - 65px);
+    margin:auto;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at center,#1c1d2b 0%,#0c0c14 55%,#050509 100%);
+}
 
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 23px;
-            font-weight: 800;
-        }
+.scoreboard{
+    position:absolute;
+    top:18px;
+    left:15px;
+    right:15px;
+    display:flex;
+    justify-content:space-between;
+    z-index:10;
+}
 
-        .logo span {
-            color: #ffc928;
-        }
+.box{
+    background:rgba(20,20,30,.9);
+    border:1px solid #30303d;
+    border-radius:12px;
+    padding:8px 14px;
+    text-align:center;
+    min-width:80px;
+}
 
-        .home-btn {
-            text-decoration: none;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 9px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
+.box small{
+    display:block;
+    color:#888;
+    font-size:10px;
+}
 
-        .home-btn:hover {
-            background: #ffc928;
-            color: #111;
-        }
+.box strong{
+    font-size:20px;
+}
 
-        /* HERO */
+.target{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    position:absolute;
+    left:50%;
+    top:42%;
+    transform:translate(-50%,-50%);
+    background:
+        radial-gradient(
+            circle,
+            #ffc928 0 15%,
+            #15151e 15% 27%,
+            #ffc928 27% 43%,
+            #15151e 43% 59%,
+            #ffc928 59% 100%
+        );
+    border:5px solid #ffc928;
+    box-shadow:0 0 30px rgba(255,201,40,.2);
+    transition:transform .05s linear;
+}
 
-        .hero {
-            text-align: center;
-            padding: 55px 20px 35px;
-        }
+.target.hit{
+    animation:hit .18s;
+}
 
-        .hero-icon {
-            font-size: 55px;
-            margin-bottom: 12px;
-        }
+@keyframes hit{
+    50%{transform:translate(-50%,-50%) scale(1.08);}
+}
 
-        .hero h1 {
-            font-size: clamp(35px, 8vw, 58px);
-            line-height: 1.1;
-            margin-bottom: 14px;
-        }
+.arrow{
+    position:absolute;
+    width:8px;
+    height:75px;
+    background:linear-gradient(#ddd,#999);
+    border-radius:5px;
+    transform-origin:50% 100%;
+    z-index:5;
+}
 
-        .hero h1 span {
-            color: #ffc928;
-        }
+.arrow:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-5px;
+    border-left:9px solid transparent;
+    border-right:9px solid transparent;
+    border-bottom:15px solid #ddd;
+}
 
-        .hero p {
-            color: #aaaab7;
-            max-width: 600px;
-            margin: auto;
-            line-height: 1.7;
-            font-size: 16px;
-        }
+.arrow:after{
+    content:"";
+    position:absolute;
+    bottom:-2px;
+    left:-5px;
+    width:18px;
+    height:14px;
+    background:#e33;
+    clip-path:polygon(50% 0,100% 100%,50% 75%,0 100%);
+}
 
-        /* GAMES */
+.shoot-line{
+    position:absolute;
+    width:4px;
+    height:75px;
+    background:#eee;
+    border-radius:5px;
+    left:50%;
+    bottom:85px;
+    transform:translateX(-50%);
+    z-index:4;
+}
 
-        .games-container {
-            width: min(1000px, 92%);
-            margin: 20px auto 70px;
-        }
+.controls{
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+    text-align:center;
+    z-index:20;
+}
 
-        .games-title {
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
+.shoot{
+    width:100%;
+    max-width:380px;
+    border:0;
+    border-radius:16px;
+    padding:18px;
+    background:#ffc928;
+    color:#111;
+    font-size:19px;
+    font-weight:bold;
+    box-shadow:0 6px 0 #b98d00;
+    cursor:pointer;
+}
 
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
-        }
+.shoot:active{
+    transform:translateY(5px);
+    box-shadow:0 1px 0 #b98d00;
+}
 
-        /* GAME CARD */
+.message{
+    position:absolute;
+    top:55%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:90%;
+    z-index:30;
+}
 
-        .game-card {
-            background: rgba(20,20,30,0.88);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.35);
-            transition: 0.25s;
-        }
+.message h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
 
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,201,40,0.5);
-        }
+.message p{
+    color:#aaa;
+    margin-bottom:20px;
+}
 
-        .game-image {
-            height: 210px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background:
-                radial-gradient(circle, #26283b 0%, #10111b 60%, #08080e 100%);
-            font-size: 85px;
-        }
+.restart{
+    border:0;
+    background:#ffc928;
+    color:#111;
+    padding:14px 30px;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:16px;
+}
 
-        .game-content {
-            padding: 24px;
-        }
+.hidden{
+    display:none;
+}
 
-        .game-content h2 {
-            font-size: 27px;
-            margin-bottom: 10px;
-        }
+@media(max-width:500px){
+    .target{
+        width:155px;
+        height:155px;
+    }
 
-        .game-content h2 span {
-            color: #ffc928;
-        }
-
-        .game-content p {
-            color: #a9a9b5;
-            line-height: 1.6;
-            font-size: 15px;
-            margin-bottom: 22px;
-        }
-
-        /* PLAY BUTTON */
-
-        .play-btn {
-            display: block;
-            width: 100%;
-            padding: 17px 20px;
-            background: #ffc928;
-            color: #111;
-            text-align: center;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 800;
-            border-radius: 15px;
-            box-shadow: 0 6px 0 #b78d00;
-            transition: 0.15s;
-        }
-
-        .play-btn:hover {
-            background: #ffd84f;
-        }
-
-        .play-btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 1px 0 #b78d00;
-        }
-
-        /* COMING SOON */
-
-        .coming-soon {
-            opacity: 0.75;
-        }
-
-        .coming-soon .game-image {
-            filter: grayscale(0.4);
-        }
-
-        .coming-btn {
-            display: block;
-            width: 100%;
-            padding: 17px;
-            text-align: center;
-            border-radius: 15px;
-            background: #292936;
-            color: #aaaab5;
-            font-weight: 700;
-        }
-
-        /* INFO */
-
-        .info {
-            width: min(900px, 92%);
-            margin: 0 auto 70px;
-            padding: 28px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 22px;
-            background: rgba(15,15,23,0.8);
-            text-align: center;
-        }
-
-        .info h2 {
-            margin-bottom: 12px;
-        }
-
-        .info p {
-            color: #a5a5b0;
-            line-height: 1.7;
-        }
-
-        /* FOOTER */
-
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            color: #777783;
-            font-size: 14px;
-        }
-
-        footer a {
-            color: #ffc928;
-            text-decoration: none;
-        }
-
-        /* MOBILE */
-
-        @media (max-width: 700px) {
-
-            header {
-                padding: 15px 16px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .home-btn {
-                padding: 8px 13px;
-            }
-
-            .hero {
-                padding: 45px 18px 30px;
-            }
-
-            .hero-icon {
-                font-size: 48px;
-            }
-
-            .hero p {
-                font-size: 14px;
-            }
-
-            .games-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .game-image {
-                height: 190px;
-                font-size: 75px;
-            }
-
-            .game-content {
-                padding: 21px;
-            }
-        }
-    </style>
+    .game{
+        height:calc(100vh - 65px);
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
+<header class="top">
 
-    <header>
+    <a href="../index.html" class="logo">
+        Calculator<span>Hubs</span>
+    </a>
 
-        <a href="../index.html" class="logo">
-            Calculator<span>Hubs</span>
-        </a>
+    <a href="index.html" class="back">
+        ← Games
+    </a>
 
-        <a href="../index.html" class="home-btn">
-            ← Home
-        </a>
+</header>
 
-    </header>
+<div class="game" id="game">
 
+    <div class="scoreboard">
 
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="hero-icon">🎮</div>
-
-        <h1>
-            Play <span>Games</span>
-        </h1>
-
-        <p>
-            Take a break and enjoy free browser games
-            directly on CalculatorHubs.
-            No downloads. No installation.
-        </p>
-
-    </section>
-
-
-    <!-- GAMES -->
-
-    <main class="games-container">
-
-        <h2 class="games-title">
-            🔥 Featured Games
-        </h2>
-
-
-        <div class="games-grid">
-
-
-            <!-- ARROW HIT -->
-
-            <div class="game-card">
-
-                <div class="game-image">
-                    🏹
-                </div>
-
-                <div class="game-content">
-
-                    <h2>
-                        Arrow <span>Hit</span>
-                    </h2>
-
-                    <p>
-                        Shoot arrows into the rotating target.
-                        Don't hit the arrows already stuck in it.
-                        How high can you score?
-                    </p>
-
-                    <!-- WORKING BUTTON -->
-
-                    <a href="./arrow-hit.html"
-                       class="play-btn">
-                        PLAY NOW
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- STACK RUSH -->
-
-            <div class="game-card">
-
-                <div class="game-image">
-                    🧱
-                </div>
-
-                <div class="game-content">
-
-                    <h2>
-                        Stack <span>Rush</span>
-                    </h2>
-
-                    <p>
-                        Stack moving blocks perfectly,
-                        build your tower and beat your
-                        highest score.
-                    </p>
-
-                    <a href="./stack-rush.html"
-                       class="play-btn">
-                        PLAY NOW
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- COMING SOON -->
-
-            <div class="game-card coming-soon">
-
-                <div class="game-image">
-                    🎯
-                </div>
-
-                <div class="game-content">
-
-                    <h2>
-                        More <span>Games</span>
-                    </h2>
-
-                    <p>
-                        More fun and addictive browser
-                        games are coming soon to CalculatorHubs.
-                    </p>
-
-                    <div class="coming-btn">
-                        COMING SOON
-                    </div>
-
-                </div>
-
-            </div>
-
-
+        <div class="box">
+            <small>SCORE</small>
+            <strong id="score">0</strong>
         </div>
 
-    </main>
+        <div class="box">
+            <small>LEVEL</small>
+            <strong id="level">1</strong>
+        </div>
 
+        <div class="box">
+            <small>BEST</small>
+            <strong id="best">0</strong>
+        </div>
 
-    <!-- INFO -->
+    </div>
 
-    <section class="info">
+    <div id="target" class="target"></div>
 
-        <h2>
-            🎮 Free Online Browser Games
-        </h2>
+    <div id="shootLine" class="shoot-line"></div>
 
-        <p>
-            Play simple and fun games directly in your
-            browser. CalculatorHubs games are designed
-            for both mobile and desktop devices.
-            No app download is required.
-        </p>
-
-    </section>
-
-
-    <!-- FOOTER -->
-
-    <footer>
-
-        © 2026
-        <a href="../index.html">
-            CalculatorHubs
-        </a>
-        — Free Online Calculators & Games
-
-    </footer>
-
-
-</body>
-</html>
+    <div class="controls">
+        <button id="shoot
