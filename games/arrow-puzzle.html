@@ -2,637 +2,485 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no">
-
-<title>Arrow Puzzle - Free Online Puzzle Game | CalculatorHubs</title>
-
-<meta name="description"
-content="Play Arrow Puzzle online for free. Move the arrows in the correct direction and clear every level.">
+<title>Tap Away Arrows - Arrow Puzzle Game</title>
 
 <style>
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
 }
 
 body{
     font-family:Arial,Helvetica,sans-serif;
+    background:#f7f9fc;
+    color:#17233c;
     min-height:100vh;
-    background:
-        radial-gradient(
-            circle at top,
-            #29234a 0%,
-            #11101f 45%,
-            #07070d 100%
-        );
-    color:white;
-    overflow:hidden;
+    display:flex;
+    justify-content:center;
 }
 
 .game-wrapper{
     width:100%;
     max-width:600px;
-    height:100vh;
-    margin:auto;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
+    min-height:100vh;
+    background:white;
+    padding:22px 16px 35px;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
-.header{
+.top-bar{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    margin-bottom:10px;
+    align-items:center;
+    margin-bottom:12px;
 }
 
-.logo{
-    font-size:21px;
-    font-weight:800;
+.back-btn{
+    border:0;
+    background:none;
+    font-size:30px;
+    color:#168bd3;
+    cursor:pointer;
 }
 
-.logo span{
-    color:#ffc94d;
-}
-
-.stats{
-    display:flex;
-    gap:6px;
-}
-
-.stat{
-    min-width:65px;
-    padding:6px 9px;
+.title{
     text-align:center;
-    border-radius:10px;
-    background:#171624;
-    border:1px solid #2c2a40;
-}
-
-.stat small{
-    display:block;
-    font-size:9px;
-    color:#999;
-}
-
-.stat strong{
-    font-size:15px;
-}
-
-/* =========================
-   GAME AREA
-========================= */
-
-#game{
-    position:relative;
     flex:1;
-    min-height:500px;
-    overflow:hidden;
-
-    border-radius:22px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #25213c 0%,
-            #12111e 45%,
-            #08080f 100%
-        );
-
-    border:1px solid #302e45;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.55);
-
-    touch-action:manipulation;
 }
 
-/* =========================
-   LEVEL
-========================= */
+.title h1{
+    font-size:28px;
+    line-height:1.1;
+    color:#34415f;
+}
+
+.title h1 span{
+    display:block;
+}
+
+.settings{
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:#fff;
+    color:#168bd3;
+    font-size:25px;
+    cursor:pointer;
+}
+
+/* LEVEL */
 
 .level{
-    position:absolute;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-
-    padding:7px 17px;
-
-    border-radius:20px;
-
-    background:#191827;
-
-    border:1px solid #37354c;
-
-    font-size:13px;
-
-    z-index:20;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin:8px 0 15px;
 }
 
-/* =========================
-   BOARD
-========================= */
+/* INFO */
 
-#board{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    width:min(88vw,430px);
-    height:min(88vw,430px);
-
-    max-height:55vh;
-    max-width:55vh;
-
-    display:grid;
-
-    gap:6px;
-
-    padding:8px;
-
-    border-radius:18px;
-
-    background:#0d0c16;
-
-    border:1px solid #353249;
-
-    box-shadow:
-        inset 0 0 25px rgba(0,0,0,.5);
-}
-
-/* =========================
-   CELLS
-========================= */
-
-.cell{
-    position:relative;
-
+.info{
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
-
-    border-radius:9px;
-
-    background:#171625;
-
-    border:1px solid #27253a;
+    margin-bottom:20px;
 }
 
-/* =========================
-   ARROW
-========================= */
+.moves{
+    background:#edf3f9;
+    padding:10px 18px;
+    border-radius:15px;
+    font-weight:bold;
+    color:#42506c;
+}
+
+.difficulty{
+    background:#edf3f9;
+    padding:10px 17px;
+    border-radius:15px;
+    font-weight:bold;
+    color:#42506c;
+}
+
+.hearts{
+    font-size:25px;
+    letter-spacing:3px;
+}
+
+/* BOARD */
+
+.board{
+    width:min(92vw,450px);
+    height:min(92vw,450px);
+    margin:0 auto;
+    position:relative;
+    background:#fff;
+    border:7px solid #263250;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(20,40,80,.08);
+}
+
+/* ARROW */
 
 .arrow{
     position:absolute;
-
-    width:72%;
-    height:72%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
+    height:14px;
+    background:#263250;
+    border-radius:10px;
     cursor:pointer;
-
+    transform-origin:center;
     transition:
-        transform .18s ease,
-        opacity .18s ease;
-
+        transform .22s ease,
+        opacity .22s ease,
+        filter .15s ease;
     z-index:5;
 }
 
-.arrow-body{
-    position:relative;
-
-    width:70%;
-    height:22%;
-
-    border-radius:5px;
-
-    background:#ffbd38;
-
-    box-shadow:
-        0 0 12px rgba(255,189,56,.25);
-}
-
-.arrow-head{
+.arrow::after{
+    content:"";
     position:absolute;
-
     width:0;
     height:0;
-
-    border-top:15px solid transparent;
-    border-bottom:15px solid transparent;
-    border-left:24px solid #ffbd38;
-}
-
-.arrow.right .arrow-head{
-    right:-24px;
     top:50%;
     transform:translateY(-50%);
 }
 
-.arrow.left .arrow-head{
-    left:-24px;
-    top:50%;
-    transform:
-        translateY(-50%)
-        rotate(180deg);
+.arrow.right::after{
+    right:-19px;
+    border-top:14px solid transparent;
+    border-bottom:14px solid transparent;
+    border-left:23px solid #263250;
 }
 
-.arrow.up .arrow-head{
-    top:-24px;
+.arrow.left::after{
+    left:-19px;
+    border-top:14px solid transparent;
+    border-bottom:14px solid transparent;
+    border-right:23px solid #263250;
+}
+
+.arrow.up::after{
+    top:-19px;
     left:50%;
-    transform:
-        translateX(-50%)
-        rotate(-90deg);
+    transform:translateX(-50%);
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-bottom:23px solid #263250;
 }
 
-.arrow.down .arrow-head{
-    bottom:-24px;
+.arrow.down::after{
+    top:auto;
+    bottom:-19px;
     left:50%;
-    transform:
-        translateX(-50%)
-        rotate(90deg);
+    transform:translateX(-50%);
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-top:23px solid #263250;
 }
 
-/* BODY ROTATION */
+/* ARROW EXIT ANIMATION */
 
-.arrow.up .arrow-body,
-.arrow.down .arrow-body{
-    transform:rotate(90deg);
+.arrow.exit-right{
+    transform:translateX(520px);
+    opacity:0;
 }
 
-/* DIFFERENT COLORS */
-
-.arrow.color2 .arrow-body{
-    background:#55d6ff;
+.arrow.exit-left{
+    transform:translateX(-520px);
+    opacity:0;
 }
 
-.arrow.color2 .arrow-head{
-    border-left-color:#55d6ff;
+.arrow.exit-up{
+    transform:translateY(-520px);
+    opacity:0;
 }
 
-.arrow.color3 .arrow-body{
-    background:#ff6b8a;
+.arrow.exit-down{
+    transform:translateY(520px);
+    opacity:0;
 }
 
-.arrow.color3 .arrow-head{
-    border-left-color:#ff6b8a;
-}
+/* CONTROLS */
 
-.arrow.color4 .arrow-body{
-    background:#a879ff;
-}
-
-.arrow.color4 .arrow-head{
-    border-left-color:#a879ff;
-}
-
-/* =========================
-   SELECTED
-========================= */
-
-.arrow.selected{
-    transform:scale(1.08);
-    filter:brightness(1.25);
-}
-
-/* =========================
-   SUCCESS
-========================= */
-
-#success{
-    position:absolute;
-
-    inset:0;
-
-    z-index:50;
-
+.controls{
     display:flex;
     justify-content:center;
+    gap:28px;
+    margin-top:30px;
+}
+
+.control-btn{
+    width:70px;
+    height:70px;
+    border:0;
+    background:white;
+    border-radius:50%;
+    box-shadow:0 5px 20px rgba(20,40,80,.12);
+    color:#138bd4;
+    font-size:28px;
+    cursor:pointer;
+    position:relative;
+}
+
+.control-btn:hover{
+    transform:translateY(-2px);
+}
+
+.hint-count{
+    position:absolute;
+    top:-5px;
+    right:-3px;
+    background:#168bd3;
+    color:white;
+    font-size:13px;
+    width:24px;
+    height:24px;
+    display:flex;
     align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-weight:bold;
+}
 
-    background:rgba(7,7,14,.88);
+/* MESSAGE */
 
+.message{
     text-align:center;
+    min-height:30px;
+    margin-top:18px;
+    font-weight:bold;
+    color:#64718b;
 }
 
-.success-box{
-    width:90%;
-    max-width:360px;
+.message.error{
+    color:#e04d4d;
 }
 
-.success-icon{
-    font-size:65px;
+.message.success{
+    color:#20a36a;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(10,20,40,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(92vw,400px);
+    background:white;
+    border-radius:25px;
+    padding:30px 25px;
+    text-align:center;
+    box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+
+.modal-box h2{
+    font-size:30px;
     margin-bottom:10px;
+    color:#263250;
 }
 
-.success-box h2{
-    font-size:32px;
-    margin-bottom:8px;
+.modal-box p{
+    color:#66728a;
+    margin:8px 0;
+    line-height:1.5;
 }
 
-.success-box p{
-    color:#aaa;
-    margin-bottom:20px;
+.modal-buttons{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-top:22px;
 }
 
-/* =========================
-   BUTTON
-========================= */
-
-.btn{
-    width:100%;
-    height:52px;
-
-    border:none;
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffd45d,
-            #ff9e24
-        );
-
-    color:#17100a;
-
-    font-size:17px;
-    font-weight:900;
-
+.modal-btn{
+    border:0;
+    padding:13px 22px;
+    border-radius:12px;
+    font-weight:bold;
     cursor:pointer;
 }
 
-.btn:active{
-    transform:scale(.97);
+.primary{
+    background:#168bd3;
+    color:white;
 }
 
 .secondary{
-    margin-top:10px;
-
-    background:#191827;
-
-    color:white;
-
-    border:1px solid #35334a;
+    background:#edf3f9;
+    color:#263250;
 }
 
-/* =========================
-   START SCREEN
-========================= */
-
-.screen{
-    position:absolute;
-
-    inset:0;
-
-    z-index:100;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:25px;
-
-    text-align:center;
-
-    background:rgba(6,6,13,.96);
-}
-
-.panel{
-    width:100%;
-    max-width:380px;
-}
-
-.big-icon{
-    font-size:70px;
-    margin-bottom:10px;
-}
-
-.panel h1{
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-.panel p{
-    color:#aaa;
-    line-height:1.6;
-    margin-bottom:22px;
-}
-
-.hidden{
-    display:none !important;
-}
-
-/* =========================
-   SHAKE
-========================= */
+/* SHAKE */
 
 .shake{
-    animation:shake .25s;
+    animation:shake .3s;
 }
 
 @keyframes shake{
-
-    0%,100%{
-        transform:translate(0,0);
-    }
-
-    25%{
-        transform:translate(-5px,0);
-    }
-
-    75%{
-        transform:translate(5px,0);
-    }
-
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-8px)}
+    75%{transform:translateX(8px)}
 }
 
-/* =========================
-   WIN ANIMATION
-========================= */
-
-.win{
-    animation:win .4s ease;
-}
-
-@keyframes win{
-
-    0%{
-        transform:scale(.8);
-        opacity:0;
-    }
-
-    100%{
-        transform:scale(1);
-        opacity:1;
-    }
-
-}
-
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:480px){
 
     .game-wrapper{
-        padding:8px;
+        padding:16px 12px 25px;
     }
 
-    .logo{
-        font-size:18px;
+    .title h1{
+        font-size:23px;
     }
 
-    .stat{
-        min-width:55px;
-        padding:5px 7px;
+    .board{
+        border-width:5px;
     }
 
-    .stat strong{
-        font-size:14px;
+    .arrow{
+        height:11px;
     }
 
-    #board{
-        gap:5px;
-        padding:6px;
+    .arrow.right::after,
+    .arrow.left::after{
+        border-top-width:11px;
+        border-bottom-width:11px;
     }
 
+    .arrow.right::after{
+        border-left-width:19px;
+        right:-16px;
+    }
+
+    .arrow.left::after{
+        border-right-width:19px;
+        left:-16px;
+    }
+
+    .arrow.up::after,
+    .arrow.down::after{
+        border-left-width:11px;
+        border-right-width:11px;
+    }
+
+    .control-btn{
+        width:62px;
+        height:62px;
+    }
 }
-
-@media(max-height:650px){
-
-    #board{
-        max-height:50vh;
-        max-width:50vh;
-    }
-
-}
-
 </style>
 </head>
-
 
 <body>
 
 <div class="game-wrapper">
 
-    <!-- HEADER -->
+    <div class="top-bar">
 
-    <div class="header">
+        <button class="back-btn" onclick="goBack()">‹</button>
 
-        <div class="logo">
-            Calculator<span>Hubs</span>
+        <div class="title">
+            <h1>
+                Tap Away
+                <span>Arrows</span>
+            </h1>
         </div>
 
-        <div class="stats">
+        <button class="settings" onclick="showInfo()">⚙</button>
 
-            <div class="stat">
-                <small>LEVEL</small>
-                <strong id="levelText">1</strong>
-            </div>
+    </div>
 
-            <div class="stat">
-                <small>MOVES</small>
-                <strong id="movesText">0</strong>
-            </div>
+    <div class="level">
+        Level <span id="levelNumber">1</span>
+    </div>
 
-            <div class="stat">
-                <small>BEST</small>
-                <strong id="bestText">1</strong>
-            </div>
+    <div class="info">
 
+        <div class="moves">
+            ➤ <span id="moveCount">0</span>
+        </div>
+
+        <div class="hearts" id="hearts">
+            ❤️ ❤️ ❤️
+        </div>
+
+        <div class="difficulty">
+            <span id="difficulty">Normal</span>
         </div>
 
     </div>
 
+    <div id="board" class="board"></div>
 
-    <!-- GAME -->
+    <div id="message" class="message">
+        Tap an arrow that has a clear path!
+    </div>
 
-    <div id="game">
+    <div class="controls">
 
-        <div class="level">
-            Arrow Puzzle
-        </div>
+        <button class="control-btn" onclick="useHint()">
+            💡
+            <span class="hint-count" id="hintCount">2</span>
+        </button>
 
-        <div id="board"></div>
+        <button class="control-btn" onclick="restartLevel()">
+            ↻
+        </button>
 
+    </div>
 
-        <!-- START -->
-
-        <div id="startScreen" class="screen">
-
-            <div class="panel">
-
-                <div class="big-icon">
-                    🧩
-                </div>
-
-                <h1>
-                    Arrow Puzzle
-                </h1>
-
-                <p>
-                    Clear every arrow from the board.
-                    Tap an arrow only when its path is free.
-                    Complete the puzzle to unlock the next level!
-                </p>
-
-                <button
-                    class="btn"
-                    id="startBtn">
-                    ▶ PLAY NOW
-                </button>
-
-            </div>
-
-        </div>
+</div>
 
 
-        <!-- SUCCESS -->
+<!-- LEVEL COMPLETE -->
 
-        <div
-            id="success"
-            class="hidden">
+<div class="modal" id="completeModal">
 
-            <div class="success-box win">
+    <div class="modal-box">
 
-                <div class="success-icon">
-                    🎉
-                </div>
+        <h2>🎉 Level Complete!</h2>
 
-                <h2>
-                    Level Complete!
-                </h2>
+        <p>
+            Great job! All arrows have been cleared.
+        </p>
 
-                <p>
-                    Great job! You cleared the puzzle.
-                </p>
+        <p>
+            Moves: <strong id="finalMoves">0</strong>
+        </p>
 
-                <button
-                    class="btn"
-                    id="nextBtn">
-                    ➜ NEXT LEVEL
-                </button>
+        <div class="modal-buttons">
 
-            </div>
+            <button
+                class="modal-btn secondary"
+                onclick="closeModal()">
+                Replay
+            </button>
+
+            <button
+                class="modal-btn primary"
+                onclick="nextLevel()">
+                Next Level →
+            </button>
 
         </div>
 
@@ -641,168 +489,210 @@ body{
 </div>
 
 
+<!-- GAME OVER -->
+
+<div class="modal" id="gameOverModal">
+
+    <div class="modal-box">
+
+        <h2>💔 Game Over</h2>
+
+        <p>
+            You ran out of lives.
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="modal-btn primary"
+                onclick="restartLevel();closeGameOver()">
+                Try Again
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- INFO -->
+
+<div class="modal" id="infoModal">
+
+    <div class="modal-box">
+
+        <h2>How to Play</h2>
+
+        <p>
+            👆 Tap an arrow to move it out of the board.
+        </p>
+
+        <p>
+            🚧 If another arrow blocks its path,
+            it cannot move.
+        </p>
+
+        <p>
+            ❤️ You have 3 lives.
+        </p>
+
+        <p>
+            💡 Use hints when you get stuck.
+        </p>
+
+        <button
+            class="modal-btn primary"
+            onclick="closeInfo()">
+            Got it
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
 
-/* =====================================
-   ARROW PUZZLE
-   CalculatorHubs.site
-===================================== */
+/* =========================================
+   ARROW PUZZLE GAME
+========================================= */
+
+const board = document.getElementById("board");
+
+const levelNumber =
+    document.getElementById("levelNumber");
+
+const moveCount =
+    document.getElementById("moveCount");
+
+const hearts =
+    document.getElementById("hearts");
+
+const message =
+    document.getElementById("message");
+
+const difficulty =
+    document.getElementById("difficulty");
+
+const hintCount =
+    document.getElementById("hintCount");
 
 
-/* ELEMENTS */
-
-const game =
-    document.getElementById("game");
-
-const board =
-    document.getElementById("board");
-
-const startScreen =
-    document.getElementById("startScreen");
-
-const startBtn =
-    document.getElementById("startBtn");
-
-const success =
-    document.getElementById("success");
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-const levelText =
-    document.getElementById("levelText");
-
-const movesText =
-    document.getElementById("movesText");
-
-const bestText =
-    document.getElementById("bestText");
-
-
-/* GAME DATA */
-
-let currentLevel = 1;
-
-let moves = 0;
-
-let arrows = [];
-
-let playing = false;
-
-
-/* BEST LEVEL */
-
-let bestLevel =
-    Number(
-        localStorage.getItem(
-            "arrowPuzzleBest"
-        ) || 1
-    );
-
-bestText.textContent =
-    bestLevel;
-
-
-/* =====================================
+/* =========================================
    LEVEL DATA
-===================================== */
 
-/*
-   Each number represents:
-
-   0 = empty
-   R = right
-   L = left
-   U = up
-   D = down
-*/
+   x/y = percentage position
+   w   = percentage width
+   direction = right/left/up/down
+========================================= */
 
 const levels = [
 
-    /* LEVEL 1 */
+/* LEVEL 1 */
 
-    [
-        ["R","D","L"],
-        ["U","R","D"],
-        ["L","U","R"]
-    ],
+[
+    {x:8,y:18,w:35,d:"right"},
+    {x:8,y:38,w:40,d:"right"},
+    {x:8,y:58,w:32,d:"right"},
+    {x:50,y:25,w:32,d:"left"},
+    {x:45,y:45,w:35,d:"right"},
+    {x:55,y:65,w:30,d:"left"}
+],
 
+/* LEVEL 2 */
 
-    /* LEVEL 2 */
+[
+    {x:10,y:15,w:38,d:"right"},
+    {x:48,y:15,w:32,d:"down"},
+    {x:25,y:30,w:30,d:"left"},
+    {x:15,y:48,w:38,d:"right"},
+    {x:52,y:55,w:28,d:"down"},
+    {x:25,y:70,w:35,d:"left"},
+    {x:72,y:70,w:18,d:"up"}
+],
 
-    [
-        ["R","D","L","D"],
-        ["U","R","D","L"],
-        ["R","U","L","D"],
-        ["U","R","D","L"]
-    ],
+/* LEVEL 3 */
 
+[
+    {x:8,y:12,w:32,d:"down"},
+    {x:8,y:40,w:30,d:"right"},
+    {x:45,y:12,w:38,d:"right"},
+    {x:55,y:25,w:30,d:"down"},
+    {x:20,y:30,w:28,d:"left"},
+    {x:35,y:48,w:35,d:"right"},
+    {x:15,y:65,w:30,d:"down"},
+    {x:50,y:70,w:35,d:"left"},
+    {x:78,y:40,w:15,d:"up"}
+],
 
-    /* LEVEL 3 */
+/* LEVEL 4 */
 
-    [
-        ["R","D","L","D","L"],
-        ["U","R","D","L","R"],
-        ["R","U","L","D","U"],
-        ["D","R","U","L","D"],
-        ["L","U","R","D","R"]
-    ],
+[
+    {x:5,y:15,w:35,d:"right"},
+    {x:45,y:15,w:38,d:"down"},
+    {x:15,y:28,w:30,d:"down"},
+    {x:15,y:50,w:35,d:"right"},
+    {x:55,y:40,w:30,d:"left"},
+    {x:35,y:58,w:35,d:"left"},
+    {x:12,y:75,w:30,d:"down"},
+    {x:50,y:75,w:35,d:"right"},
+    {x:78,y:55,w:15,d:"up"}
+],
 
+/* LEVEL 5 */
 
-    /* LEVEL 4 */
+[
+    {x:8,y:10,w:32,d:"right"},
+    {x:45,y:10,w:38,d:"down"},
+    {x:10,y:28,w:30,d:"down"},
+    {x:25,y:35,w:35,d:"left"},
+    {x:52,y:30,w:30,d:"right"},
+    {x:15,y:50,w:30,d:"right"},
+    {x:48,y:52,w:35,d:"down"},
+    {x:25,y:70,w:35,d:"left"},
+    {x:72,y:68,w:18,d:"up"},
+    {x:8,y:80,w:20,d:"down"}
+],
 
-    [
-        ["R","D","L","D","L"],
-        ["U","R","D","L","R"],
-        ["R","U","L","D","U"],
-        ["D","R","U","L","D"],
-        ["L","U","R","D","R"]
-    ],
+/* LEVEL 6 */
 
-
-    /* LEVEL 5 */
-
-    [
-        ["R","D","L","D","L","R"],
-        ["U","R","D","L","R","D"],
-        ["R","U","L","D","U","L"],
-        ["D","R","U","L","D","R"],
-        ["L","U","R","D","R","U"],
-        ["R","D","L","U","R","D"]
-    ]
+[
+    {x:5,y:10,w:35,d:"right"},
+    {x:45,y:10,w:35,d:"right"},
+    {x:20,y:25,w:35,d:"down"},
+    {x:55,y:25,w:30,d:"left"},
+    {x:8,y:40,w:30,d:"right"},
+    {x:42,y:43,w:35,d:"right"},
+    {x:68,y:48,w:20,d:"down"},
+    {x:15,y:62,w:35,d:"left"},
+    {x:50,y:68,w:35,d:"left"},
+    {x:5,y:78,w:25,d:"up"}
+]
 
 ];
 
 
-/* =====================================
-   START
-===================================== */
+/* =========================================
+   GAME VARIABLES
+========================================= */
 
-function startGame(){
+let currentLevel = 0;
 
-    playing = true;
+let arrows = [];
 
-    moves = 0;
+let moves = 0;
 
-    movesText.textContent =
-        moves;
+let lives = 3;
 
-    startScreen.classList.add(
-        "hidden"
-    );
+let hints = 2;
 
-    success.classList.add(
-        "hidden"
-    );
-
-    loadLevel();
-
-}
+let gameLocked = false;
 
 
-/* =====================================
-   LOAD LEVEL
-===================================== */
+/* =========================================
+   START GAME
+========================================= */
 
 function loadLevel(){
 
@@ -812,570 +702,541 @@ function loadLevel(){
 
     moves = 0;
 
-    movesText.textContent =
-        moves;
+    lives = 3;
 
-    levelText.textContent =
-        currentLevel;
+    gameLocked = false;
 
+    moveCount.textContent = moves;
 
-    /*
-      Use available level.
-      After level 5, generate
-      increasingly large puzzles.
-    */
+    updateHearts();
 
-    let data;
+    levelNumber.textContent =
+        currentLevel + 1;
 
-    if(currentLevel <= levels.length){
-
-        data =
-            levels[currentLevel - 1];
-
-    }else{
-
-        data =
-            generateLevel(
-                Math.min(
-                    7,
-                    5 +
-                    Math.floor(
-                        (currentLevel-5)/2
-                    )
-                )
-            );
-
-    }
+    difficulty.textContent =
+        currentLevel < 2
+        ? "Easy"
+        : currentLevel < 5
+        ? "Normal"
+        : "Hard";
 
 
-    const rows =
-        data.length;
-
-    const cols =
-        data[0].length;
+    const level =
+        levels[currentLevel % levels.length];
 
 
-    board.style.gridTemplateColumns =
-        `repeat(${cols},1fr)`;
+    level.forEach((data,index)=>{
 
-    board.style.gridTemplateRows =
-        `repeat(${rows},1fr)`;
+        const arrow =
+            document.createElement("div");
+
+        arrow.className =
+            "arrow " + data.d;
+
+        arrow.dataset.id = index;
+
+        arrow.dataset.direction =
+            data.d;
+
+        arrow.style.left =
+            data.x + "%";
+
+        arrow.style.top =
+            data.y + "%";
+
+        arrow.style.width =
+            data.w + "%";
 
 
-    for(let r=0;r<rows;r++){
+        if(
+            data.d === "up" ||
+            data.d === "down"
+        ){
 
-        for(let c=0;c<cols;c++){
+            arrow.style.width = "14px";
 
-            const cell =
-                document.createElement("div");
+            arrow.style.height =
+                data.w + "%";
 
-            cell.className =
-                "cell";
-
-            board.appendChild(cell);
-
-
-            const direction =
-                data[r][c];
+        }
 
 
-            if(direction){
+        arrow.addEventListener(
+            "click",
+            ()=>tapArrow(index)
+        );
 
-                createArrow(
-                    cell,
-                    r,
-                    c,
-                    direction
-                );
 
+        board.appendChild(arrow);
+
+
+        arrows.push({
+
+            ...data,
+
+            id:index,
+
+            active:true
+
+        });
+
+    });
+
+
+    message.textContent =
+        "Tap an arrow that has a clear path!";
+
+    message.className =
+        "message";
+}
+
+
+/* =========================================
+   GET ARROW ELEMENT
+========================================= */
+
+function getArrowElement(id){
+
+    return document.querySelector(
+        `.arrow[data-id="${id}"]`
+    );
+
+}
+
+
+/* =========================================
+   CHECK BLOCKING
+========================================= */
+
+function isBlocked(arrow){
+
+    const el =
+        getArrowElement(arrow.id);
+
+    if(!el) return true;
+
+
+    const r =
+        el.getBoundingClientRect();
+
+    const boardRect =
+        board.getBoundingClientRect();
+
+
+    for(const other of arrows){
+
+        if(
+            !other.active ||
+            other.id === arrow.id
+        ) continue;
+
+
+        const otherEl =
+            getArrowElement(other.id);
+
+        if(!otherEl) continue;
+
+
+        const o =
+            otherEl.getBoundingClientRect();
+
+
+        const overlapX =
+            r.left < o.right &&
+            r.right > o.left;
+
+
+        const overlapY =
+            r.top < o.bottom &&
+            r.bottom > o.top;
+
+
+        /* RIGHT */
+
+        if(arrow.d === "right"){
+
+            if(
+                o.left >= r.right - 4 &&
+                overlapY
+            ){
+                return true;
+            }
+
+        }
+
+
+        /* LEFT */
+
+        if(arrow.d === "left"){
+
+            if(
+                o.right <= r.left + 4 &&
+                overlapY
+            ){
+                return true;
+            }
+
+        }
+
+
+        /* DOWN */
+
+        if(arrow.d === "down"){
+
+            if(
+                o.top >= r.bottom - 4 &&
+                overlapX
+            ){
+                return true;
+            }
+
+        }
+
+
+        /* UP */
+
+        if(arrow.d === "up"){
+
+            if(
+                o.bottom <= r.top + 4 &&
+                overlapX
+            ){
+                return true;
             }
 
         }
 
     }
 
+
+    return false;
 }
 
 
-/* =====================================
-   CREATE ARROW
-===================================== */
+/* =========================================
+   TAP ARROW
+========================================= */
 
-function createArrow(
-    cell,
-    row,
-    col,
-    direction
-){
+function tapArrow(id){
+
+    if(gameLocked) return;
+
 
     const arrow =
-        document.createElement("div");
+        arrows.find(a=>a.id===id);
 
-    arrow.className =
-        "arrow " + direction;
-
-
-    /*
-      Different colors.
-    */
-
-    const color =
-        (row + col) % 4;
-
-    if(color > 0){
-
-        arrow.classList.add(
-            "color" + (color + 1)
-        );
-
-    }
-
-
-    const body =
-        document.createElement("div");
-
-    body.className =
-        "arrow-body";
-
-
-    const head =
-        document.createElement("div");
-
-    head.className =
-        "arrow-head";
-
-
-    arrow.appendChild(body);
-
-    arrow.appendChild(head);
-
-    cell.appendChild(arrow);
-
-
-    const arrowData = {
-
-        element:arrow,
-
-        row:row,
-
-        col:col,
-
-        direction:direction,
-
-        removed:false
-
-    };
-
-
-    arrows.push(
-        arrowData
-    );
-
-
-    arrow.addEventListener(
-        "click",
-        function(e){
-
-            e.stopPropagation();
-
-            if(!playing) return;
-
-            clickArrow(
-                arrowData
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   CHECK PATH
-===================================== */
-
-function isPathClear(arrow){
-
-    let row =
-        arrow.row;
-
-    let col =
-        arrow.col;
-
-
-    let dr = 0;
-    let dc = 0;
-
-
-    if(arrow.direction === "up")
-        dr = -1;
-
-    if(arrow.direction === "down")
-        dr = 1;
-
-    if(arrow.direction === "left")
-        dc = -1;
-
-    if(arrow.direction === "right")
-        dc = 1;
-
-
-    /*
-      Move cell by cell
-      until board edge.
-    */
-
-    while(true){
-
-        row += dr;
-
-        col += dc;
-
-
-        /*
-          Outside board =
-          path is clear.
-        */
-
-        if(
-            row < 0 ||
-            col < 0 ||
-            row >= getRows() ||
-            col >= getCols()
-        ){
-
-            return true;
-
-        }
-
-
-        /*
-          Check another arrow.
-        */
-
-        const blocking =
-            arrows.find(
-                a =>
-                    !a.removed &&
-                    a.row === row &&
-                    a.col === col
-            );
-
-
-        if(blocking){
-
-            return false;
-
-        }
-
-    }
-
-}
-
-
-/* =====================================
-   GET BOARD SIZE
-===================================== */
-
-function getRows(){
-
-    return board
-        .style
-        .gridTemplateRows
-        .split(" ")
-        .length;
-
-}
-
-function getCols(){
-
-    return board
-        .style
-        .gridTemplateColumns
-        .split(" ")
-        .length;
-
-}
-
-
-/* =====================================
-   CLICK ARROW
-===================================== */
-
-function clickArrow(arrow){
-
-    if(
-        !isPathClear(arrow)
-    ){
-
-        /*
-          BLOCKED
-        */
-
-        arrow.element.classList.add(
-            "selected"
-        );
-
-        game.classList.add(
-            "shake"
-        );
-
-        setTimeout(()=>{
-
-            arrow.element.classList.remove(
-                "selected"
-            );
-
-            game.classList.remove(
-                "shake"
-            );
-
-        },250);
-
+    if(!arrow || !arrow.active)
         return;
 
-    }
-
-
-    /*
-      PATH CLEAR
-    */
 
     moves++;
 
-    movesText.textContent =
+    moveCount.textContent =
         moves;
 
 
-    arrow.removed = true;
+    /* CHECK BLOCK */
 
+    if(isBlocked(arrow)){
 
-    /*
-      Animate arrow
-      towards edge.
-    */
+        loseLife();
 
-    let x = 0;
-    let y = 0;
+        const el =
+            getArrowElement(id);
 
+        el.classList.add("shake");
 
-    if(
-        arrow.direction === "left"
-    ){
+        setTimeout(()=>{
+            el.classList.remove("shake");
+        },350);
 
-        x = -300;
+        message.textContent =
+            "🚧 This arrow is blocked!";
 
-    }
+        message.className =
+            "message error";
 
-    if(
-        arrow.direction === "right"
-    ){
-
-        x = 300;
-
-    }
-
-    if(
-        arrow.direction === "up"
-    ){
-
-        y = -300;
-
-    }
-
-    if(
-        arrow.direction === "down"
-    ){
-
-        y = 300;
-
+        return;
     }
 
 
-    arrow.element.style.transform =
-        `translate(${x}px,${y}px) scale(.6)`;
+    /* CLEAR */
+
+    arrow.active = false;
 
 
-    arrow.element.style.opacity =
-        "0";
+    const el =
+        getArrowElement(id);
+
+
+    el.classList.add(
+        "exit-" + arrow.d
+    );
+
+
+    message.textContent =
+        "Nice move!";
+
+    message.className =
+        "message success";
 
 
     setTimeout(()=>{
 
-        arrow.element.remove();
+        if(el)
+            el.remove();
 
-        checkComplete();
 
-    },180);
+        checkWin();
+
+    },220);
 
 }
 
 
-/* =====================================
-   CHECK COMPLETE
-===================================== */
+/* =========================================
+   LIFE
+========================================= */
 
-function checkComplete(){
+function loseLife(){
+
+    lives--;
+
+    updateHearts();
+
+    if(lives <= 0){
+
+        gameLocked = true;
+
+        setTimeout(()=>{
+
+            document
+                .getElementById("gameOverModal")
+                .classList.add("show");
+
+        },400);
+
+    }
+
+}
+
+
+/* =========================================
+   HEART DISPLAY
+========================================= */
+
+function updateHearts(){
+
+    let html = "";
+
+    for(let i=0;i<3;i++){
+
+        html +=
+            i < lives
+            ? "❤️ "
+            : "🖤 ";
+
+    }
+
+    hearts.innerHTML = html;
+
+}
+
+
+/* =========================================
+   WIN
+========================================= */
+
+function checkWin(){
 
     const remaining =
-        arrows.filter(
-            a => !a.removed
-        );
+        arrows.filter(a=>a.active);
 
 
-    if(
-        remaining.length === 0
-    ){
+    if(remaining.length === 0){
 
-        levelComplete();
+        gameLocked = true;
+
+        document.getElementById(
+            "finalMoves"
+        ).textContent = moves;
+
+
+        setTimeout(()=>{
+
+            document
+                .getElementById("completeModal")
+                .classList.add("show");
+
+        },350);
 
     }
 
 }
 
 
-/* =====================================
-   LEVEL COMPLETE
-===================================== */
-
-function levelComplete(){
-
-    playing = false;
-
-    if(
-        currentLevel + 1 >
-        bestLevel
-    ){
-
-        bestLevel =
-            currentLevel + 1;
-
-        localStorage.setItem(
-            "arrowPuzzleBest",
-            bestLevel
-        );
-
-        bestText.textContent =
-            bestLevel;
-
-    }
-
-    success.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* =====================================
+/* =========================================
    NEXT LEVEL
-===================================== */
+========================================= */
 
 function nextLevel(){
 
+    closeModal();
+
     currentLevel++;
-
-    success.classList.add(
-        "hidden"
-    );
-
-    playing = true;
 
     loadLevel();
 
 }
 
 
-/* =====================================
-   GENERATED LEVELS
-===================================== */
+/* =========================================
+   RESTART
+========================================= */
 
-function generateLevel(size){
+function restartLevel(){
 
-    const dirs =
-        [
-            "up",
-            "down",
-            "left",
-            "right"
-        ];
+    closeModal();
 
+    closeGameOver();
 
-    const data = [];
-
-
-    for(
-        let r=0;
-        r<size;
-        r++
-    ){
-
-        const row = [];
-
-
-        for(
-            let c=0;
-            c<size;
-            c++
-        ){
-
-            /*
-              Random arrows.
-            */
-
-            row.push(
-                dirs[
-                    Math.floor(
-                        Math.random() *
-                        dirs.length
-                    )
-                ]
-            );
-
-        }
-
-
-        data.push(row);
-
-    }
-
-
-    return data;
+    loadLevel();
 
 }
 
 
-/* =====================================
-   BUTTONS
-===================================== */
+/* =========================================
+   HINT
+========================================= */
 
-startBtn.addEventListener(
-    "click",
-    startGame
-);
+function useHint(){
 
-nextBtn.addEventListener(
-    "click",
-    nextLevel
-);
+    if(gameLocked) return;
+
+    if(hints <= 0){
+
+        message.textContent =
+            "No hints left!";
+
+        return;
+
+    }
 
 
-/* =====================================
-   KEYBOARD
-===================================== */
+    const available =
+        arrows.filter(a=>a.active);
+
+
+    const free =
+        available.find(
+            a=>!isBlocked(a)
+        );
+
+
+    if(!free){
+
+        message.textContent =
+            "No clear arrow found.";
+
+        return;
+
+    }
+
+
+    hints--;
+
+    hintCount.textContent =
+        hints;
+
+
+    const el =
+        getArrowElement(free.id);
+
+
+    el.style.filter =
+        "drop-shadow(0 0 12px #00aaff)";
+
+
+    setTimeout(()=>{
+
+        el.style.filter = "";
+
+    },1500);
+
+
+    message.textContent =
+        "💡 Try the highlighted arrow!";
+}
+
+
+/* =========================================
+   MODALS
+========================================= */
+
+function closeModal(){
+
+    document
+        .getElementById("completeModal")
+        .classList.remove("show");
+
+}
+
+
+function closeGameOver(){
+
+    document
+        .getElementById("gameOverModal")
+        .classList.remove("show");
+
+}
+
+
+function showInfo(){
+
+    document
+        .getElementById("infoModal")
+        .classList.add("show");
+
+}
+
+
+function closeInfo(){
+
+    document
+        .getElementById("infoModal")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+function goBack(){
+
+    window.history.back();
+
+}
+
+
+/* =========================================
+   KEYBOARD SUPPORT
+========================================= */
 
 document.addEventListener(
     "keydown",
-    e => {
+    function(e){
 
-        if(
-            e.key === "Enter" &&
-            !startScreen.classList.contains(
-                "hidden"
-            )
-        ){
+        if(e.key === "r" || e.key === "R"){
 
-            startGame();
+            restartLevel();
+
+        }
+
+        if(e.key === "h" || e.key === "H"){
+
+            useHint();
 
         }
 
@@ -1383,15 +1244,11 @@ document.addEventListener(
 );
 
 
-/* =====================================
-   INITIAL
-===================================== */
+/* =========================================
+   START
+========================================= */
 
-levelText.textContent =
-    currentLevel;
-
-bestText.textContent =
-    bestLevel;
+loadLevel();
 
 </script>
 
