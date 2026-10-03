@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>Arrow Puzzle - Free Online Puzzle Game | CalculatorHubs</title>
+
+<meta name="description"
+content="Play Arrow Puzzle online for free. Move the arrows in the correct direction and clear every level.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at top,
+            #29234a 0%,
+            #11101f 45%,
+            #07070d 100%
+        );
+    color:white;
+    overflow:hidden;
+}
+
+.game-wrapper{
+    width:100%;
+    max-width:600px;
+    height:100vh;
+    margin:auto;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:800;
+}
+
+.logo span{
+    color:#ffc94d;
+}
+
+.stats{
+    display:flex;
+    gap:6px;
+}
+
+.stat{
+    min-width:65px;
+    padding:6px 9px;
+    text-align:center;
+    border-radius:10px;
+    background:#171624;
+    border:1px solid #2c2a40;
+}
+
+.stat small{
+    display:block;
+    font-size:9px;
+    color:#999;
+}
+
+.stat strong{
+    font-size:15px;
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+#game{
+    position:relative;
+    flex:1;
+    min-height:500px;
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #25213c 0%,
+            #12111e 45%,
+            #08080f 100%
+        );
+
+    border:1px solid #302e45;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.55);
+
+    touch-action:manipulation;
+}
+
+/* =========================
+   LEVEL
+========================= */
+
+.level{
+    position:absolute;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+
+    padding:7px 17px;
+
+    border-radius:20px;
+
+    background:#191827;
+
+    border:1px solid #37354c;
+
+    font-size:13px;
+
+    z-index:20;
+}
+
+/* =========================
+   BOARD
+========================= */
+
+#board{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(88vw,430px);
+    height:min(88vw,430px);
+
+    max-height:55vh;
+    max-width:55vh;
+
+    display:grid;
+
+    gap:6px;
+
+    padding:8px;
+
+    border-radius:18px;
+
+    background:#0d0c16;
+
+    border:1px solid #353249;
+
+    box-shadow:
+        inset 0 0 25px rgba(0,0,0,.5);
+}
+
+/* =========================
+   CELLS
+========================= */
+
+.cell{
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:9px;
+
+    background:#171625;
+
+    border:1px solid #27253a;
+}
+
+/* =========================
+   ARROW
+========================= */
+
+.arrow{
+    position:absolute;
+
+    width:72%;
+    height:72%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:
+        transform .18s ease,
+        opacity .18s ease;
+
+    z-index:5;
+}
+
+.arrow-body{
+    position:relative;
+
+    width:70%;
+    height:22%;
+
+    border-radius:5px;
+
+    background:#ffbd38;
+
+    box-shadow:
+        0 0 12px rgba(255,189,56,.25);
+}
+
+.arrow-head{
+    position:absolute;
+
+    width:0;
+    height:0;
+
+    border-top:15px solid transparent;
+    border-bottom:15px solid transparent;
+    border-left:24px solid #ffbd38;
+}
+
+.arrow.right .arrow-head{
+    right:-24px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.arrow.left .arrow-head{
+    left:-24px;
+    top:50%;
+    transform:
+        translateY(-50%)
+        rotate(180deg);
+}
+
+.arrow.up .arrow-head{
+    top:-24px;
+    left:50%;
+    transform:
+        translateX(-50%)
+        rotate(-90deg);
+}
+
+.arrow.down .arrow-head{
+    bottom:-24px;
+    left:50%;
+    transform:
+        translateX(-50%)
+        rotate(90deg);
+}
+
+/* BODY ROTATION */
+
+.arrow.up .arrow-body,
+.arrow.down .arrow-body{
+    transform:rotate(90deg);
+}
+
+/* DIFFERENT COLORS */
+
+.arrow.color2 .arrow-body{
+    background:#55d6ff;
+}
+
+.arrow.color2 .arrow-head{
+    border-left-color:#55d6ff;
+}
+
+.arrow.color3 .arrow-body{
+    background:#ff6b8a;
+}
+
+.arrow.color3 .arrow-head{
+    border-left-color:#ff6b8a;
+}
+
+.arrow.color4 .arrow-body{
+    background:#a879ff;
+}
+
+.arrow.color4 .arrow-head{
+    border-left-color:#a879ff;
+}
+
+/* =========================
+   SELECTED
+========================= */
+
+.arrow.selected{
+    transform:scale(1.08);
+    filter:brightness(1.25);
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+#success{
+    position:absolute;
+
+    inset:0;
+
+    z-index:50;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(7,7,14,.88);
+
+    text-align:center;
+}
+
+.success-box{
+    width:90%;
+    max-width:360px;
+}
+
+.success-icon{
+    font-size:65px;
+    margin-bottom:10px;
+}
+
+.success-box h2{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.success-box p{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+    width:100%;
+    height:52px;
+
+    border:none;
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd45d,
+            #ff9e24
+        );
+
+    color:#17100a;
+
+    font-size:17px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.btn:active{
+    transform:scale(.97);
+}
+
+.secondary{
+    margin-top:10px;
+
+    background:#191827;
+
+    color:white;
+
+    border:1px solid #35334a;
+}
+
+/* =========================
+   START SCREEN
+========================= */
+
+.screen{
+    position:absolute;
+
+    inset:0;
+
+    z-index:100;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:25px;
+
+    text-align:center;
+
+    background:rgba(6,6,13,.96);
+}
+
+.panel{
+    width:100%;
+    max-width:380px;
+}
+
+.big-icon{
+    font-size:70px;
+    margin-bottom:10px;
+}
+
+.panel h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.panel p{
+    color:#aaa;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================
+   SHAKE
+========================= */
+
+.shake{
+    animation:shake .25s;
+}
+
+@keyframes shake{
+
+    0%,100%{
+        transform:translate(0,0);
+    }
+
+    25%{
+        transform:translate(-5px,0);
+    }
+
+    75%{
+        transform:translate(5px,0);
+    }
+
+}
+
+/* =========================
+   WIN ANIMATION
+========================= */
+
+.win{
+    animation:win .4s ease;
+}
+
+@keyframes win{
+
+    0%{
+        transform:scale(.8);
+        opacity:0;
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px){
+
+    .game-wrapper{
+        padding:8px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .stat{
+        min-width:55px;
+        padding:5px 7px;
+    }
+
+    .stat strong{
+        font-size:14px;
+    }
+
+    #board{
+        gap:5px;
+        padding:6px;
+    }
+
+}
+
+@media(max-height:650px){
+
+    #board{
+        max-height:50vh;
+        max-width:50vh;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="game-wrapper">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            Calculator<span>Hubs</span>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <small>LEVEL</small>
+                <strong id="levelText">1</strong>
+            </div>
+
+            <div class="stat">
+                <small>MOVES</small>
+                <strong id="movesText">0</strong>
+            </div>
+
+            <div class="stat">
+                <small>BEST</small>
+                <strong id="bestText">1</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div id="game">
+
+        <div class="level">
+            Arrow Puzzle
+        </div>
+
+        <div id="board"></div>
+
+
+        <!-- START -->
+
+        <div id="startScreen" class="screen">
+
+            <div class="panel">
+
+                <div class="big-icon">
+                    🧩
+                </div>
+
+                <h1>
+                    Arrow Puzzle
+                </h1>
+
+                <p>
+                    Clear every arrow from the board.
+                    Tap an arrow only when its path is free.
+                    Complete the puzzle to unlock the next level!
+                </p>
+
+                <button
+                    class="btn"
+                    id="startBtn">
+                    ▶ PLAY NOW
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            id="success"
+            class="hidden">
+
+            <div class="success-box win">
+
+                <div class="success-icon">
+                    🎉
+                </div>
+
+                <h2>
+                    Level Complete!
+                </h2>
+
+                <p>
+                    Great job! You cleared the puzzle.
+                </p>
+
+                <button
+                    class="btn"
+                    id="nextBtn">
+                    ➜ NEXT LEVEL
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   ARROW PUZZLE
+   CalculatorHubs.site
+===================================== */
+
+
+/* ELEMENTS */
+
+const game =
+    document.getElementById("game");
+
+const board =
+    document.getElementById("board");
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const success =
+    document.getElementById("success");
+
+const nextBtn =
+    document.getElementById("nextBtn");
+
+const levelText =
+    document.getElementById("levelText");
+
+const movesText =
+    document.getElementById("movesText");
+
+const bestText =
+    document.getElementById("bestText");
+
+
+/* GAME DATA */
+
+let currentLevel = 1;
+
+let moves = 0;
+
+let arrows = [];
+
+let playing = false;
+
+
+/* BEST LEVEL */
+
+let bestLevel =
+    Number(
+        localStorage.getItem(
+            "arrowPuzzleBest"
+        ) || 1
+    );
+
+bestText.textContent =
+    bestLevel;
+
+
+/* =====================================
+   LEVEL DATA
+===================================== */
+
+/*
+   Each number represents:
+
+   0 = empty
+   R = right
+   L = left
+   U = up
+   D = down
+*/
+
+const levels = [
+
+    /* LEVEL 1 */
+
+    [
+        ["R","D","L"],
+        ["U","R","D"],
+        ["L","U","R"]
+    ],
+
+
+    /* LEVEL 2 */
+
+    [
+        ["R","D","L","D"],
+        ["U","R","D","L"],
+        ["R","U","L","D"],
+        ["U","R","D","L"]
+    ],
+
+
+    /* LEVEL 3 */
+
+    [
+        ["R","D","L","D","L"],
+        ["U","R","D","L","R"],
+        ["R","U","L","D","U"],
+        ["D","R","U","L","D"],
+        ["L","U","R","D","R"]
+    ],
+
+
+    /* LEVEL 4 */
+
+    [
+        ["R","D","L","D","L"],
+        ["U","R","D","L","R"],
+        ["R","U","L","D","U"],
+        ["D","R","U","L","D"],
+        ["L","U","R","D","R"]
+    ],
+
+
+    /* LEVEL 5 */
+
+    [
+        ["R","D","L","D","L","R"],
+        ["U","R","D","L","R","D"],
+        ["R","U","L","D","U","L"],
+        ["D","R","U","L","D","R"],
+        ["L","U","R","D","R","U"],
+        ["R","D","L","U","R","D"]
+    ]
+
+];
+
+
+/* =====================================
+   START
+===================================== */
+
+function startGame(){
+
+    playing = true;
+
+    moves = 0;
+
+    movesText.textContent =
+        moves;
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    success.classList.add(
+        "hidden"
+    );
+
+    loadLevel();
+
+}
+
+
+/* =====================================
+   LOAD LEVEL
+===================================== */
+
+function loadLevel(){
+
+    board.innerHTML = "";
+
+    arrows = [];
+
+    moves = 0;
+
+    movesText.textContent =
+        moves;
+
+    levelText.textContent =
+        currentLevel;
+
+
+    /*
+      Use available level.
+      After level 5, generate
+      increasingly large puzzles.
+    */
+
+    let data;
+
+    if(currentLevel <= levels.length){
+
+        data =
+            levels[currentLevel - 1];
+
+    }else{
+
+        data =
+            generateLevel(
+                Math.min(
+                    7,
+                    5 +
+                    Math.floor(
+                        (currentLevel-5)/2
+                    )
+                )
+            );
+
+    }
+
+
+    const rows =
+        data.length;
+
+    const cols =
+        data[0].length;
+
+
+    board.style.gridTemplateColumns =
+        `repeat(${cols},1fr)`;
+
+    board.style.gridTemplateRows =
+        `repeat(${rows},1fr)`;
+
+
+    for(let r=0;r<rows;r++){
+
+        for(let c=0;c<cols;c++){
+
+            const cell =
+                document.createElement("div");
+
+            cell.className =
+                "cell";
+
+            board.appendChild(cell);
+
+
+            const direction =
+                data[r][c];
+
+
+            if(direction){
+
+                createArrow(
+                    cell,
+                    r,
+                    c,
+                    direction
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =====================================
+   CREATE ARROW
+===================================== */
+
+function createArrow(
+    cell,
+    row,
+    col,
+    direction
+){
+
+    const arrow =
+        document.createElement("div");
+
+    arrow.className =
+        "arrow " + direction;
+
+
+    /*
+      Different colors.
+    */
+
+    const color =
+        (row + col) % 4;
+
+    if(color > 0){
+
+        arrow.classList.add(
+            "color" + (color + 1)
+        );
+
+    }
+
+
+    const body =
+        document.createElement("div");
+
+    body.className =
+        "arrow-body";
+
+
+    const head =
+        document.createElement("div");
+
+    head.className =
+        "arrow-head";
+
+
+    arrow.appendChild(body);
+
+    arrow.appendChild(head);
+
+    cell.appendChild(arrow);
+
+
+    const arrowData = {
+
+        element:arrow,
+
+        row:row,
+
+        col:col,
+
+        direction:direction,
+
+        removed:false
+
+    };
+
+
+    arrows.push(
+        arrowData
+    );
+
+
+    arrow.addEventListener(
+        "click",
+        function(e){
+
+            e.stopPropagation();
+
+            if(!playing) return;
+
+            clickArrow(
+                arrowData
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   CHECK PATH
+===================================== */
+
+function isPathClear(arrow){
+
+    let row =
+        arrow.row;
+
+    let col =
+        arrow.col;
+
+
+    let dr = 0;
+    let dc = 0;
+
+
+    if(arrow.direction === "up")
+        dr = -1;
+
+    if(arrow.direction === "down")
+        dr = 1;
+
+    if(arrow.direction === "left")
+        dc = -1;
+
+    if(arrow.direction === "right")
+        dc = 1;
+
+
+    /*
+      Move cell by cell
+      until board edge.
+    */
+
+    while(true){
+
+        row += dr;
+
+        col += dc;
+
+
+        /*
+          Outside board =
+          path is clear.
+        */
+
+        if(
+            row < 0 ||
+            col < 0 ||
+            row >= getRows() ||
+            col >= getCols()
+        ){
+
+            return true;
+
+        }
+
+
+        /*
+          Check another arrow.
+        */
+
+        const blocking =
+            arrows.find(
+                a =>
+                    !a.removed &&
+                    a.row === row &&
+                    a.col === col
+            );
+
+
+        if(blocking){
+
+            return false;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================
+   GET BOARD SIZE
+===================================== */
+
+function getRows(){
+
+    return board
+        .style
+        .gridTemplateRows
+        .split(" ")
+        .length;
+
+}
+
+function getCols(){
+
+    return board
+        .style
+        .gridTemplateColumns
+        .split(" ")
+        .length;
+
+}
+
+
+/* =====================================
+   CLICK ARROW
+===================================== */
+
+function clickArrow(arrow){
+
+    if(
+        !isPathClear(arrow)
+    ){
+
+        /*
+          BLOCKED
+        */
+
+        arrow.element.classList.add(
+            "selected"
+        );
+
+        game.classList.add(
+            "shake"
+        );
+
+        setTimeout(()=>{
+
+            arrow.element.classList.remove(
+                "selected"
+            );
+
+            game.classList.remove(
+                "shake"
+            );
+
+        },250);
+
+        return;
+
+    }
+
+
+    /*
+      PATH CLEAR
+    */
+
+    moves++;
+
+    movesText.textContent =
+        moves;
+
+
+    arrow.removed = true;
+
+
+    /*
+      Animate arrow
+      towards edge.
+    */
+
+    let x = 0;
+    let y = 0;
+
+
+    if(
+        arrow.direction === "left"
+    ){
+
+        x = -300;
+
+    }
+
+    if(
+        arrow.direction === "right"
+    ){
+
+        x = 300;
+
+    }
+
+    if(
+        arrow.direction === "up"
+    ){
+
+        y = -300;
+
+    }
+
+    if(
+        arrow.direction === "down"
+    ){
+
+        y = 300;
+
+    }
+
+
+    arrow.element.style.transform =
+        `translate(${x}px,${y}px) scale(.6)`;
+
+
+    arrow.element.style.opacity =
+        "0";
+
+
+    setTimeout(()=>{
+
+        arrow.element.remove();
+
+        checkComplete();
+
+    },180);
+
+}
+
+
+/* =====================================
+   CHECK COMPLETE
+===================================== */
+
+function checkComplete(){
+
+    const remaining =
+        arrows.filter(
+            a => !a.removed
+        );
+
+
+    if(
+        remaining.length === 0
+    ){
+
+        levelComplete();
+
+    }
+
+}
+
+
+/* =====================================
+   LEVEL COMPLETE
+===================================== */
+
+function levelComplete(){
+
+    playing = false;
+
+    if(
+        currentLevel + 1 >
+        bestLevel
+    ){
+
+        bestLevel =
+            currentLevel + 1;
+
+        localStorage.setItem(
+            "arrowPuzzleBest",
+            bestLevel
+        );
+
+        bestText.textContent =
+            bestLevel;
+
+    }
+
+    success.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =====================================
+   NEXT LEVEL
+===================================== */
+
+function nextLevel(){
+
+    currentLevel++;
+
+    success.classList.add(
+        "hidden"
+    );
+
+    playing = true;
+
+    loadLevel();
+
+}
+
+
+/* =====================================
+   GENERATED LEVELS
+===================================== */
+
+function generateLevel(size){
+
+    const dirs =
+        [
+            "up",
+            "down",
+            "left",
+            "right"
+        ];
+
+
+    const data = [];
+
+
+    for(
+        let r=0;
+        r<size;
+        r++
+    ){
+
+        const row = [];
+
+
+        for(
+            let c=0;
+            c<size;
+            c++
+        ){
+
+            /*
+              Random arrows.
+            */
+
+            row.push(
+                dirs[
+                    Math.floor(
+                        Math.random() *
+                        dirs.length
+                    )
+                ]
+            );
+
+        }
+
+
+        data.push(row);
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+nextBtn.addEventListener(
+    "click",
+    nextLevel
+);
+
+
+/* =====================================
+   KEYBOARD
+===================================== */
+
+document.addEventListener(
+    "keydown",
+    e => {
+
+        if(
+            e.key === "Enter" &&
+            !startScreen.classList.contains(
+                "hidden"
+            )
+        ){
+
+            startGame();
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   INITIAL
+===================================== */
+
+levelText.textContent =
+    currentLevel;
+
+bestText.textContent =
+    bestLevel;
+
+</script>
+
+</body>
+</html>
