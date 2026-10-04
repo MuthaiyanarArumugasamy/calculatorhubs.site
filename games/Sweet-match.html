@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sweet Match 3 - Swipe Puzzle</title>
+<meta name="description" content="Sweet Match 3 is a colorful swipe-to-match browser puzzle game.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg1:#24102f;--bg2:#100b20;--panel:rgba(255,255,255,.10);
+  --text:#fff;--muted:#c9bfd4;--accent:#ffcf33;
+}
+body{
+  min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at 20% 10%,rgba(255,92,161,.25),transparent 30%),
+    radial-gradient(circle at 85% 80%,rgba(79,156,255,.20),transparent 32%),
+    linear-gradient(145deg,var(--bg1),var(--bg2));
+  display:flex;justify-content:center;padding:18px 10px;
+  overflow-x:hidden;
+}
+.wrap{width:min(560px,100%)}
+.header{text-align:center;margin-bottom:14px}
+.logo{font-size:30px;font-weight:900;letter-spacing:.5px;text-shadow:0 5px 18px rgba(0,0,0,.4)}
+.sub{color:var(--muted);font-size:13px;margin-top:5px}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px
+}
+.stat{
+  background:var(--panel);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:9px 5px;text-align:center;backdrop-filter:blur(8px)
+}
+.stat b{display:block;font-size:18px}
+.stat span{display:block;color:var(--muted);font-size:10px;margin-top:2px;text-transform:uppercase}
+.goal{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);
+  padding:10px 12px;border-radius:14px;margin-bottom:12px;font-size:13px;
+}
+.goalTop{display:flex;justify-content:space-between;margin-bottom:7px}
+.progress{height:7px;background:rgba(255,255,255,.10);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd43b,#ff5c9b);transition:width .25s}
+.gamebox{
+  background:rgba(8,5,20,.48);padding:10px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 45px rgba(0,0,0,.35)
+}
+#board{
+  width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);
+  gap:5px;touch-action:none;user-select:none;-webkit-user-select:none;
+}
+.cell{
+  position:relative;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.055);
+  overflow:hidden;cursor:grab;transform:scale(1);transition:transform .12s,filter .12s;
+}
+.cell:active{cursor:grabbing}
+.candy{
+  width:76%;height:76%;border-radius:32% 32% 42% 42%;
+  box-shadow:inset 7px 7px 0 rgba(255,255,255,.20),inset -7px -8px 0 rgba(0,0,0,.15),0 5px 9px rgba(0,0,0,.30);
+  position:relative;transition:transform .12s;
+}
+.candy:before{
+  content:"";position:absolute;width:28%;height:20%;border-radius:50%;
+  background:rgba(255,255,255,.48);left:18%;top:13%;filter:blur(1px)
+}
+.c0{background:linear-gradient(145deg,#ff5b70,#d71945)}
+.c1{background:linear-gradient(145deg,#ffd94a,#e59b00)}
+.c2{background:linear-gradient(145deg,#67e878,#16a64a)}
+.c3{background:linear-gradient(145deg,#61c9ff,#1971d8)}
+.c4{background:linear-gradient(145deg,#c986ff,#7832c9)}
+.c5{background:linear-gradient(145deg,#ff9b5b,#e95118)}
+.cell.matched .candy{animation:pop .28s ease forwards}
+.cell.hint .candy{animation:hint .55s ease-in-out 2}
+@keyframes pop{50%{transform:scale(1.25);filter:brightness(1.5)}100%{transform:scale(.05);opacity:0}}
+@keyframes hint{50%{transform:scale(1.18);filter:brightness(1.5)}}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+button{
+  border:0;border-radius:14px;padding:12px 10px;font-weight:800;font-size:14px;
+  color:white;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;transition:.15s;
+}
+button:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
+button:active{transform:scale(.98)}
+.help{
+  margin-top:12px;text-align:center;color:var(--muted);font-size:12px;line-height:1.55
+}
+.overlay{
+  position:fixed;inset:0;background:rgba(7,4,16,.78);backdrop-filter:blur(7px);
+  display:none;align-items:center;justify-content:center;padding:20px;z-index:10
+}
+.overlay.show{display:flex}
+.modal{
+  width:min(390px,100%);background:linear-gradient(145deg,#351447,#171025);
+  border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:24px;text-align:center;
+  box-shadow:0 25px 80px rgba(0,0,0,.55)
+}
+.modal h2{font-size:28px;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:17px}
+.modal button{width:100%;background:linear-gradient(90deg,#ff4f8b,#ffb52f);color:#210b18}
+.toast{
+  position:fixed;left:50%;top:18px;transform:translate(-50%,-100px);
+  background:#fff;color:#201025;padding:10px 17px;border-radius:99px;font-weight:800;
+  z-index:20;box-shadow:0 8px 30px rgba(0,0,0,.35);transition:.25s;pointer-events:none
+}
+.toast.show{transform:translate(-50%,0)}
+@media(max-width:420px){
+  body{padding:12px 7px}.logo{font-size:26px}.gamebox{padding:7px}.cell{border-radius:10px}.stats{gap:5px}.stat{padding:8px 3px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="logo">🍬 Sweet Match 3</div>
+    <div class="sub">Swipe candies • Match 3 or more • Clear the level</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="score">0</b><span>Score</span></div>
+    <div class="stat"><b id="moves">30</b><span>Moves</span></div>
+    <div class="stat"><b id="level">1</b><span>Level</span></div>
+    <div class="stat"><b id="combo">0</b><span>Combo</span></div>
+  </div>
+
+  <div class="goal">
+    <div class="goalTop">
+      <span>🎯 Level Goal</span>
+      <strong id="goalText">0 / 1200</strong>
+    </div>
+    <div class="progress"><i id="progress"></i></div>
+  </div>
+
+  <div class="gamebox">
+    <div id="board"></div>
+  </div>
+
+  <div class="controls">
+    <button id="shuffleBtn">🔀 Shuffle</button>
+    <button id="restartBtn">🔄 Restart</button>
+  </div>
+
+  <div class="help">
+    👆 Swipe any candy <b>up / down / left / right</b>.<br>
+    Make 3+ matching candies to score. Bigger matches give more points!
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="modalTitle">Level Complete! 🎉</h2>
+    <p id="modalText">Great job!</p>
+    <button id="modalBtn">Continue</button>
+  </div>
+</div>
+
+<script>
+const SIZE=8;
+const TYPES=6;
+const START_MOVES=30;
+
+let board=[];
+let score=0;
+let moves=START_MOVES;
+let level=1;
+let combo=0;
+let busy=false;
+let goal=1200;
+let gesture=null;
+let hintTimer=null;
+
+const boardEl=document.getElementById("board");
+const scoreEl=document.getElementById("score");
+const movesEl=document.getElementById("moves");
+const levelEl=document.getElementById("level");
+const comboEl=document.getElementById("combo");
+const goalText=document.getElementById("goalText");
+const progress=document.getElementById("progress");
+const overlay=document.getElementById("overlay");
+const modalTitle=document.getElementById("modalTitle");
+const modalText=document.getElementById("modalText");
+const modalBtn=document.getElementById("modalBtn");
+const toast=document.getElementById("toast");
+
+function rand(n){return Math.floor(Math.random()*n)}
+
+function randomCandy(){
+  return rand(TYPES);
+}
+
+function createBoard(){
+  board=Array.from({length:SIZE},()=>Array(SIZE).fill(0));
+  for(let r=0;r<SIZE;r++){
+    for(let c=0;c<SIZE;c++){
+      let v;
+      do{
+        v=randomCandy();
+      }while(
+        (c>=2 && board[r][c-1]===v && board[r][c-2]===v) ||
+        (r>=2 && board[r-1][c]===v && board[r-2][c]===v)
+      );
+      board[r][c]=v;
+    }
+  }
+  if(!hasPossibleMove()) shuffleBoard();
+}
+
+function render(matchedSet=new Set(),hintSet=new Set()){
+  boardEl.innerHTML="";
+  for(let r=0;r<SIZE;r++){
+    for(let c=0;c<SIZE;c++){
+      const cell=document.createElement("div");
+      cell.className="cell";
+      cell.dataset.r=r;
+      cell.dataset.c=c;
+
+      const candy=document.createElement("div");
+      candy.className="candy c"+board[r][c];
+
+      if(matchedSet.has(r+","+c)) cell.classList.add("matched");
+      if(hintSet.has(r+","+c)) cell.classList.add("hint");
+
+      cell.appendChild(candy);
+      boardEl.appendChild(cell);
+    }
+  }
+  updateUI();
+}
+
+function updateUI(){
+  scoreEl.textContent=score;
+  movesEl.textContent=moves;
+  levelEl.textContent=level;
+  comboEl.textContent=combo;
+  goalText.textContent=Math.min(score,goal)+" / "+goal;
+  progress.style.width=Math.min(100,(score/goal)*100)+"%";
+}
+
+function findMatches(){
+  const set=new Set();
+
+  // Horizontal
+  for(let r=0;r<SIZE;r++){
+    let start=0;
+    while(start<SIZE){
+      let end=start+1;
+      while(end<SIZE && board[r][end]===board[r][start]) end++;
+      if(end-start>=3){
+        for(let c=start;c<end;c++) set.add(r+","+c);
+      }
+      start=end;
+    }
+  }
+
+  // Vertical
+  for(let c=0;c<SIZE;c++){
+    let start=0;
+    while(start<SIZE){
+      let end=start+1;
+      while(end<SIZE && board[end][c]===board[start][c]) end++;
+      if(end-start>=3){
+        for(let r=start;r<end;r++) set.add(r+","+c);
+      }
+      start=end;
+    }
+  }
+  return set;
+}
+
+function adjacent(a,b){
+  return Math.abs(a.r-b.r)+Math.abs(a.c-b.c)===1;
+}
+
+function swapValues(a,b){
+  const t=board[a.r][a.c];
+  board[a.r][a.c]=board[b.r][b.c];
+  board[b.r][b.c]=t;
+}
+
+async function swap(a,b){
+  if(busy || !adjacent(a,b)) return;
+
+  busy=true;
+  combo=0;
+
+  swapValues(a,b);
+  render();
+  await wait(120);
+
+  let matches=findMatches();
+
+  if(matches.size===0){
+    swapValues(a,b);
+    render();
+    showToast("❌ No match!");
+    await wait(100);
+    busy=false;
+    return;
+  }
+
+  moves--;
+  await resolveMatches(matches);
+
+  if(score>=goal){
+    levelComplete();
+    return;
+  }
+
+  if(moves<=0){
+    gameOver();
+    return;
+  }
+
+  if(!hasPossibleMove()){
+    shuffleBoard();
+    render();
+    showToast("🔀 No moves — shuffled!");
+  }
+
+  busy=false;
+}
+
+async function resolveMatches(matches){
+  while(matches.size>0){
+    combo++;
+    const count=matches.size;
+
+    // Bonus based on size and cascade
+    const gained=count*50*combo + Math.max(0,count-3)*100;
+    score+=gained;
+
+    render(matches);
+    showToast("+"+gained+"  •  Combo x"+combo);
+    await wait(300);
+
+    // Remove
+    for(const key of matches){
+      const [r,c]=key.split(",").map(Number);
+      board[r][c]=null;
+    }
+
+    // Gravity
+    for(let c=0;c<SIZE;c++){
+      let write=SIZE-1;
+      for(let r=SIZE-1;r>=0;r--){
+        if(board[r][c]!==null){
+          board[write][c]=board[r][c];
+          if(write!==r) board[r][c]=null;
+          write--;
+        }
+      }
+      while(write>=0){
+        board[write][c]=randomCandy();
+        write--;
+      }
+    }
+
+    render();
+    await wait(180);
+    matches=findMatches();
+  }
+}
+
+function hasPossibleMove(){
+  for(let r=0;r<SIZE;r++){
+    for(let c=0;c<SIZE;c++){
+      const a={r,c};
+      if(c+1<SIZE){
+        const b={r,c:c+1};
+        swapValues(a,b);
+        const ok=findMatches().size>0;
+        swapValues(a,b);
+        if(ok)return true;
+      }
+      if(r+1<SIZE){
+        const b={r:r+1,c};
+        swapValues(a,b);
+        const ok=findMatches().size>0;
+        swapValues(a,b);
+        if(ok)return true;
+      }
+    }
+  }
+  return false;
+}
+
+function findHint(){
+  for(let r=0;r<SIZE;r++){
+    for(let c=0;c<SIZE;c++){
+      const a={r,c};
+      for(const [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]){
+        const nr=r+dr,nc=c+dc;
+        if(nr<0||nr>=SIZE||nc<0||nc>=SIZE)continue;
+        const b={r:nr,c:nc};
+        swapValues(a,b);
+        const ok=findMatches().size>0;
+        swapValues(a,b);
+        if(ok)return [a,b];
+      }
+    }
+  }
+  return null;
+}
+
+function shuffleBoard(){
+  let arr=board.flat();
+  for(let i=arr.length-1;i>0;i--){
+    const j=rand(i+1);
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  board=Array.from({length:SIZE},(_,r)=>arr.slice(r*SIZE,(r+1)*SIZE));
+
+  // Remove immediate matches and ensure a move exists.
+  let tries=0;
+  while((findMatches().size>0 || !hasPossibleMove()) && tries<500){
+    arr=board.flat();
+    for(let i=arr.length-1;i>0;i--){
+      const j=rand(i+1);
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    board=Array.from({length:SIZE},(_,r)=>arr.slice(r*SIZE,(r+1)*SIZE));
+    tries++;
+  }
+}
+
+function levelComplete(){
+  busy=true;
+  modalTitle.textContent="Level Complete! 🎉";
+  modalText.textContent="You reached "+score+" points. Ready for Level "+(level+1)+"?";
+  modalBtn.textContent="Next Level 🚀";
+  overlay.classList.add("show");
+}
+
+function nextLevel(){
+  level++;
+  goal=1200 + (level-1)*700;
+  moves=START_MOVES + Math.min(8,Math.floor(level/3));
+  combo=0;
+  createBoard();
+  render();
+  overlay.classList.remove("show");
+  busy=false;
+}
+
+function gameOver(){
+  busy=true;
+  modalTitle.textContent="Out of Moves 😵";
+  modalText.textContent="Final score: "+score+". Try again and beat your best!";
+  modalBtn.textContent="Play Again 🔄";
+  overlay.classList.add("show");
+}
+
+function restart(){
+  score=0;
+  moves=START_MOVES;
+  level=1;
+  goal=1200;
+  combo=0;
+  busy=false;
+  overlay.classList.remove("show");
+  createBoard();
+  render();
+}
+
+function showToast(text){
+  toast.textContent=text;
+  toast.classList.add("show");
+  clearTimeout(showToast.t);
+  showToast.t=setTimeout(()=>toast.classList.remove("show"),750);
+}
+
+function wait(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+// ===== SWIPE CONTROLS =====
+boardEl.addEventListener("pointerdown",e=>{
+  if(busy)return;
+  const cell=e.target.closest(".cell");
+  if(!cell)return;
+
+  gesture={
+    x:e.clientX,
+    y:e.clientY,
+    r:Number(cell.dataset.r),
+    c:Number(cell.dataset.c),
+    pointerId:e.pointerId
+  };
+
+  try{boardEl.setPointerCapture(e.pointerId)}catch(err){}
+});
+
+boardEl.addEventListener("pointerup",e=>{
+  if(!gesture || busy){
+    gesture=null;
+    return;
+  }
+
+  const dx=e.clientX-gesture.x;
+  const dy=e.clientY-gesture.y;
+  const ax=Math.abs(dx);
+  const ay=Math.abs(dy);
+
+  // Ignore simple taps. This game is swipe-only.
+  if(Math.max(ax,ay)<18){
+    gesture=null;
+    return;
+  }
+
+  let r=gesture.r;
+  let c=gesture.c;
+
+  if(ax>ay){
+    c += dx>0 ? 1 : -1;
+  }else{
+    r += dy>0 ? 1 : -1;
+  }
+
+  if(r>=0 && r<SIZE && c>=0 && c<SIZE){
+    swap(
+      {r:gesture.r,c:gesture.c},
+      {r,c}
+    );
+  }
+
+  gesture=null;
+});
+
+boardEl.addEventListener("pointercancel",()=>gesture=null);
+boardEl.addEventListener("lostpointercapture",()=>gesture=null);
+
+document.getElementById("shuffleBtn").addEventListener("click",()=>{
+  if(busy)return;
+  shuffleBoard();
+  render();
+  showToast("🔀 Board shuffled!");
+});
+
+document.getElementById("restartBtn").addEventListener("click",restart);
+
+modalBtn.addEventListener("click",()=>{
+  if(levelComplete){
+    nextLevel();
+  }
+});
+
+// Better modal state
+let modalMode="level";
+function levelComplete(){
+  busy=true;
+  modalMode="level";
+  modalTitle.textContent="Level Complete! 🎉";
+  modalText.textContent="You reached "+score+" points. Ready for Level "+(level+1)+"?";
+  modalBtn.textContent="Next Level 🚀";
+  overlay.classList.add("show");
+}
+function gameOver(){
+  busy=true;
+  modalMode="restart";
+  modalTitle.textContent="Out of Moves 😵";
+  modalText.textContent="Final score: "+score+". Try again and beat your best!";
+  modalBtn.textContent="Play Again 🔄";
+  overlay.classList.add("show");
+}
+modalBtn.onclick=()=>{
+  if(modalMode==="level") nextLevel();
+  else restart();
+};
+
+createBoard();
+render();
+
+// Small automatic hint after inactivity
+let idleTimer;
+function resetIdle(){
+  clearTimeout(idleTimer);
+  idleTimer=setTimeout(()=>{
+    if(!busy){
+      const hint=findHint();
+      if(hint){
+        const s=new Set([
+          hint[0].r+","+hint[0].c,
+          hint[1].r+","+hint[1].c
+        ]);
+        render(new Set(),s);
+        setTimeout(()=>{if(!busy)render()},1300);
+      }
+    }
+  },7000);
+}
+boardEl.addEventListener("pointerdown",resetIdle);
+document.addEventListener("click",resetIdle);
+resetIdle();
+</script>
+</body>
+</html>
