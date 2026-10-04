@@ -2,346 +2,292 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0,
-maximum-scale=1.0,user-scalable=no">
-
-<title>Ball Sort Puzzle - CalculatorHubs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Play Ball Sort Puzzle online for free. Sort all colored balls into matching tubes.">
+<title>Ball Sort Puzzle - Free Online Game</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-    -webkit-tap-highlight-color:transparent;
 }
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#f4f7fb;
-    color:#263250;
     min-height:100vh;
+    background:
+        radial-gradient(circle at top,#252c55 0%,#11152d 45%,#080a16 100%);
+    color:white;
+    overflow-x:hidden;
+}
+
+header{
+    text-align:center;
+    padding:22px 15px 10px;
+}
+
+header h1{
+    font-size:clamp(28px,7vw,48px);
+    margin-bottom:7px;
+}
+
+header p{
+    color:#bfc5df;
+    font-size:14px;
+}
+
+.topbar{
+    width:min(950px,94%);
+    margin:15px auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.stat{
+    min-width:100px;
+    padding:10px 16px;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    text-align:center;
+}
+
+.stat small{
+    display:block;
+    color:#aeb5d2;
+    font-size:11px;
+    margin-bottom:4px;
+}
+
+.stat strong{
+    font-size:19px;
+}
+
+.controls{
+    width:min(950px,94%);
+    margin:12px auto;
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    color:white;
+    font-weight:700;
+    border-radius:12px;
+    padding:11px 17px;
+    background:#242b4b;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.15);
+}
+
+button:active{
+    transform:scale(.96);
+}
+
+.primary{
+    background:#6c63ff;
+}
+
+.success{
+    background:#19a974;
+}
+
+.warning{
+    background:#c88918;
+}
+
+.danger{
+    background:#c43d58;
 }
 
 .game{
-    width:100%;
-    max-width:600px;
-    min-height:100vh;
-    margin:auto;
-    background:white;
-    position:relative;
-    padding:18px 14px 30px;
+    width:min(1000px,96%);
+    margin:20px auto 30px;
 }
 
-/* HEADER */
-
-.header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:12px;
-}
-
-.back{
-    width:44px;
-    height:44px;
-    border:0;
-    border-radius:50%;
-    background:#f0f4f9;
-    font-size:29px;
-    color:#263250;
-    cursor:pointer;
-}
-
-.title{
-    text-align:center;
-}
-
-.title h1{
-    font-size:24px;
-}
-
-.title p{
-    color:#8993a6;
-    font-size:12px;
-    margin-top:3px;
-}
-
-.restart{
-    width:44px;
-    height:44px;
-    border:0;
-    border-radius:50%;
-    background:#f0f4f9;
-    font-size:21px;
-    cursor:pointer;
-}
-
-/* LEVEL */
-
-.level{
-    text-align:center;
-    margin:12px 0;
-}
-
-.level strong{
-    font-size:21px;
-}
-
-/* INFO */
-
-.info{
-    display:flex;
-    gap:9px;
-    margin-bottom:20px;
-}
-
-.info-box{
-    flex:1;
-    background:#f3f6fa;
-    border-radius:13px;
-    padding:10px;
-    text-align:center;
-}
-
-.info-box small{
-    display:block;
-    font-size:11px;
-    color:#8993a6;
-    margin-bottom:3px;
-}
-
-.info-box strong{
-    font-size:18px;
-}
-
-/* BOARD */
-
-.board{
-    min-height:470px;
-    display:flex;
-    align-items:center;
+.tubes{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(72px,92px));
     justify-content:center;
-    gap:13px;
-    flex-wrap:wrap;
-    padding:20px 8px;
+    gap:22px 18px;
+    align-items:end;
 }
-
-/* TUBE */
 
 .tube{
-    width:64px;
-    height:220px;
-    border:4px solid #cbd4df;
-    border-top:0;
-    border-radius:0 0 30px 30px;
+    width:78px;
+    height:205px;
     position:relative;
+    border:3px solid rgba(255,255,255,.45);
+    border-top:0;
+    border-radius:0 0 28px 28px;
+    background:rgba(255,255,255,.045);
+    padding:8px 7px;
     display:flex;
     flex-direction:column-reverse;
-    align-items:center;
+    gap:5px;
     justify-content:flex-start;
-    padding-bottom:9px;
     cursor:pointer;
     transition:.2s;
+    box-shadow:
+        inset 0 0 15px rgba(255,255,255,.04),
+        0 8px 25px rgba(0,0,0,.2);
 }
 
 .tube::before{
     content:"";
     position:absolute;
-    left:-4px;
-    right:-4px;
+    left:-5px;
     top:-4px;
-    height:17px;
-    border:4px solid #cbd4df;
+    width:calc(100% + 10px);
+    height:15px;
+    border:3px solid rgba(255,255,255,.45);
     border-bottom:0;
-    border-radius:20px 20px 0 0;
+    border-radius:18px 18px 0 0;
 }
 
 .tube.selected{
-    transform:translateY(-10px);
-    border-color:#238be0;
+    transform:translateY(-12px);
+    border-color:#fff;
     box-shadow:
-        0 8px 20px rgba(35,139,224,.2);
+        0 0 0 3px rgba(108,99,255,.5),
+        0 15px 35px rgba(108,99,255,.3);
 }
 
 .tube.hint{
-    animation:hint 0.6s infinite alternate;
+    animation:hintGlow .7s infinite alternate;
 }
 
-@keyframes hint{
-
+@keyframes hintGlow{
     from{
-        transform:translateY(0);
+        box-shadow:0 0 5px #ffe066;
     }
-
     to{
-        transform:translateY(-8px);
+        box-shadow:0 0 28px #ffe066;
     }
-
 }
-
-/* BALL */
 
 .ball{
-    width:48px;
-    height:48px;
+    width:58px;
+    height:40px;
     border-radius:50%;
-    margin:3px 0;
-    position:relative;
+    margin:auto auto 0;
+    flex-shrink:0;
     box-shadow:
-        inset -6px -8px 12px rgba(0,0,0,.12),
-        inset 5px 5px 9px rgba(255,255,255,.35),
-        0 3px 5px rgba(0,0,0,.12);
-    animation:ballIn .18s ease;
-}
-
-@keyframes ballIn{
-
-    from{
-        transform:scale(.6);
-        opacity:.3;
-    }
-
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-
+        inset 0 7px 10px rgba(255,255,255,.35),
+        inset 0 -7px 10px rgba(0,0,0,.25),
+        0 4px 8px rgba(0,0,0,.25);
+    position:relative;
 }
 
 .ball::after{
     content:"";
     position:absolute;
-    width:12px;
-    height:7px;
+    width:16px;
+    height:8px;
     border-radius:50%;
-    background:rgba(255,255,255,.55);
-    top:8px;
-    left:9px;
-    transform:rotate(-25deg);
+    background:rgba(255,255,255,.38);
+    left:12px;
+    top:7px;
+    transform:rotate(-20deg);
 }
 
-/* COLORS */
-
 .red{
-    background:#ff5268;
+    background:linear-gradient(145deg,#ff657d,#d71943);
 }
 
 .blue{
-    background:#429cf2;
+    background:linear-gradient(145deg,#64b5ff,#2167dc);
 }
 
 .green{
-    background:#35c985;
+    background:linear-gradient(145deg,#55e69a,#07945a);
 }
 
 .yellow{
-    background:#ffc936;
+    background:linear-gradient(145deg,#ffe86b,#e7a900);
 }
 
 .purple{
-    background:#9b65e8;
+    background:linear-gradient(145deg,#c784ff,#7c36c9);
 }
 
 .orange{
-    background:#ff9148;
+    background:linear-gradient(145deg,#ffad60,#e45a12);
 }
 
 .pink{
-    background:#f45da5;
+    background:linear-gradient(145deg,#ff83c8,#d52685);
 }
 
 .cyan{
-    background:#25c8d8;
+    background:linear-gradient(145deg,#65f3ff,#079eac);
 }
 
-/* CONTROLS */
-
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    margin-top:4px;
-}
-
-.control{
-    border:0;
-    padding:13px 20px;
-    border-radius:12px;
-    font-weight:bold;
-    cursor:pointer;
-    background:#edf2f7;
-    color:#263250;
-}
-
-.hint-btn{
-    background:#263250;
-    color:white;
-}
-
-.control:active{
-    transform:scale(.96);
-}
-
-/* MESSAGE */
-
-.message{
+.level-area{
+    width:min(950px,94%);
+    margin:10px auto 35px;
     text-align:center;
-    min-height:25px;
-    margin:13px 0;
-    color:#7b869a;
-    font-size:14px;
 }
 
-/* LEVELS */
-
-.levels{
-    margin-top:25px;
-}
-
-.levels h3{
-    text-align:center;
+.level-area h2{
+    font-size:18px;
     margin-bottom:12px;
 }
 
-.level-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(5,1fr);
-    gap:8px;
+.levels{
+    display:flex;
+    gap:7px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
 
 .level-btn{
-    aspect-ratio:1;
-    border:0;
+    width:39px;
+    height:39px;
+    padding:0;
     border-radius:10px;
-    background:#edf2f7;
-    color:#263250;
-    font-weight:bold;
-    cursor:pointer;
+    background:#202641;
+    color:#cbd0e8;
 }
 
-.level-btn.current{
-    background:#238be0;
+.level-btn.active{
+    background:#6c63ff;
     color:white;
 }
 
 .level-btn.locked{
-    opacity:.45;
+    opacity:.35;
+    cursor:not-allowed;
 }
 
-/* OVERLAY */
+.message{
+    text-align:center;
+    color:#aeb5d2;
+    font-size:13px;
+    margin:10px 0 25px;
+}
 
 .overlay{
     position:fixed;
     inset:0;
-    background:rgba(20,30,50,.58);
     display:none;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    background:rgba(3,5,15,.82);
+    backdrop-filter:blur(8px);
     z-index:100;
+    padding:20px;
 }
 
 .overlay.show{
@@ -349,245 +295,165 @@ body{
 }
 
 .popup{
-    width:min(92%,390px);
-    background:white;
-    border-radius:25px;
-    padding:30px 22px;
+    width:min(420px,95%);
     text-align:center;
+    background:#171b36;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:24px;
+    padding:30px 22px;
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
-.popup h2{
-    font-size:30px;
+.popup .emoji{
+    font-size:55px;
     margin-bottom:10px;
 }
 
-.popup p{
-    color:#707c90;
-    line-height:1.6;
+.popup h2{
+    font-size:28px;
+    margin-bottom:8px;
 }
 
-.stars{
-    font-size:38px;
-    margin:15px 0;
-    letter-spacing:4px;
+.popup p{
+    color:#b8bed7;
+    line-height:1.6;
+    margin-bottom:20px;
 }
 
 .popup-buttons{
     display:flex;
-    gap:10px;
     justify-content:center;
-    margin-top:18px;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.popup button{
-    border:0;
-    padding:13px 20px;
-    border-radius:11px;
-    font-weight:bold;
-    cursor:pointer;
+footer{
+    text-align:center;
+    padding:20px;
+    color:#777f9e;
+    font-size:12px;
 }
 
-.next{
-    background:#238be0;
-    color:white;
-}
+@media(max-width:600px){
 
-.replay{
-    background:#edf2f7;
-    color:#263250;
-}
-
-/* MOBILE */
-
-@media(max-width:430px){
-
-    .game{
-        padding:14px 9px;
+    header{
+        padding-top:16px;
     }
 
     .tube{
-        width:57px;
-        height:190px;
+        width:68px;
+        height:180px;
     }
 
     .ball{
-        width:42px;
-        height:42px;
+        width:50px;
+        height:34px;
     }
 
-    .board{
-        gap:9px;
-        min-height:430px;
+    .tubes{
+        gap:17px 10px;
     }
 
-    .title h1{
-        font-size:21px;
+    .stat{
+        min-width:88px;
+        padding:8px 11px;
     }
-
 }
 
+@media(max-width:380px){
+
+    .tube{
+        width:61px;
+        height:165px;
+        padding:6px 5px;
+    }
+
+    .ball{
+        width:46px;
+        height:30px;
+    }
+
+    .tubes{
+        gap:14px 7px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="game">
+<header>
+    <h1>🧪 Ball Sort Puzzle</h1>
+    <p>Sort every color into the correct tube!</p>
+</header>
 
-    <div class="header">
+<div class="topbar">
 
-        <button class="back"
-        onclick="history.back()">
-            ‹
-        </button>
-
-        <div class="title">
-
-            <h1>🧪 Ball Sort</h1>
-
-            <p>Sort every color</p>
-
-        </div>
-
-        <button class="restart"
-        onclick="restartLevel()">
-            ↻
-        </button>
-
+    <div class="stat">
+        <small>LEVEL</small>
+        <strong id="levelText">1</strong>
     </div>
 
-
-    <div class="level">
-
-        Level
-        <strong id="levelNumber">1</strong>
-
+    <div class="stat">
+        <small>MOVES</small>
+        <strong id="movesText">0</strong>
     </div>
 
-
-    <div class="info">
-
-        <div class="info-box">
-
-            <small>MOVES</small>
-
-            <strong id="moves">
-                0
-            </strong>
-
-        </div>
-
-        <div class="info-box">
-
-            <small>BEST</small>
-
-            <strong id="best">
-                0
-            </strong>
-
-        </div>
-
-        <div class="info-box">
-
-            <small>HINTS</small>
-
-            <strong id="hints">
-                3
-            </strong>
-
-        </div>
-
+    <div class="stat">
+        <small>BEST</small>
+        <strong id="bestText">-</strong>
     </div>
 
-
-    <div
-        id="board"
-        class="board">
-    </div>
-
-
-    <div
-        id="message"
-        class="message">
-        Tap a tube to pick a ball.
-    </div>
-
-
-    <div class="controls">
-
-        <button
-        class="control hint-btn"
-        onclick="useHint()">
-
-            💡 Hint
-
-        </button>
-
-        <button
-        class="control"
-        onclick="undoMove()">
-
-            ↩ Undo
-
-        </button>
-
-    </div>
-
-
-    <div class="levels">
-
-        <h3>Levels</h3>
-
-        <div
-        id="levelGrid"
-        class="level-grid">
-        </div>
-
+    <div class="stat">
+        <small>HINTS</small>
+        <strong id="hintText">3</strong>
     </div>
 
 </div>
 
+<div class="controls">
+    <button class="primary" onclick="newGame()">🔄 Restart</button>
+    <button onclick="undoMove()">↩ Undo</button>
+    <button class="warning" onclick="useHint()">💡 Hint</button>
+</div>
 
-<!-- WIN POPUP -->
+<div class="game">
+    <div id="tubes" class="tubes"></div>
 
-<div
-id="winPopup"
-class="overlay">
+    <div class="message">
+        Tap a tube to pick a ball, then tap another tube to move it.
+    </div>
+</div>
+
+<div class="level-area">
+    <h2>Choose Level</h2>
+    <div id="levels" class="levels"></div>
+</div>
+
+<footer>
+    © CalculatorHubs — Free Online Games
+</footer>
+
+<div id="winOverlay" class="overlay">
 
     <div class="popup">
 
-        <h2>🎉 Great Job!</h2>
+        <div class="emoji">🎉</div>
 
-        <p>
-            You sorted all the colors!
-        </p>
+        <h2>Level Complete!</h2>
 
-        <div
-        id="stars"
-        class="stars">
-            ⭐⭐⭐
-        </div>
-
-        <p>
-            Moves:
-            <b id="finalMoves">0</b>
+        <p id="winText">
+            Great job!
         </p>
 
         <div class="popup-buttons">
 
-            <button
-            class="replay"
-            onclick="restartLevel();closeWin()">
-
-                Replay
-
+            <button class="primary" onclick="nextLevel()">
+                ▶ Next Level
             </button>
 
-            <button
-            class="next"
-            onclick="nextLevel()">
-
-                Next Level →
-
+            <button onclick="closePopup()">
+                ✕ Close
             </button>
 
         </div>
@@ -596,44 +462,9 @@ class="overlay">
 
 </div>
 
-
 <script>
 
-/* ==========================================
-   BALL SORT PUZZLE
-========================================== */
-
-const boardElement =
-document.getElementById("board");
-
-const levelNumber =
-document.getElementById("levelNumber");
-
-const movesElement =
-document.getElementById("moves");
-
-const bestElement =
-document.getElementById("best");
-
-const hintsElement =
-document.getElementById("hints");
-
-const message =
-document.getElementById("message");
-
-const levelGrid =
-document.getElementById("levelGrid");
-
-const winPopup =
-document.getElementById("winPopup");
-
-
-/* ==========================================
-   COLORS
-========================================== */
-
-const colorNames = [
-
+const COLORS = [
     "red",
     "blue",
     "green",
@@ -642,864 +473,602 @@ const colorNames = [
     "orange",
     "pink",
     "cyan"
-
 ];
 
+const BALLS_PER_COLOR = 4;
+const MAX_LEVEL = 50;
 
-/* ==========================================
-   GAME VARIABLES
-========================================== */
-
-let currentLevel =
-Number(localStorage.getItem(
-    "ballSortLevel"
-)) || 1;
-
-let moves = 0;
-
-let hints = 3;
-
-let selectedTube = null;
-
+let level = 1;
 let tubes = [];
-
+let selectedTube = null;
+let moves = 0;
+let hints = 3;
 let history = [];
+let hintTimer = null;
 
-let best =
-Number(localStorage.getItem(
-    "ballSortBest"
-)) || 0;
+let unlocked =
+    Number(localStorage.getItem("ballSortUnlocked")) || 1;
 
+if(unlocked < 1){
+    unlocked = 1;
+}
 
-/* ==========================================
-   LEVEL GENERATOR
-========================================== */
+function colorCountForLevel(lvl){
 
-function createLevel(level){
+    return Math.min(
+        2 + Math.floor((lvl - 1) / 4),
+        8
+    );
 
-    /*
-       Difficulty increases by
-       number of colors.
-    */
+}
 
-    let colors =
-        Math.min(
-            2 + Math.floor((level-1)/4),
-            6
-        );
+function createSolvedBalls(colorCount){
 
-    /*
-       Maximum 6 colors.
-    */
+    let balls = [];
 
-    let ballsPerColor = 4;
+    for(let c = 0; c < colorCount; c++){
 
-    let total =
-        colors * ballsPerColor;
+        for(let i = 0; i < BALLS_PER_COLOR; i++){
 
-    let data = [];
-
-    for(
-        let c=0;
-        c<colors;
-        c++
-    ){
-
-        for(
-            let b=0;
-            b<ballsPerColor;
-            b++
-        ){
-
-            data.push(
-                colorNames[c]
-            );
+            balls.push(COLORS[c]);
 
         }
 
     }
 
-
-    /*
-       Shuffle
-    */
-
-    shuffle(data);
-
-
-    tubes = [];
-
-
-    /*
-       Number of full tubes
-    */
-
-    for(
-        let i=0;
-        i<colors;
-        i++
-    ){
-
-        tubes.push(
-            data.slice(
-                i*4,
-                i*4+4
-            )
-        );
-
-    }
-
-
-    /*
-       Empty tubes
-    */
-
-    tubes.push([]);
-
-    tubes.push([]);
-
-
-    /*
-       For harder levels,
-       add another empty tube
-    */
-
-    if(level >= 10){
-
-        tubes.push([]);
-
-    }
-
+    return balls;
 }
 
+/*
+    Creates a shuffled puzzle.
+*/
+function generateLevel(lvl){
 
-/* ==========================================
-   SHUFFLE
-========================================== */
+    const colorCount = colorCountForLevel(lvl);
+
+    let balls = createSolvedBalls(colorCount);
+
+    shuffle(balls);
+
+    let tubeCount =
+        colorCount +
+        (lvl >= 10 ? 3 : 2);
+
+    let result = [];
+
+    for(let i = 0; i < tubeCount; i++){
+
+        result.push([]);
+
+    }
+
+    let index = 0;
+
+    /*
+       Distribute the balls randomly.
+    */
+    for(let i = 0; i < balls.length; i++){
+
+        result[index].push(balls[i]);
+
+        index++;
+
+        if(index >= colorCount){
+            index = 0;
+        }
+
+    }
+
+    /*
+       Shuffle individual tube contents.
+    */
+    for(let tube of result){
+
+        shuffle(tube);
+
+    }
+
+    return result;
+}
 
 function shuffle(array){
 
-    for(
-        let i=array.length-1;
-        i>0;
-        i--
-    ){
+    for(let i = array.length - 1; i > 0; i--){
 
-        let j =
-        Math.floor(
-            Math.random()*(i+1)
-        );
+        const j =
+            Math.floor(Math.random() * (i + 1));
 
-        [
-            array[i],
-            array[j]
-        ] =
-        [
-            array[j],
-            array[i]
-        ];
+        [array[i],array[j]] =
+        [array[j],array[i]];
 
     }
 
+    return array;
 }
-
-
-/* ==========================================
-   LOAD LEVEL
-========================================== */
-
-function loadLevel(){
-
-    createLevel(
-        currentLevel
-    );
-
-    moves=0;
-
-    hints=3;
-
-    selectedTube=null;
-
-    history=[];
-
-    levelNumber.textContent=
-        currentLevel;
-
-    movesElement.textContent=0;
-
-    hintsElement.textContent=3;
-
-    message.textContent=
-        "Tap a tube to pick a ball.";
-
-    render();
-
-}
-
-
-/* ==========================================
-   RENDER
-========================================== */
 
 function render(){
 
-    boardElement.innerHTML="";
+    const container =
+        document.getElementById("tubes");
 
-    tubes.forEach(
-        (tube,index)=>{
+    container.innerHTML = "";
 
-            const tubeElement =
+    tubes.forEach((tube,index)=>{
+
+        const div =
             document.createElement("div");
 
-            tubeElement.className="tube";
+        div.className = "tube";
 
-            if(
-                selectedTube===index
-            ){
-
-                tubeElement.classList.add(
-                    "selected"
-                );
-
-            }
-
-
-            tube.forEach(
-                color=>{
-
-                    const ball =
-                    document.createElement("div");
-
-                    ball.className =
-                        "ball "+color;
-
-                    tubeElement.appendChild(
-                        ball
-                    );
-
-                }
-            );
-
-
-            tubeElement.onclick =
-                ()=>tapTube(index);
-
-
-            boardElement.appendChild(
-                tubeElement
-            );
-
+        if(selectedTube === index){
+            div.classList.add("selected");
         }
-    );
 
+        div.dataset.index = index;
+
+        div.onclick = () => tubeClick(index);
+
+        tube.forEach(color=>{
+
+            const ball =
+                document.createElement("div");
+
+            ball.className =
+                "ball " + color;
+
+            div.appendChild(ball);
+
+        });
+
+        container.appendChild(div);
+
+    });
+
+    document.getElementById("levelText")
+        .textContent = level;
+
+    document.getElementById("movesText")
+        .textContent = moves;
+
+    document.getElementById("hintText")
+        .textContent = hints;
+
+    updateBest();
+
+    renderLevels();
 }
 
+function tubeClick(index){
 
-/* ==========================================
-   TAP TUBE
-========================================== */
+    if(selectedTube === null){
 
-function tapTube(index){
-
-    /*
-       Nothing selected
-    */
-
-    if(selectedTube===null){
-
-        if(
-            tubes[index].length===0
-        ){
-
-            message.textContent=
-                "This tube is empty.";
+        if(tubes[index].length === 0){
 
             return;
 
         }
 
-        selectedTube=index;
-
-        message.textContent=
-            "Now choose where to move it.";
+        selectedTube = index;
 
         render();
 
         return;
-
     }
 
+    if(selectedTube === index){
 
-    /*
-       Same tube
-    */
-
-    if(selectedTube===index){
-
-        selectedTube=null;
-
-        message.textContent=
-            "Selection cancelled.";
+        selectedTube = null;
 
         render();
 
         return;
-
     }
 
+    if(canMove(selectedTube,index)){
 
-    /*
-       Attempt move
-    */
+        saveHistory();
 
-    moveBall(
-        selectedTube,
-        index
-    );
+        moveBall(
+            selectedTube,
+            index
+        );
+
+        moves++;
+
+        selectedTube = null;
+
+        render();
+
+        checkWin();
+
+    }else{
+
+        /*
+          If player taps another non-empty tube,
+          switch selection.
+        */
+        if(tubes[index].length > 0){
+
+            selectedTube = index;
+
+            render();
+
+        }
+
+    }
 
 }
 
+function canMove(from,to){
 
-/* ==========================================
-   MOVE BALL
-========================================== */
+    if(tubes[from].length === 0){
+        return false;
+    }
+
+    if(tubes[to].length >= BALLS_PER_COLOR){
+        return false;
+    }
+
+    if(tubes[to].length === 0){
+        return true;
+    }
+
+    const moving =
+        tubes[from][tubes[from].length - 1];
+
+    const target =
+        tubes[to][tubes[to].length - 1];
+
+    return moving === target;
+}
 
 function moveBall(from,to){
 
-    const source =
-        tubes[from];
-
-    const target =
-        tubes[to];
-
-
-    if(
-        source.length===0
-    ){
-
-        selectedTube=null;
-
-        render();
-
-        return;
-
-    }
-
-
-    if(
-        target.length>=4
-    ){
-
-        message.textContent=
-            "❌ That tube is full!";
-
-        return;
-
-    }
-
-
     const ball =
-        source[source.length-1];
+        tubes[from].pop();
 
+    tubes[to].push(ball);
 
-    /*
-       Only same color can stack.
-    */
+}
 
-    if(
-        target.length>0 &&
-        target[target.length-1]!==ball
-    ){
-
-        message.textContent=
-            "❌ Colors don't match!";
-
-        return;
-
-    }
-
-
-    /*
-       Save state
-    */
+function saveHistory(){
 
     history.push(
-        JSON.stringify(tubes)
+        JSON.parse(JSON.stringify(tubes))
     );
 
+    if(history.length > 50){
 
-    /*
-       Move ball
-    */
-
-    source.pop();
-
-    target.push(ball);
-
-    moves++;
-
-    movesElement.textContent=
-        moves;
-
-    selectedTube=null;
-
-    message.textContent=
-        "Nice move! 🎯";
-
-    render();
-
-
-    /*
-       Check win
-    */
-
-    setTimeout(
-        checkWin,
-        120
-    );
-
-}
-
-
-/* ==========================================
-   WIN CHECK
-========================================== */
-
-function checkWin(){
-
-    let won=true;
-
-
-    for(
-        const tube of tubes
-    ){
-
-        if(
-            tube.length===0
-        )
-            continue;
-
-
-        if(
-            tube.length!==4
-        ){
-
-            won=false;
-
-            break;
-
-        }
-
-
-        const first =
-            tube[0];
-
-        if(
-            !tube.every(
-                color=>
-                    color===first
-            )
-        ){
-
-            won=false;
-
-            break;
-
-        }
-
-    }
-
-
-    if(won){
-
-        showWin();
+        history.shift();
 
     }
 
 }
-
-
-/* ==========================================
-   STARS
-========================================== */
-
-function calculateStars(){
-
-    const colors =
-        Math.min(
-            2 +
-            Math.floor(
-                (currentLevel-1)/4
-            ),
-            6
-        );
-
-
-    const perfect =
-        colors*5;
-
-
-    if(
-        moves<=perfect
-    )
-        return 3;
-
-    if(
-        moves<=perfect+6
-    )
-        return 2;
-
-    return 1;
-
-}
-
-
-/* ==========================================
-   SHOW WIN
-========================================== */
-
-function showWin(){
-
-    const stars =
-        calculateStars();
-
-
-    document.getElementById(
-        "finalMoves"
-    ).textContent=moves;
-
-
-    document.getElementById(
-        "stars"
-    ).textContent=
-        "⭐".repeat(stars)+
-        "☆".repeat(3-stars);
-
-
-    /*
-       Unlock next level
-    */
-
-    const unlocked =
-        Number(
-            localStorage.getItem(
-                "ballSortLevel"
-            )
-        ) || 1;
-
-
-    if(
-        currentLevel>=unlocked
-    ){
-
-        localStorage.setItem(
-            "ballSortLevel",
-            currentLevel+1
-        );
-
-    }
-
-
-    if(
-        best===0 ||
-        moves<best
-    ){
-
-        best=moves;
-
-        localStorage.setItem(
-            "ballSortBest",
-            best
-        );
-
-        bestElement.textContent=
-            best;
-
-    }
-
-
-    winPopup.classList.add(
-        "show"
-    );
-
-}
-
-
-/* ==========================================
-   CLOSE WIN
-========================================== */
-
-function closeWin(){
-
-    winPopup.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* ==========================================
-   NEXT LEVEL
-========================================== */
-
-function nextLevel(){
-
-    closeWin();
-
-    currentLevel++;
-
-    const unlocked =
-        Number(
-            localStorage.getItem(
-                "ballSortLevel"
-            )
-        ) || 1;
-
-
-    if(
-        currentLevel>unlocked
-    ){
-
-        currentLevel=unlocked;
-
-    }
-
-
-    loadLevel();
-
-    renderLevels();
-
-}
-
-
-/* ==========================================
-   RESTART
-========================================== */
-
-function restartLevel(){
-
-    closeWin();
-
-    loadLevel();
-
-}
-
-
-/* ==========================================
-   UNDO
-========================================== */
 
 function undoMove(){
 
-    if(
-        history.length===0
-    ){
-
-        message.textContent=
-            "Nothing to undo.";
+    if(history.length === 0){
 
         return;
 
     }
 
-
     tubes =
-        JSON.parse(
-            history.pop()
-        );
+        history.pop();
 
+    moves++;
 
-    moves =
-        Math.max(
-            0,
-            moves-1
-        );
-
-
-    selectedTube=null;
-
-    movesElement.textContent=
-        moves;
-
-    message.textContent=
-        "↩ Move undone.";
+    selectedTube = null;
 
     render();
 
 }
 
+function isTubeSolved(tube){
 
-/* ==========================================
-   HINT
-========================================== */
+    if(tube.length === 0){
+        return true;
+    }
 
-function useHint(){
+    if(tube.length !== BALLS_PER_COLOR){
+        return false;
+    }
 
-    if(hints<=0){
+    return tube.every(
+        color => color === tube[0]
+    );
 
-        message.textContent=
-            "No hints remaining.";
+}
+
+function checkWin(){
+
+    const solved =
+        tubes.every(
+            tube => isTubeSolved(tube)
+        );
+
+    if(!solved){
+        return;
+    }
+
+    saveBest();
+
+    setTimeout(()=>{
+
+        document.getElementById("winText")
+            .textContent =
+            `You solved Level ${level} in ${moves} moves!`;
+
+        document
+            .getElementById("winOverlay")
+            .classList.add("show");
+
+        if(level >= unlocked){
+
+            unlocked =
+                Math.min(level + 1,MAX_LEVEL);
+
+            localStorage.setItem(
+                "ballSortUnlocked",
+                unlocked
+            );
+
+        }
+
+    },250);
+
+}
+
+function newGame(){
+
+    closePopup();
+
+    selectedTube = null;
+    moves = 0;
+    hints = 3;
+    history = [];
+
+    tubes =
+        generateLevel(level);
+
+    render();
+
+}
+
+function goToLevel(lvl){
+
+    if(lvl > unlocked){
 
         return;
 
     }
 
+    level = lvl;
+
+    newGame();
+
+}
+
+function nextLevel(){
+
+    closePopup();
+
+    if(level < MAX_LEVEL){
+
+        level++;
+
+    }
+
+    if(level > unlocked){
+
+        unlocked = level;
+
+        localStorage.setItem(
+            "ballSortUnlocked",
+            unlocked
+        );
+
+    }
+
+    newGame();
+
+}
+
+function closePopup(){
+
+    document
+        .getElementById("winOverlay")
+        .classList.remove("show");
+
+}
+
+function renderLevels(){
+
+    const container =
+        document.getElementById("levels");
+
+    container.innerHTML = "";
+
+    for(let i = 1; i <= MAX_LEVEL; i++){
+
+        const btn =
+            document.createElement("button");
+
+        btn.className = "level-btn";
+
+        if(i === level){
+
+            btn.classList.add("active");
+
+        }
+
+        if(i > unlocked){
+
+            btn.classList.add("locked");
+
+            btn.textContent = "🔒";
+
+        }else{
+
+            btn.textContent = i;
+
+            btn.onclick = () => goToLevel(i);
+
+        }
+
+        container.appendChild(btn);
+
+    }
+
+}
+
+function useHint(){
+
+    if(hints <= 0){
+
+        return;
+
+    }
+
+    const move =
+        findHint();
+
+    if(!move){
+
+        return;
+
+    }
 
     hints--;
 
-    hintsElement.textContent=
-        hints;
+    const elements =
+        document.querySelectorAll(".tube");
 
+    elements[move.from]
+        .classList.add("hint");
+
+    elements[move.to]
+        .classList.add("hint");
+
+    clearTimeout(hintTimer);
+
+    hintTimer =
+        setTimeout(()=>{
+
+            elements.forEach(el=>{
+                el.classList.remove("hint");
+            });
+
+        },1200);
+
+    document.getElementById("hintText")
+        .textContent = hints;
+
+}
+
+function findHint(){
 
     /*
-       Find a legal move
+       First find matching-color moves.
     */
 
-    let from=-1;
+    for(let from = 0; from < tubes.length; from++){
 
-    let to=-1;
-
-
-    for(
-        let i=0;
-        i<tubes.length;
-        i++
-    ){
-
-        if(
-            tubes[i].length===0
-        )
+        if(tubes[from].length === 0){
             continue;
+        }
 
+        const moving =
+            tubes[from][tubes[from].length - 1];
 
-        const ball =
-            tubes[i][
-                tubes[i].length-1
-            ];
+        for(let to = 0; to < tubes.length; to++){
 
-
-        for(
-            let j=0;
-            j<tubes.length;
-            j++
-        ){
-
-            if(i===j)
+            if(from === to){
                 continue;
-
+            }
 
             if(
-                tubes[j].length>=4
-            )
-                continue;
-
-
-            if(
-                tubes[j].length===0 ||
-                tubes[j][
-                    tubes[j].length-1
-                ]===ball
+                tubes[to].length > 0 &&
+                tubes[to].length < BALLS_PER_COLOR &&
+                tubes[to][tubes[to].length - 1] === moving
             ){
 
-                from=i;
-                to=j;
-
-                break;
+                return {from,to};
 
             }
 
         }
 
+    }
 
-        if(from!==-1)
-            break;
+    /*
+       Then find empty tube.
+    */
+
+    for(let from = 0; from < tubes.length; from++){
+
+        if(tubes[from].length === 0){
+            continue;
+        }
+
+        for(let to = 0; to < tubes.length; to++){
+
+            if(from !== to && tubes[to].length === 0){
+
+                return {from,to};
+
+            }
+
+        }
 
     }
 
-
-    if(
-        from===-1
-    ){
-
-        message.textContent=
-            "No obvious move found.";
-
-        return;
-
-    }
-
-
-    const elements =
-        document.querySelectorAll(
-            ".tube"
-        );
-
-
-    elements[from].classList.add(
-        "hint"
-    );
-
-    elements[to].classList.add(
-        "hint"
-    );
-
-
-    setTimeout(()=>{
-
-        elements[from].classList.remove(
-            "hint"
-        );
-
-        elements[to].classList.remove(
-            "hint"
-        );
-
-    },1600);
-
-
-    message.textContent=
-        "💡 Try the highlighted tubes.";
+    return null;
 
 }
 
+function getBestKey(){
 
-/* ==========================================
-   LEVEL SELECT
-========================================== */
+    return "ballSortBest_" + level;
 
-function renderLevels(){
+}
 
-    levelGrid.innerHTML="";
+function updateBest(){
 
+    const best =
+        localStorage.getItem(getBestKey());
 
-    const unlocked =
-        Number(
-            localStorage.getItem(
-                "ballSortLevel"
-            )
-        ) || 1;
+    document.getElementById("bestText")
+        .textContent =
+        best ? best : "-";
 
+}
 
-    for(
-        let i=1;
-        i<=50;
-        i++
-    ){
+function saveBest(){
 
-        const button =
-            document.createElement(
-                "button"
-            );
+    const key =
+        getBestKey();
 
+    const old =
+        Number(localStorage.getItem(key));
 
-        button.className=
-            "level-btn";
+    if(!old || moves < old){
 
+        localStorage.setItem(
+            key,
+            moves
+        );
 
-        if(i===currentLevel){
+    }
 
-            button.classList.add(
-                "current"
-            );
+}
 
- 
+/*
+   Start game.
+*/
+newGame();
+
+</script>
+
+</body>
+</html>
