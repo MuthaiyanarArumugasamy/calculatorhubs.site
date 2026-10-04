@@ -2,1073 +2,213 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Play Ball Sort Puzzle online for free. Sort all colored balls into matching tubes.">
-<title>Ball Sort Puzzle - Free Online Game</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ball Sort Extreme - Free Puzzle Game</title>
+<meta name="description" content="Play Ball Sort Extreme, a challenging free color sorting puzzle game with 100 levels.">
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    min-height:100vh;
-    background:
-        radial-gradient(circle at top,#252c55 0%,#11152d 45%,#080a16 100%);
-    color:white;
-    overflow-x:hidden;
-}
-
-header{
-    text-align:center;
-    padding:22px 15px 10px;
-}
-
-header h1{
-    font-size:clamp(28px,7vw,48px);
-    margin-bottom:7px;
-}
-
-header p{
-    color:#bfc5df;
-    font-size:14px;
-}
-
-.topbar{
-    width:min(950px,94%);
-    margin:15px auto;
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.stat{
-    min-width:100px;
-    padding:10px 16px;
-    border-radius:14px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.1);
-    text-align:center;
-}
-
-.stat small{
-    display:block;
-    color:#aeb5d2;
-    font-size:11px;
-    margin-bottom:4px;
-}
-
-.stat strong{
-    font-size:19px;
-}
-
-.controls{
-    width:min(950px,94%);
-    margin:12px auto;
-    display:flex;
-    justify-content:center;
-    gap:9px;
-    flex-wrap:wrap;
-}
-
-button{
-    border:0;
-    cursor:pointer;
-    color:white;
-    font-weight:700;
-    border-radius:12px;
-    padding:11px 17px;
-    background:#242b4b;
-    transition:.2s;
-}
-
-button:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.15);
-}
-
-button:active{
-    transform:scale(.96);
-}
-
-.primary{
-    background:#6c63ff;
-}
-
-.success{
-    background:#19a974;
-}
-
-.warning{
-    background:#c88918;
-}
-
-.danger{
-    background:#c43d58;
-}
-
-.game{
-    width:min(1000px,96%);
-    margin:20px auto 30px;
-}
-
-.tubes{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(72px,92px));
-    justify-content:center;
-    gap:22px 18px;
-    align-items:end;
-}
-
-.tube{
-    width:78px;
-    height:205px;
-    position:relative;
-    border:3px solid rgba(255,255,255,.45);
-    border-top:0;
-    border-radius:0 0 28px 28px;
-    background:rgba(255,255,255,.045);
-    padding:8px 7px;
-    display:flex;
-    flex-direction:column-reverse;
-    gap:5px;
-    justify-content:flex-start;
-    cursor:pointer;
-    transition:.2s;
-    box-shadow:
-        inset 0 0 15px rgba(255,255,255,.04),
-        0 8px 25px rgba(0,0,0,.2);
-}
-
-.tube::before{
-    content:"";
-    position:absolute;
-    left:-5px;
-    top:-4px;
-    width:calc(100% + 10px);
-    height:15px;
-    border:3px solid rgba(255,255,255,.45);
-    border-bottom:0;
-    border-radius:18px 18px 0 0;
-}
-
-.tube.selected{
-    transform:translateY(-12px);
-    border-color:#fff;
-    box-shadow:
-        0 0 0 3px rgba(108,99,255,.5),
-        0 15px 35px rgba(108,99,255,.3);
-}
-
-.tube.hint{
-    animation:hintGlow .7s infinite alternate;
-}
-
-@keyframes hintGlow{
-    from{
-        box-shadow:0 0 5px #ffe066;
-    }
-    to{
-        box-shadow:0 0 28px #ffe066;
-    }
-}
-
-.ball{
-    width:58px;
-    height:40px;
-    border-radius:50%;
-    margin:auto auto 0;
-    flex-shrink:0;
-    box-shadow:
-        inset 0 7px 10px rgba(255,255,255,.35),
-        inset 0 -7px 10px rgba(0,0,0,.25),
-        0 4px 8px rgba(0,0,0,.25);
-    position:relative;
-}
-
-.ball::after{
-    content:"";
-    position:absolute;
-    width:16px;
-    height:8px;
-    border-radius:50%;
-    background:rgba(255,255,255,.38);
-    left:12px;
-    top:7px;
-    transform:rotate(-20deg);
-}
-
-.red{
-    background:linear-gradient(145deg,#ff657d,#d71943);
-}
-
-.blue{
-    background:linear-gradient(145deg,#64b5ff,#2167dc);
-}
-
-.green{
-    background:linear-gradient(145deg,#55e69a,#07945a);
-}
-
-.yellow{
-    background:linear-gradient(145deg,#ffe86b,#e7a900);
-}
-
-.purple{
-    background:linear-gradient(145deg,#c784ff,#7c36c9);
-}
-
-.orange{
-    background:linear-gradient(145deg,#ffad60,#e45a12);
-}
-
-.pink{
-    background:linear-gradient(145deg,#ff83c8,#d52685);
-}
-
-.cyan{
-    background:linear-gradient(145deg,#65f3ff,#079eac);
-}
-
-.level-area{
-    width:min(950px,94%);
-    margin:10px auto 35px;
-    text-align:center;
-}
-
-.level-area h2{
-    font-size:18px;
-    margin-bottom:12px;
-}
-
-.levels{
-    display:flex;
-    gap:7px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.level-btn{
-    width:39px;
-    height:39px;
-    padding:0;
-    border-radius:10px;
-    background:#202641;
-    color:#cbd0e8;
-}
-
-.level-btn.active{
-    background:#6c63ff;
-    color:white;
-}
-
-.level-btn.locked{
-    opacity:.35;
-    cursor:not-allowed;
-}
-
-.message{
-    text-align:center;
-    color:#aeb5d2;
-    font-size:13px;
-    margin:10px 0 25px;
-}
-
-.overlay{
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:rgba(3,5,15,.82);
-    backdrop-filter:blur(8px);
-    z-index:100;
-    padding:20px;
-}
-
-.overlay.show{
-    display:flex;
-}
-
-.popup{
-    width:min(420px,95%);
-    text-align:center;
-    background:#171b36;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:24px;
-    padding:30px 22px;
-    box-shadow:0 25px 80px rgba(0,0,0,.5);
-}
-
-.popup .emoji{
-    font-size:55px;
-    margin-bottom:10px;
-}
-
-.popup h2{
-    font-size:28px;
-    margin-bottom:8px;
-}
-
-.popup p{
-    color:#b8bed7;
-    line-height:1.6;
-    margin-bottom:20px;
-}
-
-.popup-buttons{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-footer{
-    text-align:center;
-    padding:20px;
-    color:#777f9e;
-    font-size:12px;
-}
-
-@media(max-width:600px){
-
-    header{
-        padding-top:16px;
-    }
-
-    .tube{
-        width:68px;
-        height:180px;
-    }
-
-    .ball{
-        width:50px;
-        height:34px;
-    }
-
-    .tubes{
-        gap:17px 10px;
-    }
-
-    .stat{
-        min-width:88px;
-        padding:8px 11px;
-    }
-}
-
-@media(max-width:380px){
-
-    .tube{
-        width:61px;
-        height:165px;
-        padding:6px 5px;
-    }
-
-    .ball{
-        width:46px;
-        height:30px;
-    }
-
-    .tubes{
-        gap:14px 7px;
-    }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;min-height:100vh;color:#fff;background:radial-gradient(circle at top,#263452,#0b101a 65%);padding:18px}
+.wrap{max-width:1050px;margin:auto}
+header{text-align:center;margin:8px 0 18px}
+h1{font-size:30px}.sub{color:#aab5c9;margin-top:5px;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;max-width:720px;margin:15px auto}
+.stat{background:#ffffff0d;border:1px solid #ffffff18;border-radius:14px;padding:11px;text-align:center}
+.label{font-size:10px;color:#8996ad;text-transform:uppercase}.val{font-size:21px;font-weight:800;margin-top:3px}
+.controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{border:1px solid #ffffff18;background:#1d2940;color:#fff;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+button:hover{background:#2b3a58;transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed}
+.primary{background:#536dff}.msg{text-align:center;color:#aab5c9;min-height:24px;font-size:14px}
+.board{display:grid;grid-template-columns:repeat(6,78px);justify-content:center;gap:17px;min-height:360px;padding:24px 0}
+.tube{width:78px;height:265px;border:3px solid #ffffff55;border-top:0;border-radius:0 0 27px 27px;display:flex;flex-direction:column-reverse;align-items:center;gap:5px;padding:8px 4px;cursor:pointer;background:linear-gradient(90deg,#ffffff08,#ffffff16,#ffffff08);box-shadow:inset 0 0 20px #ffffff08,0 12px 25px #0005;position:relative;transition:.18s}
+.tube:before{content:"";position:absolute;top:-3px;left:-3px;right:-3px;height:11px;border:3px solid #ffffff55;border-bottom:0;border-radius:18px 18px 0 0}
+.tube.selected{transform:translateY(-10px);border-color:#fff;box-shadow:0 0 0 3px #ffffff12,0 0 25px #fff4}
+.ball{width:49px;height:49px;border-radius:50%;flex:none;position:relative;box-shadow:inset -7px -9px 12px #0004,inset 6px 6px 10px #fff5,0 5px 9px #0005}
+.ball:after{content:"";position:absolute;width:13px;height:13px;border-radius:50%;background:#ffffff99;top:7px;left:9px}
+.c0{background:#ff4757}.c1{background:#2e86ff}.c2{background:#20bf6b}.c3{background:#feca57}.c4{background:#a55eea}.c5{background:#ff9f43}.c6{background:#ff6bcb}.c7{background:#18dcff}.c8{background:#badc58}.c9{background:#1dd1a1}.c10{background:#5f27cd}.c11{background:#ff7675}
+.levelTitle{text-align:center;margin:10px 0}.levels{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;max-width:850px;margin:auto}.levels button{padding:8px 2px;font-size:12px}.levels .current{background:#536dff}.levels .done{background:#15533e}.levels .locked{color:#667188;background:#111827}
+.hintFrom{outline:3px solid white;animation:pulse .8s infinite}.hintTo{outline:3px solid #feca57;animation:pulse .8s infinite}
+@keyframes pulse{50%{transform:translateY(-6px)}}
+.overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.overlay.show{display:flex}
+.popup{background:#151e30;border:1px solid #ffffff18;border-radius:22px;padding:30px;text-align:center;width:min(410px,100%);box-shadow:0 30px 80px #0008}.icon{font-size:48px}.popup p{color:#aab5c9;margin:10px 0 20px}.popup button{margin:3px}
+footer{text-align:center;color:#65728a;font-size:12px;margin:25px 0}
+@media(max-width:700px){body{padding:10px}h1{font-size:24px}.stats{gap:5px}.stat{padding:9px 3px}.val{font-size:18px}.label{font-size:8px}.board{grid-template-columns:repeat(4,67px);gap:13px 9px;min-height:auto}.tube{width:67px;height:220px}.ball{width:40px;height:40px}.levels{grid-template-columns:repeat(5,1fr)}button{padding:9px 11px;font-size:12px}}
+@media(max-width:380px){.board{grid-template-columns:repeat(4,61px);gap:9px 6px}.tube{width:61px;height:205px}.ball{width:36px;height:36px}}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+<header><h1>🧪 Ball Sort Extreme</h1><div class="sub">Simple rules. Brutal puzzles.</div></header>
 
-<header>
-    <h1>🧪 Ball Sort Puzzle</h1>
-    <p>Sort every color into the correct tube!</p>
-</header>
-
-<div class="topbar">
-
-    <div class="stat">
-        <small>LEVEL</small>
-        <strong id="levelText">1</strong>
-    </div>
-
-    <div class="stat">
-        <small>MOVES</small>
-        <strong id="movesText">0</strong>
-    </div>
-
-    <div class="stat">
-        <small>BEST</small>
-        <strong id="bestText">-</strong>
-    </div>
-
-    <div class="stat">
-        <small>HINTS</small>
-        <strong id="hintText">3</strong>
-    </div>
-
+<div class="stats">
+<div class="stat"><div class="label">Level</div><div class="val" id="lv">1</div></div>
+<div class="stat"><div class="label">Moves</div><div class="val" id="mv">0</div></div>
+<div class="stat"><div class="label">Best</div><div class="val" id="best">—</div></div>
+<div class="stat"><div class="label">Hints</div><div class="val" id="hintCount">3</div></div>
 </div>
 
 <div class="controls">
-    <button class="primary" onclick="newGame()">🔄 Restart</button>
-    <button onclick="undoMove()">↩ Undo</button>
-    <button class="warning" onclick="useHint()">💡 Hint</button>
+<button onclick="restart()">🔄 Restart</button>
+<button id="undo" onclick="undo()">↩️ Undo</button>
+<button id="hint" onclick="hint()">💡 Hint</button>
+</div>
+<div class="msg" id="msg">Select a tube to pick a ball.</div>
+<div class="board" id="board"></div>
+
+<div class="levelTitle">🏆 Levels</div>
+<div class="levels" id="levels"></div>
+<footer>Ball Sort Extreme • 100 Levels • Free Browser Game</footer>
 </div>
 
-<div class="game">
-    <div id="tubes" class="tubes"></div>
-
-    <div class="message">
-        Tap a tube to pick a ball, then tap another tube to move it.
-    </div>
+<div class="overlay" id="overlay">
+<div class="popup">
+<div class="icon">🎉</div>
+<h2>Level Complete!</h2>
+<p id="winText"></p>
+<button onclick="closeWin()">Levels</button>
+<button class="primary" id="next" onclick="nextLevel()">Next Level →</button>
 </div>
-
-<div class="level-area">
-    <h2>Choose Level</h2>
-    <div id="levels" class="levels"></div>
-</div>
-
-<footer>
-    © CalculatorHubs — Free Online Games
-</footer>
-
-<div id="winOverlay" class="overlay">
-
-    <div class="popup">
-
-        <div class="emoji">🎉</div>
-
-        <h2>Level Complete!</h2>
-
-        <p id="winText">
-            Great job!
-        </p>
-
-        <div class="popup-buttons">
-
-            <button class="primary" onclick="nextLevel()">
-                ▶ Next Level
-            </button>
-
-            <button onclick="closePopup()">
-                ✕ Close
-            </button>
-
-        </div>
-
-    </div>
-
 </div>
 
 <script>
+const MAX=100,CAP=4,COLORS=12;
+const unlockedKey="bse_unlocked";
+let level=1,board=[],history=[],selected=-1,moves=0,hints=3,unlocked=+localStorage.getItem(unlockedKey)||1;
 
-const COLORS = [
-    "red",
-    "blue",
-    "green",
-    "yellow",
-    "purple",
-    "orange",
-    "pink",
-    "cyan"
-];
+function count(){return level<=5?4:level<=12?5:level<=22?6:level<=35?7:level<=50?8:level<=65?9:level<=80?10:level<=92?11:12}
+function depth(){return level<=5?60+level*5:level<=15?110+level*7:level<=30?190+level*8:level<=50?330+level*8:level<=70?500+level*7:level<=85?680+level*6:900+level*5}
+function seed(){return level*9176+28471}
+function clone(b){return b.map(x=>x.slice())}
 
-const BALLS_PER_COLOR = 4;
-const MAX_LEVEL = 50;
-
-let level = 1;
-let tubes = [];
-let selectedTube = null;
-let moves = 0;
-let hints = 3;
-let history = [];
-let hintTimer = null;
-
-let unlocked =
-    Number(localStorage.getItem("ballSortUnlocked")) || 1;
-
-if(unlocked < 1){
-    unlocked = 1;
+function solved(){
+ let b=[];for(let c=0;c<count();c++)b.push([c,c,c,c]);b.push([]);b.push([]);return b;
 }
 
-function colorCountForLevel(lvl){
-
-    return Math.min(
-        2 + Math.floor((lvl - 1) / 4),
-        8
-    );
-
+/* Reverse generation: after removing the top ball, the source must
+   still expose the same colour or be empty. This preserves a valid
+   path back to the solved board. */
+function reversePossible(b,a,z){
+ if(a===z||!b[a].length||b[z].length>=CAP)return false;
+ let ball=b[a][b[a].length-1];
+ let below=b[a].length>1?b[a][b[a].length-2]:null;
+ return below===null||below===ball;
 }
-
-function createSolvedBalls(colorCount){
-
-    let balls = [];
-
-    for(let c = 0; c < colorCount; c++){
-
-        for(let i = 0; i < BALLS_PER_COLOR; i++){
-
-            balls.push(COLORS[c]);
-
-        }
-
-    }
-
-    return balls;
+function scramble(start,s){
+ let b=clone(start),prevA=-1,prevZ=-1;
+ for(let n=0;n<depth();n++){
+  let choices=[];
+  for(let a=0;a<b.length;a++)for(let z=0;z<b.length;z++){
+   if(reversePossible(b,a,z)&&!(a===prevZ&&z===prevA))choices.push([a,z]);
+  }
+  if(!choices.length)break;
+  s=(s*9301+49297)%233280;
+  let p=choices[Math.floor(s/233280*choices.length)];
+  b[p[1]].push(b[p[0]].pop());prevA=p[0];prevZ=p[1];
+ }
+ return b;
 }
-
-/*
-    Creates a shuffled puzzle.
-*/
-function generateLevel(lvl){
-
-    const colorCount = colorCountForLevel(lvl);
-
-    let balls = createSolvedBalls(colorCount);
-
-    shuffle(balls);
-
-    let tubeCount =
-        colorCount +
-        (lvl >= 10 ? 3 : 2);
-
-    let result = [];
-
-    for(let i = 0; i < tubeCount; i++){
-
-        result.push([]);
-
-    }
-
-    let index = 0;
-
-    /*
-       Distribute the balls randomly.
-    */
-    for(let i = 0; i < balls.length; i++){
-
-        result[index].push(balls[i]);
-
-        index++;
-
-        if(index >= colorCount){
-            index = 0;
-        }
-
-    }
-
-    /*
-       Shuffle individual tube contents.
-    */
-    for(let tube of result){
-
-        shuffle(tube);
-
-    }
-
-    return result;
+function quality(b){
+ let q=0;
+ for(let t of b){
+  if(!t.length)continue;
+  let u=new Set(t).size;q+=u*4;
+  for(let i=1;i<t.length;i++)if(t[i]!==t[i-1])q+=9;
+  if(t.length===4&&u===1)q-=25;
+  if(t.length<4)q+=5;
+ }
+ return q;
 }
-
-function shuffle(array){
-
-    for(let i = array.length - 1; i > 0; i--){
-
-        const j =
-            Math.floor(Math.random() * (i + 1));
-
-        [array[i],array[j]] =
-        [array[j],array[i]];
-
-    }
-
-    return array;
+function makePuzzle(){
+ let best=null,score=-1e9,s=seed();
+ for(let i=0;i<8;i++){let b=scramble(solved(),s+i*997),q=quality(b);if(q>score){score=q;best=b}}
+ return best;
 }
-
+function start(){
+ board=makePuzzle();history=[];selected=-1;moves=0;hints=3;render();stats();message("Select a tube to pick a ball.");
+}
 function render(){
-
-    const container =
-        document.getElementById("tubes");
-
-    container.innerHTML = "";
-
-    tubes.forEach((tube,index)=>{
-
-        const div =
-            document.createElement("div");
-
-        div.className = "tube";
-
-        if(selectedTube === index){
-            div.classList.add("selected");
-        }
-
-        div.dataset.index = index;
-
-        div.onclick = () => tubeClick(index);
-
-        tube.forEach(color=>{
-
-            const ball =
-                document.createElement("div");
-
-            ball.className =
-                "ball " + color;
-
-            div.appendChild(ball);
-
-        });
-
-        container.appendChild(div);
-
-    });
-
-    document.getElementById("levelText")
-        .textContent = level;
-
-    document.getElementById("movesText")
-        .textContent = moves;
-
-    document.getElementById("hintText")
-        .textContent = hints;
-
-    updateBest();
-
-    renderLevels();
+ let el=document.getElementById("board");el.innerHTML="";
+ board.forEach((t,i)=>{
+  let tube=document.createElement("div");tube.className="tube"+(selected===i?" selected":"");tube.onclick=()=>select(i);
+  t.forEach(c=>{let ball=document.createElement("div");ball.className="ball c"+c;tube.appendChild(ball)});
+  el.appendChild(tube);
+ });
 }
-
-function tubeClick(index){
-
-    if(selectedTube === null){
-
-        if(tubes[index].length === 0){
-
-            return;
-
-        }
-
-        selectedTube = index;
-
-        render();
-
-        return;
-    }
-
-    if(selectedTube === index){
-
-        selectedTube = null;
-
-        render();
-
-        return;
-    }
-
-    if(canMove(selectedTube,index)){
-
-        saveHistory();
-
-        moveBall(
-            selectedTube,
-            index
-        );
-
-        moves++;
-
-        selectedTube = null;
-
-        render();
-
-        checkWin();
-
-    }else{
-
-        /*
-          If player taps another non-empty tube,
-          switch selection.
-        */
-        if(tubes[index].length > 0){
-
-            selectedTube = index;
-
-            render();
-
-        }
-
-    }
-
+function legal(a,z){
+ if(!board[a].length||board[z].length>=CAP)return false;
+ if(!board[z].length)return true;
+ return board[a][board[a].length-1]===board[z][board[z].length-1];
 }
-
-function canMove(from,to){
-
-    if(tubes[from].length === 0){
-        return false;
-    }
-
-    if(tubes[to].length >= BALLS_PER_COLOR){
-        return false;
-    }
-
-    if(tubes[to].length === 0){
-        return true;
-    }
-
-    const moving =
-        tubes[from][tubes[from].length - 1];
-
-    const target =
-        tubes[to][tubes[to].length - 1];
-
-    return moving === target;
+function select(i){
+ if(selected<0){
+  if(!board[i].length)return message("That tube is empty.");
+  selected=i;render();return message("Now select the destination tube.");
+ }
+ if(selected===i){selected=-1;render();return message("Selection cancelled.")}
+ if(!legal(selected,i))return message("❌ That move is not allowed.");
+ history.push(clone(board));board[i].push(board[selected].pop());moves++;selected=-1;render();stats();
+ if(solvedCheck())win();
 }
-
-function moveBall(from,to){
-
-    const ball =
-        tubes[from].pop();
-
-    tubes[to].push(ball);
-
+function solvedCheck(){
+ return board.every(t=>!t.length||(t.length===CAP&&t.every(x=>x===t[0])));
 }
-
-function saveHistory(){
-
-    history.push(
-        JSON.parse(JSON.stringify(tubes))
-    );
-
-    if(history.length > 50){
-
-        history.shift();
-
-    }
-
+function undo(){
+ if(!history.length)return message("Nothing to undo.");
+ board=history.pop();moves=Math.max(0,moves-1);selected=-1;render();stats();message("↩️ Move undone.");
 }
-
-function undoMove(){
-
-    if(history.length === 0){
-
-        return;
-
-    }
-
-    tubes =
-        history.pop();
-
-    moves++;
-
-    selectedTube = null;
-
-    render();
-
+function restart(){start();message("Level restarted.")}
+function hint(){
+ if(!hints)return message("No hints left.");
+ let found=null;
+ for(let a=0;a<board.length&&!found;a++)for(let z=0;z<board.length;z++){
+  if(legal(a,z)&&board[z].length){found=[a,z];break}
+ }
+ if(!found)for(let a=0;a<board.length&&!found;a++)for(let z=0;z<board.length;z++){
+  if(legal(a,z)&&!board[z].length){found=[a,z];break}
+ }
+ if(!found)return message("No simple hint available.");
+ hints--;stats();
+ let ts=document.querySelectorAll(".tube");ts[found[0]].classList.add("hintFrom");ts[found[1]].classList.add("hintTo");
+ message("💡 Try the highlighted move.");
+ setTimeout(()=>{ts[found[0]]?.classList.remove("hintFrom");ts[found[1]]?.classList.remove("hintTo")},1600);
 }
-
-function isTubeSolved(tube){
-
-    if(tube.length === 0){
-        return true;
-    }
-
-    if(tube.length !== BALLS_PER_COLOR){
-        return false;
-    }
-
-    return tube.every(
-        color => color === tube[0]
-    );
-
+function win(){
+ let key="bse_best_"+level,old=+localStorage.getItem(key)||0;
+ if(!old||moves<old)localStorage.setItem(key,moves);
+ if(level>=unlocked){unlocked=Math.min(MAX,level+1);localStorage.setItem(unlockedKey,unlocked)}
+ document.getElementById("winText").textContent=`Level ${level} completed in ${moves} moves!`;
+ document.getElementById("overlay").classList.add("show");
+ document.getElementById("next").style.display=level<MAX?"inline-block":"none";
+ levels();
 }
-
-function checkWin(){
-
-    const solved =
-        tubes.every(
-            tube => isTubeSolved(tube)
-        );
-
-    if(!solved){
-        return;
-    }
-
-    saveBest();
-
-    setTimeout(()=>{
-
-        document.getElementById("winText")
-            .textContent =
-            `You solved Level ${level} in ${moves} moves!`;
-
-        document
-            .getElementById("winOverlay")
-            .classList.add("show");
-
-        if(level >= unlocked){
-
-            unlocked =
-                Math.min(level + 1,MAX_LEVEL);
-
-            localStorage.setItem(
-                "ballSortUnlocked",
-                unlocked
-            );
-
-        }
-
-    },250);
-
+function closeWin(){document.getElementById("overlay").classList.remove("show")}
+function nextLevel(){closeWin();if(level<MAX){level++;start();levels()}}
+function loadLevel(n){if(n>unlocked)return message("🔒 Complete previous levels first.");level=n;closeWin();start();levels()}
+function levels(){
+ let el=document.getElementById("levels");el.innerHTML="";
+ for(let i=1;i<=MAX;i++){
+  let b=document.createElement("button");b.textContent=i;
+  if(i===level)b.classList.add("current");
+  if(localStorage.getItem("bse_best_"+i))b.classList.add("done");
+  if(i>unlocked){b.textContent="🔒 "+i;b.classList.add("locked");b.disabled=true}
+  else b.onclick=()=>loadLevel(i);
+  el.appendChild(b);
+ }
 }
-
-function newGame(){
-
-    closePopup();
-
-    selectedTube = null;
-    moves = 0;
-    hints = 3;
-    history = [];
-
-    tubes =
-        generateLevel(level);
-
-    render();
-
+function stats(){
+ document.getElementById("lv").textContent=level;
+ document.getElementById("mv").textContent=moves;
+ document.getElementById("best").textContent=localStorage.getItem("bse_best_"+level)||"—";
+ document.getElementById("hintCount").textContent=hints;
+ document.getElementById("undo").disabled=!history.length;
+ document.getElementById("hint").disabled=!hints;
 }
-
-function goToLevel(lvl){
-
-    if(lvl > unlocked){
-
-        return;
-
-    }
-
-    level = lvl;
-
-    newGame();
-
-}
-
-function nextLevel(){
-
-    closePopup();
-
-    if(level < MAX_LEVEL){
-
-        level++;
-
-    }
-
-    if(level > unlocked){
-
-        unlocked = level;
-
-        localStorage.setItem(
-            "ballSortUnlocked",
-            unlocked
-        );
-
-    }
-
-    newGame();
-
-}
-
-function closePopup(){
-
-    document
-        .getElementById("winOverlay")
-        .classList.remove("show");
-
-}
-
-function renderLevels(){
-
-    const container =
-        document.getElementById("levels");
-
-    container.innerHTML = "";
-
-    for(let i = 1; i <= MAX_LEVEL; i++){
-
-        const btn =
-            document.createElement("button");
-
-        btn.className = "level-btn";
-
-        if(i === level){
-
-            btn.classList.add("active");
-
-        }
-
-        if(i > unlocked){
-
-            btn.classList.add("locked");
-
-            btn.textContent = "🔒";
-
-        }else{
-
-            btn.textContent = i;
-
-            btn.onclick = () => goToLevel(i);
-
-        }
-
-        container.appendChild(btn);
-
-    }
-
-}
-
-function useHint(){
-
-    if(hints <= 0){
-
-        return;
-
-    }
-
-    const move =
-        findHint();
-
-    if(!move){
-
-        return;
-
-    }
-
-    hints--;
-
-    const elements =
-        document.querySelectorAll(".tube");
-
-    elements[move.from]
-        .classList.add("hint");
-
-    elements[move.to]
-        .classList.add("hint");
-
-    clearTimeout(hintTimer);
-
-    hintTimer =
-        setTimeout(()=>{
-
-            elements.forEach(el=>{
-                el.classList.remove("hint");
-            });
-
-        },1200);
-
-    document.getElementById("hintText")
-        .textContent = hints;
-
-}
-
-function findHint(){
-
-    /*
-       First find matching-color moves.
-    */
-
-    for(let from = 0; from < tubes.length; from++){
-
-        if(tubes[from].length === 0){
-            continue;
-        }
-
-        const moving =
-            tubes[from][tubes[from].length - 1];
-
-        for(let to = 0; to < tubes.length; to++){
-
-            if(from === to){
-                continue;
-            }
-
-            if(
-                tubes[to].length > 0 &&
-                tubes[to].length < BALLS_PER_COLOR &&
-                tubes[to][tubes[to].length - 1] === moving
-            ){
-
-                return {from,to};
-
-            }
-
-        }
-
-    }
-
-    /*
-       Then find empty tube.
-    */
-
-    for(let from = 0; from < tubes.length; from++){
-
-        if(tubes[from].length === 0){
-            continue;
-        }
-
-        for(let to = 0; to < tubes.length; to++){
-
-            if(from !== to && tubes[to].length === 0){
-
-                return {from,to};
-
-            }
-
-        }
-
-    }
-
-    return null;
-
-}
-
-function getBestKey(){
-
-    return "ballSortBest_" + level;
-
-}
-
-function updateBest(){
-
-    const best =
-        localStorage.getItem(getBestKey());
-
-    document.getElementById("bestText")
-        .textContent =
-        best ? best : "-";
-
-}
-
-function saveBest(){
-
-    const key =
-        getBestKey();
-
-    const old =
-        Number(localStorage.getItem(key));
-
-    if(!old || moves < old){
-
-        localStorage.setItem(
-            key,
-            moves
-        );
-
-    }
-
-}
-
-/*
-   Start game.
-*/
-newGame();
-
+function message(x){document.getElementById("msg").textContent=x}
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){selected=-1;render();message("Selection cancelled.")}
+ if(e.key.toLowerCase()==="u")undo();
+ if(e.key.toLowerCase()==="h")hint();
+});
+levels();start();
 </script>
-
 </body>
 </html>
