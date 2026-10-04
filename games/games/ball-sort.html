@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,
+maximum-scale=1.0,user-scalable=no">
+
+<title>Ball Sort Puzzle - CalculatorHubs</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#263250;
+    min-height:100vh;
+}
+
+.game{
+    width:100%;
+    max-width:600px;
+    min-height:100vh;
+    margin:auto;
+    background:white;
+    position:relative;
+    padding:18px 14px 30px;
+}
+
+/* HEADER */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.back{
+    width:44px;
+    height:44px;
+    border:0;
+    border-radius:50%;
+    background:#f0f4f9;
+    font-size:29px;
+    color:#263250;
+    cursor:pointer;
+}
+
+.title{
+    text-align:center;
+}
+
+.title h1{
+    font-size:24px;
+}
+
+.title p{
+    color:#8993a6;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.restart{
+    width:44px;
+    height:44px;
+    border:0;
+    border-radius:50%;
+    background:#f0f4f9;
+    font-size:21px;
+    cursor:pointer;
+}
+
+/* LEVEL */
+
+.level{
+    text-align:center;
+    margin:12px 0;
+}
+
+.level strong{
+    font-size:21px;
+}
+
+/* INFO */
+
+.info{
+    display:flex;
+    gap:9px;
+    margin-bottom:20px;
+}
+
+.info-box{
+    flex:1;
+    background:#f3f6fa;
+    border-radius:13px;
+    padding:10px;
+    text-align:center;
+}
+
+.info-box small{
+    display:block;
+    font-size:11px;
+    color:#8993a6;
+    margin-bottom:3px;
+}
+
+.info-box strong{
+    font-size:18px;
+}
+
+/* BOARD */
+
+.board{
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:13px;
+    flex-wrap:wrap;
+    padding:20px 8px;
+}
+
+/* TUBE */
+
+.tube{
+    width:64px;
+    height:220px;
+    border:4px solid #cbd4df;
+    border-top:0;
+    border-radius:0 0 30px 30px;
+    position:relative;
+    display:flex;
+    flex-direction:column-reverse;
+    align-items:center;
+    justify-content:flex-start;
+    padding-bottom:9px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tube::before{
+    content:"";
+    position:absolute;
+    left:-4px;
+    right:-4px;
+    top:-4px;
+    height:17px;
+    border:4px solid #cbd4df;
+    border-bottom:0;
+    border-radius:20px 20px 0 0;
+}
+
+.tube.selected{
+    transform:translateY(-10px);
+    border-color:#238be0;
+    box-shadow:
+        0 8px 20px rgba(35,139,224,.2);
+}
+
+.tube.hint{
+    animation:hint 0.6s infinite alternate;
+}
+
+@keyframes hint{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-8px);
+    }
+
+}
+
+/* BALL */
+
+.ball{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    margin:3px 0;
+    position:relative;
+    box-shadow:
+        inset -6px -8px 12px rgba(0,0,0,.12),
+        inset 5px 5px 9px rgba(255,255,255,.35),
+        0 3px 5px rgba(0,0,0,.12);
+    animation:ballIn .18s ease;
+}
+
+@keyframes ballIn{
+
+    from{
+        transform:scale(.6);
+        opacity:.3;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+.ball::after{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:7px;
+    border-radius:50%;
+    background:rgba(255,255,255,.55);
+    top:8px;
+    left:9px;
+    transform:rotate(-25deg);
+}
+
+/* COLORS */
+
+.red{
+    background:#ff5268;
+}
+
+.blue{
+    background:#429cf2;
+}
+
+.green{
+    background:#35c985;
+}
+
+.yellow{
+    background:#ffc936;
+}
+
+.purple{
+    background:#9b65e8;
+}
+
+.orange{
+    background:#ff9148;
+}
+
+.pink{
+    background:#f45da5;
+}
+
+.cyan{
+    background:#25c8d8;
+}
+
+/* CONTROLS */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:4px;
+}
+
+.control{
+    border:0;
+    padding:13px 20px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#edf2f7;
+    color:#263250;
+}
+
+.hint-btn{
+    background:#263250;
+    color:white;
+}
+
+.control:active{
+    transform:scale(.96);
+}
+
+/* MESSAGE */
+
+.message{
+    text-align:center;
+    min-height:25px;
+    margin:13px 0;
+    color:#7b869a;
+    font-size:14px;
+}
+
+/* LEVELS */
+
+.levels{
+    margin-top:25px;
+}
+
+.levels h3{
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.level-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(5,1fr);
+    gap:8px;
+}
+
+.level-btn{
+    aspect-ratio:1;
+    border:0;
+    border-radius:10px;
+    background:#edf2f7;
+    color:#263250;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.level-btn.current{
+    background:#238be0;
+    color:white;
+}
+
+.level-btn.locked{
+    opacity:.45;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,30,50,.58);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.popup{
+    width:min(92%,390px);
+    background:white;
+    border-radius:25px;
+    padding:30px 22px;
+    text-align:center;
+}
+
+.popup h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.popup p{
+    color:#707c90;
+    line-height:1.6;
+}
+
+.stars{
+    font-size:38px;
+    margin:15px 0;
+    letter-spacing:4px;
+}
+
+.popup-buttons{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:18px;
+}
+
+.popup button{
+    border:0;
+    padding:13px 20px;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.next{
+    background:#238be0;
+    color:white;
+}
+
+.replay{
+    background:#edf2f7;
+    color:#263250;
+}
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+    .game{
+        padding:14px 9px;
+    }
+
+    .tube{
+        width:57px;
+        height:190px;
+    }
+
+    .ball{
+        width:42px;
+        height:42px;
+    }
+
+    .board{
+        gap:9px;
+        min-height:430px;
+    }
+
+    .title h1{
+        font-size:21px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <div class="header">
+
+        <button class="back"
+        onclick="history.back()">
+            ‹
+        </button>
+
+        <div class="title">
+
+            <h1>🧪 Ball Sort</h1>
+
+            <p>Sort every color</p>
+
+        </div>
+
+        <button class="restart"
+        onclick="restartLevel()">
+            ↻
+        </button>
+
+    </div>
+
+
+    <div class="level">
+
+        Level
+        <strong id="levelNumber">1</strong>
+
+    </div>
+
+
+    <div class="info">
+
+        <div class="info-box">
+
+            <small>MOVES</small>
+
+            <strong id="moves">
+                0
+            </strong>
+
+        </div>
+
+        <div class="info-box">
+
+            <small>BEST</small>
+
+            <strong id="best">
+                0
+            </strong>
+
+        </div>
+
+        <div class="info-box">
+
+            <small>HINTS</small>
+
+            <strong id="hints">
+                3
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="board"
+        class="board">
+    </div>
+
+
+    <div
+        id="message"
+        class="message">
+        Tap a tube to pick a ball.
+    </div>
+
+
+    <div class="controls">
+
+        <button
+        class="control hint-btn"
+        onclick="useHint()">
+
+            💡 Hint
+
+        </button>
+
+        <button
+        class="control"
+        onclick="undoMove()">
+
+            ↩ Undo
+
+        </button>
+
+    </div>
+
+
+    <div class="levels">
+
+        <h3>Levels</h3>
+
+        <div
+        id="levelGrid"
+        class="level-grid">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- WIN POPUP -->
+
+<div
+id="winPopup"
+class="overlay">
+
+    <div class="popup">
+
+        <h2>🎉 Great Job!</h2>
+
+        <p>
+            You sorted all the colors!
+        </p>
+
+        <div
+        id="stars"
+        class="stars">
+            ⭐⭐⭐
+        </div>
+
+        <p>
+            Moves:
+            <b id="finalMoves">0</b>
+        </p>
+
+        <div class="popup-buttons">
+
+            <button
+            class="replay"
+            onclick="restartLevel();closeWin()">
+
+                Replay
+
+            </button>
+
+            <button
+            class="next"
+            onclick="nextLevel()">
+
+                Next Level →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   BALL SORT PUZZLE
+========================================== */
+
+const boardElement =
+document.getElementById("board");
+
+const levelNumber =
+document.getElementById("levelNumber");
+
+const movesElement =
+document.getElementById("moves");
+
+const bestElement =
+document.getElementById("best");
+
+const hintsElement =
+document.getElementById("hints");
+
+const message =
+document.getElementById("message");
+
+const levelGrid =
+document.getElementById("levelGrid");
+
+const winPopup =
+document.getElementById("winPopup");
+
+
+/* ==========================================
+   COLORS
+========================================== */
+
+const colorNames = [
+
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "purple",
+    "orange",
+    "pink",
+    "cyan"
+
+];
+
+
+/* ==========================================
+   GAME VARIABLES
+========================================== */
+
+let currentLevel =
+Number(localStorage.getItem(
+    "ballSortLevel"
+)) || 1;
+
+let moves = 0;
+
+let hints = 3;
+
+let selectedTube = null;
+
+let tubes = [];
+
+let history = [];
+
+let best =
+Number(localStorage.getItem(
+    "ballSortBest"
+)) || 0;
+
+
+/* ==========================================
+   LEVEL GENERATOR
+========================================== */
+
+function createLevel(level){
+
+    /*
+       Difficulty increases by
+       number of colors.
+    */
+
+    let colors =
+        Math.min(
+            2 + Math.floor((level-1)/4),
+            6
+        );
+
+    /*
+       Maximum 6 colors.
+    */
+
+    let ballsPerColor = 4;
+
+    let total =
+        colors * ballsPerColor;
+
+    let data = [];
+
+    for(
+        let c=0;
+        c<colors;
+        c++
+    ){
+
+        for(
+            let b=0;
+            b<ballsPerColor;
+            b++
+        ){
+
+            data.push(
+                colorNames[c]
+            );
+
+        }
+
+    }
+
+
+    /*
+       Shuffle
+    */
+
+    shuffle(data);
+
+
+    tubes = [];
+
+
+    /*
+       Number of full tubes
+    */
+
+    for(
+        let i=0;
+        i<colors;
+        i++
+    ){
+
+        tubes.push(
+            data.slice(
+                i*4,
+                i*4+4
+            )
+        );
+
+    }
+
+
+    /*
+       Empty tubes
+    */
+
+    tubes.push([]);
+
+    tubes.push([]);
+
+
+    /*
+       For harder levels,
+       add another empty tube
+    */
+
+    if(level >= 10){
+
+        tubes.push([]);
+
+    }
+
+}
+
+
+/* ==========================================
+   SHUFFLE
+========================================== */
+
+function shuffle(array){
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        let j =
+        Math.floor(
+            Math.random()*(i+1)
+        );
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+}
+
+
+/* ==========================================
+   LOAD LEVEL
+========================================== */
+
+function loadLevel(){
+
+    createLevel(
+        currentLevel
+    );
+
+    moves=0;
+
+    hints=3;
+
+    selectedTube=null;
+
+    history=[];
+
+    levelNumber.textContent=
+        currentLevel;
+
+    movesElement.textContent=0;
+
+    hintsElement.textContent=3;
+
+    message.textContent=
+        "Tap a tube to pick a ball.";
+
+    render();
+
+}
+
+
+/* ==========================================
+   RENDER
+========================================== */
+
+function render(){
+
+    boardElement.innerHTML="";
+
+    tubes.forEach(
+        (tube,index)=>{
+
+            const tubeElement =
+            document.createElement("div");
+
+            tubeElement.className="tube";
+
+            if(
+                selectedTube===index
+            ){
+
+                tubeElement.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            tube.forEach(
+                color=>{
+
+                    const ball =
+                    document.createElement("div");
+
+                    ball.className =
+                        "ball "+color;
+
+                    tubeElement.appendChild(
+                        ball
+                    );
+
+                }
+            );
+
+
+            tubeElement.onclick =
+                ()=>tapTube(index);
+
+
+            boardElement.appendChild(
+                tubeElement
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   TAP TUBE
+========================================== */
+
+function tapTube(index){
+
+    /*
+       Nothing selected
+    */
+
+    if(selectedTube===null){
+
+        if(
+            tubes[index].length===0
+        ){
+
+            message.textContent=
+                "This tube is empty.";
+
+            return;
+
+        }
+
+        selectedTube=index;
+
+        message.textContent=
+            "Now choose where to move it.";
+
+        render();
+
+        return;
+
+    }
+
+
+    /*
+       Same tube
+    */
+
+    if(selectedTube===index){
+
+        selectedTube=null;
+
+        message.textContent=
+            "Selection cancelled.";
+
+        render();
+
+        return;
+
+    }
+
+
+    /*
+       Attempt move
+    */
+
+    moveBall(
+        selectedTube,
+        index
+    );
+
+}
+
+
+/* ==========================================
+   MOVE BALL
+========================================== */
+
+function moveBall(from,to){
+
+    const source =
+        tubes[from];
+
+    const target =
+        tubes[to];
+
+
+    if(
+        source.length===0
+    ){
+
+        selectedTube=null;
+
+        render();
+
+        return;
+
+    }
+
+
+    if(
+        target.length>=4
+    ){
+
+        message.textContent=
+            "❌ That tube is full!";
+
+        return;
+
+    }
+
+
+    const ball =
+        source[source.length-1];
+
+
+    /*
+       Only same color can stack.
+    */
+
+    if(
+        target.length>0 &&
+        target[target.length-1]!==ball
+    ){
+
+        message.textContent=
+            "❌ Colors don't match!";
+
+        return;
+
+    }
+
+
+    /*
+       Save state
+    */
+
+    history.push(
+        JSON.stringify(tubes)
+    );
+
+
+    /*
+       Move ball
+    */
+
+    source.pop();
+
+    target.push(ball);
+
+    moves++;
+
+    movesElement.textContent=
+        moves;
+
+    selectedTube=null;
+
+    message.textContent=
+        "Nice move! 🎯";
+
+    render();
+
+
+    /*
+       Check win
+    */
+
+    setTimeout(
+        checkWin,
+        120
+    );
+
+}
+
+
+/* ==========================================
+   WIN CHECK
+========================================== */
+
+function checkWin(){
+
+    let won=true;
+
+
+    for(
+        const tube of tubes
+    ){
+
+        if(
+            tube.length===0
+        )
+            continue;
+
+
+        if(
+            tube.length!==4
+        ){
+
+            won=false;
+
+            break;
+
+        }
+
+
+        const first =
+            tube[0];
+
+        if(
+            !tube.every(
+                color=>
+                    color===first
+            )
+        ){
+
+            won=false;
+
+            break;
+
+        }
+
+    }
+
+
+    if(won){
+
+        showWin();
+
+    }
+
+}
+
+
+/* ==========================================
+   STARS
+========================================== */
+
+function calculateStars(){
+
+    const colors =
+        Math.min(
+            2 +
+            Math.floor(
+                (currentLevel-1)/4
+            ),
+            6
+        );
+
+
+    const perfect =
+        colors*5;
+
+
+    if(
+        moves<=perfect
+    )
+        return 3;
+
+    if(
+        moves<=perfect+6
+    )
+        return 2;
+
+    return 1;
+
+}
+
+
+/* ==========================================
+   SHOW WIN
+========================================== */
+
+function showWin(){
+
+    const stars =
+        calculateStars();
+
+
+    document.getElementById(
+        "finalMoves"
+    ).textContent=moves;
+
+
+    document.getElementById(
+        "stars"
+    ).textContent=
+        "⭐".repeat(stars)+
+        "☆".repeat(3-stars);
+
+
+    /*
+       Unlock next level
+    */
+
+    const unlocked =
+        Number(
+            localStorage.getItem(
+                "ballSortLevel"
+            )
+        ) || 1;
+
+
+    if(
+        currentLevel>=unlocked
+    ){
+
+        localStorage.setItem(
+            "ballSortLevel",
+            currentLevel+1
+        );
+
+    }
+
+
+    if(
+        best===0 ||
+        moves<best
+    ){
+
+        best=moves;
+
+        localStorage.setItem(
+            "ballSortBest",
+            best
+        );
+
+        bestElement.textContent=
+            best;
+
+    }
+
+
+    winPopup.classList.add(
+        "show"
+    );
+
+}
+
+
+/* ==========================================
+   CLOSE WIN
+========================================== */
+
+function closeWin(){
+
+    winPopup.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* ==========================================
+   NEXT LEVEL
+========================================== */
+
+function nextLevel(){
+
+    closeWin();
+
+    currentLevel++;
+
+    const unlocked =
+        Number(
+            localStorage.getItem(
+                "ballSortLevel"
+            )
+        ) || 1;
+
+
+    if(
+        currentLevel>unlocked
+    ){
+
+        currentLevel=unlocked;
+
+    }
+
+
+    loadLevel();
+
+    renderLevels();
+
+}
+
+
+/* ==========================================
+   RESTART
+========================================== */
+
+function restartLevel(){
+
+    closeWin();
+
+    loadLevel();
+
+}
+
+
+/* ==========================================
+   UNDO
+========================================== */
+
+function undoMove(){
+
+    if(
+        history.length===0
+    ){
+
+        message.textContent=
+            "Nothing to undo.";
+
+        return;
+
+    }
+
+
+    tubes =
+        JSON.parse(
+            history.pop()
+        );
+
+
+    moves =
+        Math.max(
+            0,
+            moves-1
+        );
+
+
+    selectedTube=null;
+
+    movesElement.textContent=
+        moves;
+
+    message.textContent=
+        "↩ Move undone.";
+
+    render();
+
+}
+
+
+/* ==========================================
+   HINT
+========================================== */
+
+function useHint(){
+
+    if(hints<=0){
+
+        message.textContent=
+            "No hints remaining.";
+
+        return;
+
+    }
+
+
+    hints--;
+
+    hintsElement.textContent=
+        hints;
+
+
+    /*
+       Find a legal move
+    */
+
+    let from=-1;
+
+    let to=-1;
+
+
+    for(
+        let i=0;
+        i<tubes.length;
+        i++
+    ){
+
+        if(
+            tubes[i].length===0
+        )
+            continue;
+
+
+        const ball =
+            tubes[i][
+                tubes[i].length-1
+            ];
+
+
+        for(
+            let j=0;
+            j<tubes.length;
+            j++
+        ){
+
+            if(i===j)
+                continue;
+
+
+            if(
+                tubes[j].length>=4
+            )
+                continue;
+
+
+            if(
+                tubes[j].length===0 ||
+                tubes[j][
+                    tubes[j].length-1
+                ]===ball
+            ){
+
+                from=i;
+                to=j;
+
+                break;
+
+            }
+
+        }
+
+
+        if(from!==-1)
+            break;
+
+    }
+
+
+    if(
+        from===-1
+    ){
+
+        message.textContent=
+            "No obvious move found.";
+
+        return;
+
+    }
+
+
+    const elements =
+        document.querySelectorAll(
+            ".tube"
+        );
+
+
+    elements[from].classList.add(
+        "hint"
+    );
+
+    elements[to].classList.add(
+        "hint"
+    );
+
+
+    setTimeout(()=>{
+
+        elements[from].classList.remove(
+            "hint"
+        );
+
+        elements[to].classList.remove(
+            "hint"
+        );
+
+    },1600);
+
+
+    message.textContent=
+        "💡 Try the highlighted tubes.";
+
+}
+
+
+/* ==========================================
+   LEVEL SELECT
+========================================== */
+
+function renderLevels(){
+
+    levelGrid.innerHTML="";
+
+
+    const unlocked =
+        Number(
+            localStorage.getItem(
+                "ballSortLevel"
+            )
+        ) || 1;
+
+
+    for(
+        let i=1;
+        i<=50;
+        i++
+    ){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className=
+            "level-btn";
+
+
+        if(i===currentLevel){
+
+            button.classList.add(
+                "current"
+            );
+
+ 
