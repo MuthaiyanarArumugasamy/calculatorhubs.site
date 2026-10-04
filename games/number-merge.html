@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Number Merge - CalculatorHubs</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#263250;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+}
+
+.game{
+    width:100%;
+    max-width:500px;
+    padding:20px 15px 35px;
+}
+
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.back{
+    border:0;
+    background:none;
+    font-size:32px;
+    color:#168bd3;
+    cursor:pointer;
+}
+
+h1{
+    font-size:28px;
+    text-align:center;
+}
+
+.reset{
+    border:0;
+    background:#168bd3;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.box{
+    flex:1;
+    background:white;
+    border-radius:14px;
+    padding:12px;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.box small{
+    display:block;
+    color:#778198;
+    margin-bottom:4px;
+}
+
+.box strong{
+    font-size:20px;
+}
+
+.board{
+    background:#263250;
+    padding:10px;
+    border-radius:15px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    touch-action:none;
+}
+
+.cell{
+    aspect-ratio:1;
+    background:#dfe5ee;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:bold;
+    color:#263250;
+    transition:.15s;
+}
+
+.cell.pop{
+    animation:pop .18s ease;
+}
+
+@keyframes pop{
+    50%{
+        transform:scale(1.15);
+    }
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:20px;
+}
+
+.move{
+    width:55px;
+    height:55px;
+    border:0;
+    border-radius:12px;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    font-size:25px;
+    cursor:pointer;
+    color:#263250;
+}
+
+.help{
+    margin-top:20px;
+    background:white;
+    padding:18px;
+    border-radius:15px;
+    line-height:1.6;
+    color:#59657c;
+}
+
+.help h3{
+    color:#263250;
+    margin-bottom:5px;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:10;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.popup{
+    background:white;
+    width:min(90%,380px);
+    padding:30px 20px;
+    border-radius:22px;
+    text-align:center;
+}
+
+.popup h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.popup p{
+    color:#69758a;
+    margin-bottom:20px;
+}
+
+.popup button{
+    border:0;
+    background:#168bd3;
+    color:white;
+    padding:13px 25px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+@media(max-width:400px){
+
+    h1{
+        font-size:23px;
+    }
+
+    .cell{
+        font-size:25px;
+    }
+
+    .game{
+        padding:15px 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<header>
+
+<button class="back" onclick="history.back()">‹</button>
+
+<h1>Number Merge</h1>
+
+<button class="reset" onclick="newGame()">New</button>
+
+</header>
+
+<div class="info">
+
+<div class="box">
+<small>SCORE</small>
+<strong id="score">0</strong>
+</div>
+
+<div class="box">
+<small>BEST</small>
+<strong id="best">0</strong>
+</div>
+
+</div>
+
+<div id="board" class="board"></div>
+
+<div class="controls">
+
+<button class="move" onclick="move('up')">↑</button>
+
+</div>
+
+<div class="controls">
+
+<button class="move" onclick="move('left')">←</button>
+
+<button class="move" onclick="move('down')">↓</button>
+
+<button class="move" onclick="move('right')">→</button>
+
+</div>
+
+<div class="help">
+
+<h3>How to Play</h3>
+
+<p>
+Use the arrow buttons or swipe on the board.
+</p>
+
+<p>
+Merge two identical numbers to create a bigger number.
+</p>
+
+<p>
+🎯 Reach <b>2048</b> to win!
+</p>
+
+</div>
+
+</div>
+
+
+<div id="overlay" class="overlay">
+
+<div class="popup">
+
+<h2 id="popupTitle">🎉 You Win!</h2>
+
+<p id="popupText">
+You reached 2048!
+</p>
+
+<button onclick="newGame()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const boardElement =
+document.getElementById("board");
+
+const scoreElement =
+document.getElementById("score");
+
+const bestElement =
+document.getElementById("best");
+
+let board = [];
+
+let score = 0;
+
+let best =
+Number(localStorage.getItem("mergeBest")) || 0;
+
+bestElement.textContent = best;
+
+
+/* =========================
+   NEW GAME
+========================= */
+
+function newGame(){
+
+    board =
+    Array(16).fill(0);
+
+    score = 0;
+
+    scoreElement.textContent = score;
+
+    document
+    .getElementById("overlay")
+    .classList.remove("show");
+
+    addNumber();
+    addNumber();
+
+    render();
+
+}
+
+
+/* =========================
+   ADD NUMBER
+========================= */
+
+function addNumber(){
+
+    const empty =
+    board
+    .map((value,index)=>
+        value === 0 ? index : null
+    )
+    .filter(index=>index !== null);
+
+    if(!empty.length) return;
+
+    const index =
+    empty[Math.floor(Math.random()*empty.length)];
+
+    board[index] =
+    Math.random() < .9 ? 2 : 4;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(){
+
+    boardElement.innerHTML="";
+
+    board.forEach((value,index)=>{
+
+        const cell =
+        document.createElement("div");
+
+        cell.className="cell";
+
+        if(value){
+
+            cell.textContent=value;
+
+            cell.classList.add("pop");
+
+            cell.style.background =
+                getTileColor(value);
+
+        }
+
+        boardElement.appendChild(cell);
+
+    });
+
+    scoreElement.textContent=score;
+
+    if(score > best){
+
+        best=score;
+
+        localStorage.setItem(
+            "mergeBest",
+            best
+        );
+
+    }
+
+    bestElement.textContent=best;
+
+}
+
+
+/* =========================
+   TILE COLORS
+========================= */
+
+function getTileColor(value){
+
+    const colors={
+
+        2:"#e9eef5",
+        4:"#d8e7f5",
+        8:"#b9ddf5",
+        16:"#8bc8ef",
+        32:"#64b4e8",
+        64:"#3b9bd8",
+        128:"#2886c5",
+        256:"#176fa9",
+        512:"#125b8a",
+        1024:"#0c4b73",
+        2048:"#073c5d"
+
+    };
+
+    return colors[value] || "#263250";
+
+}
+
+
+/* =========================
+   MOVE
+========================= */
+
+function move(direction){
+
+    let old =
+    [...board];
+
+    if(direction==="left")
+        slideLeft();
+
+    if(direction==="right"){
+        reverseRows();
+        slideLeft();
+        reverseRows();
+    }
+
+    if(direction==="up"){
+        rotateBoard();
+        slideLeft();
+        rotateBoard();
+        rotateBoard();
+        rotateBoard();
+    }
+
+    if(direction==="down"){
+        rotateBoard();
+        rotateBoard();
+        rotateBoard();
+        slideLeft();
+        rotateBoard();
+    }
+
+    if(JSON.stringify(old)!==
+       JSON.stringify(board)){
+
+        addNumber();
+
+        render();
+
+        if(board.includes(2048)){
+
+            showWin();
+
+            return;
+
+        }
+
+        if(!canMove()){
+
+            showGameOver();
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   SLIDE LEFT
+========================= */
+
+function slideLeft(){
+
+    for(let row=0;row<4;row++){
+
+        let start=row*4;
+
+        let line=
+        board.slice(start,start+4)
+        .filter(value=>value!==0);
+
+        for(let i=0;i<line.length-1;i++){
+
+            if(line[i]===line[i+1]){
+
+                line[i]*=2;
+
+                score+=line[i];
+
+                line.splice(i+1,1);
+
+            }
+
+        }
+
+        while(line.length<4)
+            line.push(0);
+
+        for(let i=0;i<4;i++)
+            board[start+i]=line[i];
+
+    }
+
+}
+
+
+/* =========================
+   REVERSE
+========================= */
+
+function reverseRows(){
+
+    for(let row=0;row<4;row++){
+
+        let start=row*4;
+
+        let part=
+        board.slice(start,start+4);
+
+        part.reverse();
+
+        for(let i=0;i<4;i++)
+            board[start+i]=part[i];
+
+    }
+
+}
+
+
+/* =========================
+   ROTATE
+========================= */
+
+function rotateBoard(){
+
+    const newBoard =
+    Array(16).fill(0);
+
+    for(let r=0;r<4;r++){
+
+        for(let c=0;c<4;c++){
+
+            newBoard[c*4+(3-r)] =
+            board[r*4+c];
+
+        }
+
+    }
+
+    board=newBoard;
+
+}
+
+
+/* =========================
+   CAN MOVE?
+========================= */
+
+function canMove(){
+
+    if(board.includes(0))
+        return true;
+
+    for(let r=0;r<4;r++){
+
+        for(let c=0;c<4;c++){
+
+            const current =
+            board[r*4+c];
+
+            if(
+                c<3 &&
+                current===
+                board[r*4+c+1]
+            )
+                return true;
+
+            if(
+                r<3 &&
+                current===
+                board[(r+1)*4+c]
+            )
+                return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+
+/* =========================
+   WIN
+========================= */
+
+function showWin(){
+
+    document
+    .getElementById("popupTitle")
+    .textContent="🎉 You Win!";
+
+    document
+    .getElementById("popupText")
+    .textContent=
+    "Amazing! You reached 2048.";
+
+    document
+    .getElementById("overlay")
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
+
+function showGameOver(){
+
+    document
+    .getElementById("popupTitle")
+    .textContent="😢 Game Over";
+
+    document
+    .getElementById("popupText")
+    .textContent=
+    "No more moves available.";
+
+    document
+    .getElementById("overlay")
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+    if(e.key==="ArrowLeft")
+        move("left");
+
+    if(e.key==="ArrowRight")
+        move("right");
+
+    if(e.key==="ArrowUp")
+        move("up");
+
+    if(e.key==="ArrowDown")
+        move("down");
+
+});
+
+
+/* =========================
+   MOBILE SWIPE
+========================= */
+
+let startX=0;
+let startY=0;
+
+boardElement.addEventListener(
+"touchstart",
+function(e){
+
+    startX=e.touches[0].clientX;
+    startY=e.touches[0].clientY;
+
+},{passive:true});
+
+
+boardElement.addEventListener(
+"touchend",
+function(e){
+
+    let endX=e.changedTouches[0].clientX;
+    let endY=e.changedTouches[0].clientY;
+
+    let dx=endX-startX;
+    let dy=endY-startY;
+
+    if(Math.max(
+        Math.abs(dx),
+        Math.abs(dy)
+    )<30) return;
+
+
+    if(Math.abs(dx)>Math.abs(dy)){
+
+        if(dx>0)
+            move("right");
+        else
+            move("left");
+
+    }else{
+
+        if(dy>0)
+            move("down");
+        else
+            move("up");
+
+    }
+
+},{passive:true});
+
+
+/* START */
+
+newGame();
+
+</script>
+
+</body>
+</html>
